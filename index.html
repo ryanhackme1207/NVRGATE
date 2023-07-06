@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Ryan's Blog</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.less"> 
+  <link rel="stylesheet" href="styles.css"> <!-- Replace "styles.css" with the correct path to your compiled CSS file -->
 </head>
 <body>
   <header>
@@ -33,8 +34,67 @@
     </article>
   </main>
 
-  <footer>
-    <p>&copy; 2023 Ryan's Blog. All rights reserved.</p>
-  </footer>
+  <div class="main">
+    <div class="footer">
+      <div class="bubbles">
+        <!-- Bubble elements -->
+        <!-- Use indentation as per your preference -->
+        <!-- You can add more bubbles by adjusting the loop -->
+        <!-- Make sure to close the div tags properly -->
+        <!-- The style attribute sets the bubble properties using CSS variables -->
+        <!-- Math.random() generates random numbers between 0 and 1 -->
+        <!-- Adjust the values as desired -->
+        <!-- For example: style="--size:${2+Math.random()*4}rem;" -->
+        <!-- Remember to use proper escaping for HTML attribute values -->
+        <!-- Add more attributes or content as needed -->
+        <!-- Example: <div class="bubble" style="--size:${2+Math.random()*4}rem;" data-id="1"></div> -->
+        <!-- Make sure to close the loop -->
+        <!-- Example: <% } %> -->
+        <% for (var i = 0; i < 128; i++) { %>
+        <div class="bubble" style="--size:${2+Math.random()*4}rem; --distance:${6+Math.random()*4}rem; --position:${-5+Math.random()*110}%; --time:${2+Math.random()*2}s; --delay:${-1*(2+Math.random()*2)}s;"></div>
+        <% } %>
+      </div>
+      <div class="content">
+        <div>
+          <div>
+            <b>Eldew</b>
+            <a href="#">Secuce</a>
+            <a href="#">Drupand</a>
+            <a href="#">Oceash</a>
+            <a href="#">Ugefe</a>
+            <a href="#">Babed</a>
+          </div>
+          <div>
+            <b>Spotha</b>
+            <a href="#">Miskasa</a>
+            <a href="#">Agithe</a>
+            <a href="#">Scesha</a>
+            <a href="#">Lulle</a>
+          </div>
+          <div>
+            <b>Chashakib</b>
+            <a href="#">Chogauw</a>
+            <a href="#">Phachuled</a>
+            <a href="#">Tiebeft</a>
+            <a href="#">Ocid</a>
+            <a href="#">Izom</a>
+            <a href="#">Ort</a>
+          </div>
+          <div>
+            <b>Athod</b>
+            <a href="#">Pamuz</a>
+            <a href="#">Vapert</a>
+            <a href="#">Neesk</a>
+            <a href="#">Omemanen</a>
+          </div>
+        </div>
+        <div>
+          <a class="image" href="https://codepen.io/z-" target="_blank" style="background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/199011/happy.svg')"></a>
+          <p>&copy; 2023 Ryan's Blog. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
