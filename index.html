@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+  <script src="scripts.js"></script>
   <meta charset="UTF-8">
   <title>Ryan's Blog</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="icon" href="https://static.vecteezy.com/system/resources/previews/000/498/536/original/vector-notes-icon-design.jpg" type="image/x-icon">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
   <header>
@@ -20,19 +21,33 @@
   </header>
   
   
+  <!-- 
+ecss nearly: https://ecss.io/  
+-->
+
+<!-- tab module -->
+<section class="ns-TabsModule" data-active-tab="A">
+  <!-- horizontal scroll wrapper -->
+  <div class="ns-ScrollWrapper">
+    <!-- tab nav -->
+    <nav class="ns-TabNav">
+      <a href="#ns-TabPanelA" class="ns-TabNav_Link" data-tab="A"><span>HOME</span></a>
+      <a href="#ns-TabPanelB" class="ns-TabNav_Link" data-tab="B"><span>NOTE</span></a>
+      <a href="#ns-TabPanelC" class="ns-TabNav_Link" data-tab="C"><span>CODERS</span></a>
+      <a href="#ns-TabPanelD" class="ns-TabNav_Link" data-tab="D"><span>GAMERS</span></a>
+      <span class="ns-TabNav_Indicator"></span>
+    </nav><!-- /.ns-TabNav -->
+  </div><!-- /.ns-ScrollWrapper -->
+</section>
+
   
   
-  <nav>
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Blog</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-  </nav>
+
+
 
   <main>
-    <article>
+
+    <article  id="scrollingArticle">
       <h2>About Ryan</h2>
       <p>Welcome to my note webpage! My name is Ryan, and I'm a student at Multimedia University (MMU), pursuing the Foundation in 
         Information Technology course. I created this webpage to provide a convenient and organized platform for sharing notes and 
@@ -48,9 +63,9 @@
           knowledge sharing, we can all enhance our understanding and make significant strides in our IT education.</p>
     </article>
 
+ 
   </main>
-
-  <div class="main">
+  <div class="main" class="footers">
     <div class="footer">
       <div class="bubbles">
         <div class="bubble" style="--size:2.6335177957251634rem; --distance:9.56863401168497rem; --position:103.58917245557305%; --time:2.1187339051454606s; --delay:-2.4730491182180865s;"></div>
@@ -198,73 +213,109 @@
       </div>
     </div>
   </div>
-  <script>
-    // 创建烟雾效果的函数
-    function createSmoke() {
-      const smokeElement = document.querySelector('.smoke'); // 获取烟雾元素
-      const smokeCanvas = document.createElement('canvas');
-      smokeCanvas.width = window.innerWidth;
-      smokeCanvas.height = window.innerHeight;
-      smokeElement.appendChild(smokeCanvas);
 
-      const context = smokeCanvas.getContext('2d');
+<script>
+  
+  // 创建烟雾效果的函数
+  function createSmoke() {
+    const smokeElement = document.querySelector('.smoke'); // 获取烟雾元素
+    const smokeCanvas = document.createElement('canvas');
+    smokeCanvas.width = window.innerWidth;
+    smokeCanvas.height = window.innerHeight;
+    smokeElement.appendChild(smokeCanvas);
 
-      function Particle(x, y, radius) {
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
-        this.opacity = 1;
-        this.speedY = -2;
-        this.color = '#ECECEC';
-      }
+    const context = smokeCanvas.getContext('2d');
 
-      Particle.prototype.draw = function() {
-        context.save();
-        context.globalAlpha = this.opacity;
-        context.beginPath();
-        context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        context.fillStyle = this.color;
-        context.fill();
-        context.closePath();
-        context.restore();
-      };
-
-      Particle.prototype.update = function() {
-        this.y += this.speedY;
-        this.opacity -= 0.01;
-        if (this.opacity <= 0) {
-          this.opacity = 0;
-        }
-      };
-
-      const particles = [];
-
-      function addParticles() {
-        const radius = Math.random() * 20 + 10;
-        const x = Math.random() * smokeCanvas.width;
-        const y = smokeCanvas.height + radius;
-        particles.push(new Particle(x, y, radius));
-      }
-
-      function drawSmoke() {
-        context.clearRect(0, 0, smokeCanvas.width, smokeCanvas.height);
-        for (let i = 0; i < particles.length; i++) {
-          particles[i].draw();
-          particles[i].update();
-          if (particles[i].opacity <= 0) {
-            particles.splice(i, 1);
-            i--;
-          }
-        }
-        requestAnimationFrame(drawSmoke);
-      }
-
-      setInterval(addParticles, 100);
-      drawSmoke();
+    function Particle(x, y, radius) {
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.opacity = 1;
+      this.speedY = -2;
+      this.color = '#ECECEC';
     }
 
-    window.addEventListener('load', createSmoke);
-  </script>
+    Particle.prototype.draw = function() {
+      context.save();
+      context.globalAlpha = this.opacity;
+      context.beginPath();
+      context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+      context.fillStyle = this.color;
+      context.fill();
+      context.closePath();
+      context.restore();
+    };
+
+    Particle.prototype.update = function() {
+      this.y += this.speedY;
+      this.opacity -= 0.01;
+      if (this.opacity <= 0) {
+        this.opacity = 0;
+      }
+    };
+
+    const particles = [];
+
+    function addParticles() {
+      const radius = Math.random() * 20 + 10;
+      const x = Math.random() * smokeCanvas.width;
+      const y = smokeCanvas.height + radius;
+      particles.push(new Particle(x, y, radius));
+    }
+
+    function drawSmoke() {
+      context.clearRect(0, 0, smokeCanvas.width, smokeCanvas.height);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].draw();
+        particles[i].update();
+        if (particles[i].opacity <= 0) {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+      requestAnimationFrame(drawSmoke);
+    }
+
+    setInterval(addParticles, 100);
+    drawSmoke();
+  }
+
+  window.addEventListener('load', createSmoke);
+
+
+// Get the scrolling article element
+const scrollingArticle = document.querySelector('#scrollingArticle');
+
+// Calculate the article's height and position relative to the viewport
+const articleHeight = scrollingArticle.getBoundingClientRect().height;
+const articleOffsetTop = scrollingArticle.getBoundingClientRect().top + window.pageYOffset;
+
+// Set the initial opacity of the article
+scrollingArticle.style.opacity = 1;
+
+// Listen to the scroll event
+window.addEventListener('scroll', () => {
+  // Calculate the distance scrolled from the top of the article
+  const scrollDistance = window.pageYOffset - articleOffsetTop;
+
+  // Check if scrolled past the article
+  if (scrollDistance > articleHeight) {
+    // Calculate the remaining scroll distance
+    const remainingScroll = scrollDistance - articleHeight;
+
+    // Calculate the opacity based on the remaining scroll distance
+    const opacity = Math.max(0, 1 - remainingScroll / (window.innerHeight - articleOffsetTop));
+
+    // Apply the opacity to the article
+    scrollingArticle.style.opacity = opacity;
+  } else {
+    // Reset the opacity if scrolled back to the top of the article
+    scrollingArticle.style.opacity = 1;
+  }
+});
+
+
+</script>
 </body>
 </html>
 
