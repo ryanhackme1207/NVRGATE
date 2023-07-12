@@ -1,0 +1,119 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+.back-button a {
+  text-decoration: none;
+  color: #000;
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn3 {
+  background-color: #f0f0f0;
+  color: #000;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin-left: -1400px;
+}
+.dropbtn1 {
+  background-color: #f0f0f0;
+  color: #000;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin-left: -1600px;
+}
+
+.dropbtn2 {
+  background-color: #f0f0f0;
+  color: #000;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin-left: -1500px;
+}
+
+.dropbtn4 {
+  background-color: #f0f0f0;
+  color: #000;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin-left: -1300px;}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f0f0f0;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  margin-left: -800px;
+}
+
+.dropdown-content a {
+  color: #000;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-container {
+  text-align: center;
+
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: aquamarine;
+  padding: 20px;
+  border-radius: 50px;
+  margin-top: 40px;
+  overflow-y: scroll; /* Add vertical scroll behavior */
+  height: 440px; /* Set a fixed height for the container */
+}
+
+.horizontal-layout {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image-container {
+  flex: 1 0 20%; /* Adjust the flex-basis value as per your requirement */
+  padding: 10px;
+  height: 200px; /* Set a fixed height for the image container */
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100%; /* Add this property to ensure images don't exceed the height of the container */
+  object-fit: cover; /* Add this property to maintain the aspect ratio of the images */
+  transition: transform 0.3s ease; /* Add transition for smooth hover effect */
+}
+
+.image-container:hover img {
+  transform: scale(1.1); /* Apply scale transform to create a zoom-in effect on hover */
+}
