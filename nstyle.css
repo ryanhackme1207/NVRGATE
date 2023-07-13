@@ -3,7 +3,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: #f0f0f0;
+  background-color: #a67bf5;
+  border-radius: 30px;
 }
 
 .back-button a {
@@ -18,7 +19,7 @@
 }
 
 .dropbtn3 {
-  background-color: #f0f0f0;
+  background-color: #f0f0f000;
   color: #000;
   padding: 10px;
   font-size: 16px;
@@ -27,7 +28,7 @@
   margin-left: -1400px;
 }
 .dropbtn1 {
-  background-color: #f0f0f0;
+  background-color: #f0f0f000;
   color: #000;
   padding: 10px;
   font-size: 16px;
@@ -37,7 +38,7 @@
 }
 
 .dropbtn2 {
-  background-color: #f0f0f0;
+  background-color: #f0f0f000;
   color: #000;
   padding: 10px;
   font-size: 16px;
@@ -47,7 +48,7 @@
 }
 
 .dropbtn4 {
-  background-color: #f0f0f0;
+  background-color: #f0f0f000;
   color: #000;
   padding: 10px;
   font-size: 16px;
@@ -73,7 +74,7 @@
 }
 
 .dropdown-content a:hover {
-  background-color: #ddd;
+  background-color: #affe88;
 }
 
 .dropdown:hover .dropdown-content {
@@ -88,7 +89,7 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  background-color: aquamarine;
+  background-color: rgb(255, 211, 123);
   padding: 20px;
   border-radius: 50px;
   margin-top: 40px;
@@ -117,3 +118,145 @@
 .image-container:hover img {
   transform: scale(1.1); /* Apply scale transform to create a zoom-in effect on hover */
 }
+
+
+body .footer {
+  z-index: 1;
+  --footer-background: #ED5565;
+  display: grid;
+  position: relative;
+  grid-area: footer;
+  min-height: 10rem;
+}
+
+body .footer .bubbles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1rem;
+  background: var(--footer-background);
+  filter: url("#blob");
+}
+
+body .footer .bubbles .bubble {
+  position: absolute;
+  left: var(--position, 50%);
+  background: var(--footer-background);
+  border-radius: 100%;
+  -webkit-animation: bubble-size var(--time, 4s) ease-in infinite var(--delay, 0s), bubble-move var(--time, 4s) ease-in infinite var(--delay, 0s);
+  animation: bubble-size var(--time, 4s) ease-in infinite var(--delay, 0s), bubble-move var(--time, 4s) ease-in infinite var(--delay, 0s);
+  transform: translate(-50%, 100%);
+}
+
+body .footer .content {
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 4rem;
+  padding: 2rem;
+  background: var(--footer-background);
+}
+
+body .footer .content a,
+body .footer .content p {
+  color: #F5F7FA;
+  text-decoration: none;
+}
+
+body .footer .content b {
+  color: white;
+}
+
+body .footer .content p {
+  margin: 0;
+  font-size: 0.75rem;
+}
+
+body .footer .content>div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+body .footer .content>div>div {
+  margin: 0.25rem 0;
+}
+
+body .footer .content>div>div>* {
+  margin-right: 0.5rem;
+}
+
+
+body {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: "main" "footer";
+  overflow-x: hidden;
+  min-height: 100vh;
+  font-family: "Open Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+  animation: blueBackgroundAnimation 5s ease infinite;
+  background-color: #343535;
+}
+
+body .footer .content>div .image {
+  align-self: center;
+  width: 4rem;
+  height: 4rem;
+  margin: 0.25rem 0;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+}
+
+@-webkit-keyframes bubble-size {
+
+  0%,
+  75% {
+      width: var(--size, 4rem);
+      height: var(--size, 4rem);
+  }
+
+  100% {
+      width: 0rem;
+      height: 0rem;
+  }
+}
+
+@keyframes bubble-size {
+
+  0%,
+  75% {
+      width: var(--size, 4rem);
+      height: var(--size, 4rem);
+  }
+
+  100% {
+      width: 0rem;
+      height: 0rem;
+  }
+}
+
+@-webkit-keyframes bubble-move {
+  0% {
+      bottom: -4rem;
+  }
+
+  100% {
+      bottom: var(--distance, 10rem);
+  }
+}
+
+@keyframes bubble-move {
+  0% {
+      bottom: -4rem;
+  }
+
+  100% {
+      bottom: var(--distance, 10rem);
+  }
+}
+
+.center{text-align: center;}
