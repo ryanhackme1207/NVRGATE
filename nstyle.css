@@ -260,3 +260,12 @@ body .footer .content>div .image {
 }
 
 .center{text-align: center;}
+
+h1{text-align: center;
+font-size: 40px;
+color: #f0f0f0;
+font-family: Georgia, 'Times New Roman', Times, serif;}
+
+a{font-size: 15px;
+color: #000;
+text-decoration: none;}
