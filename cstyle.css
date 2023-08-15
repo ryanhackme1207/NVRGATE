@@ -1,0 +1,203 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e1e;
+    font-family: 'Courier New', monospace;
+    color: #ffffff;
+  }
+
+  .navbar {
+    background-color: #333;
+    overflow: hidden;
+    text-align: center; /* Center the text horizontally */
+  }
+
+  .navbar a {
+    display: inline-block; /* Make the links appear in a row */
+    font-size: 16px;
+    color: #ffffff;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  .navbar a:hover {
+    background-color: #555;
+  }
+
+  /* Apply styles to the whole page */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', monospace;
+    color: #ffffff;
+    background-color: #1e1e1e;
+  }
+  
+ /* Center the container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    z-index: 0; /* Ensure the container is behind other elements */
+  }
+  
+  /* Style the slideshow */
+  .slideshow {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    z-index: 1; /* Make the slideshow appear above the container */
+  }
+  
+  .slide {
+    display: none;
+    width: 100%;
+    height: auto;
+    position: absolute; /* Position the images absolutely within the slideshow */
+    top: 0;
+    left: 0;
+  }
+  
+  /* Add styles for slideshow animation */
+  .fade-in {
+    animation: fadeEffect 4s ease-in-out infinite;
+  }
+  
+  @keyframes fadeEffect {
+    0% { opacity: 0; }
+    25% { opacity: 1; }
+    75% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  
+  
+body .footer {
+  z-index: 1;
+  --footer-background: #ED5565;
+  display: grid;
+  position: relative;
+  grid-area: footer;
+  min-height: 12rem;
+}
+
+body .footer .bubbles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1rem;
+  background: var(--footer-background);
+  filter: url("#blob");
+}
+
+body .footer .bubbles .bubble {
+  position: absolute;
+  left: var(--position, 50%);
+  background: var(--footer-background);
+  border-radius: 100%;
+  -webkit-animation: bubble-size var(--time, 4s) ease-in infinite var(--delay, 0s), bubble-move var(--time, 4s) ease-in infinite var(--delay, 0s);
+  animation: bubble-size var(--time, 4s) ease-in infinite var(--delay, 0s), bubble-move var(--time, 4s) ease-in infinite var(--delay, 0s);
+  transform: translate(-50%, 100%);
+}
+
+body .footer .content {
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 4rem;
+  padding: 2rem;
+  background: var(--footer-background);
+}
+
+body .footer .content a,
+body .footer .content p {
+  color: #F5F7FA;
+  text-decoration: none;
+}
+
+body .footer .content b {
+  color: white;
+}
+
+body .footer .content p {
+  margin: 0;
+  font-size: 0.75rem;
+}
+
+body .footer .content>div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+body .footer .content>div>div {
+  margin: 0.25rem 0;
+}
+
+body .footer .content>div>div>* {
+  margin-right: 0.5rem;
+}
+
+body .footer .content>div .image {
+  align-self: center;
+  width: 4rem;
+  height: 4rem;
+  margin: 0.25rem 0;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+}
+
+@-webkit-keyframes bubble-size {
+
+  0%,
+  75% {
+      width: var(--size, 4rem);
+      height: var(--size, 4rem);
+  }
+
+  100% {
+      width: 0rem;
+      height: 0rem;
+  }
+}
+
+@keyframes bubble-size {
+
+  0%,
+  75% {
+      width: var(--size, 4rem);
+      height: var(--size, 4rem);
+  }
+
+  100% {
+      width: 0rem;
+      height: 0rem;
+  }
+}
+
+@-webkit-keyframes bubble-move {
+  0% {
+      bottom: -4rem;
+  }
+
+  100% {
+      bottom: var(--distance, 10rem);
+  }
+}
+
+@keyframes bubble-move {
+  0% {
+      bottom: -4rem;
+  }
+
+  100% {
+      bottom: var(--distance, 10rem);
+  }
+}
+
+.center{text-align: center;}
+h1 {
+  font-size: 50px; 
+}
