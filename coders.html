@@ -98,15 +98,313 @@ body {font-family: "Lato", sans-serif}
 
   <!-- The Tour Section -->
   <div class="w3-black" id="tour">
-    <div class="w3-container w3-content w3-padding-64" style="max-width:800px">
-      <h2 class="w3-wide w3-center">coming soon</h2>
-
+   <h1> HTML</h1>
+    
+    <div class="code-box" id="codeBox">
+      <pre class="pre"><code id="codeContent" class="language-js code">
+          &lt;!DOCTYPE html&gt;
+          &lt;html lang="en"&gt;
+          &lt;head&gt;
+              &lt;meta charset="UTF-8"&gt;
+              &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+              &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+              &lt;title&gt;Magic Navigation Menu Indicator&lt;/title&gt;
+              &lt;link rel="stylesheet" href="style.css"&gt;
+          &lt;/head&gt;
+          &lt;body&gt;
+              &lt;div class="navigation"&gt;
+                  &lt;ul&gt;
+                      &lt;li class="list active"&gt;
+                          &lt;a href="#"&gt;
+                              &lt;span class="icon"&gt;
+                                  &lt;ion-icon name="home-outline"&gt;&lt;/ion-icon&gt;
+                              &lt;/span&gt;
+                              &lt;span class="text"&gt;Home&lt;/span&gt;
+                              &lt;span class="circle"&gt;&lt;/span&gt;
+                          &lt;/a&gt;
+                      &lt;/li&gt;
+                      &lt;li class="list"&gt;
+                          &lt;a href="#"&gt;
+                              &lt;span class="icon"&gt;
+                                  &lt;ion-icon name="person-outline"&gt;&lt;/ion-icon&gt;
+                              &lt;/span&gt;
+                              &lt;span class="text"&gt;Profile&lt;/span&gt;
+                              &lt;span class="circle"&gt;&lt;/span&gt;
+                          &lt;/a&gt;
+                      &lt;/li&gt;
+                      &lt;!-- more list items... --&gt;
+                  &lt;/ul&gt;
+              &lt;/div&gt;
+              &lt;script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"&gt;&lt;/script&gt;
+              &lt;script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"&gt;&lt;/script&gt;
+              &lt;script src="script.js"&gt;&lt;/script&gt;
+          &lt;/body&gt;
+          &lt;/html&gt;
+      </code></pre>
+      <button class="copy-button" onclick="copyToClipboard('codeContent')">Copy to Clipboard</button>
   </div>
+  <h1> JS</h1>
+  <div class="code-box" id="codeBox2">
+      <pre class="pre"><code id="codeContent2" class="code2">
+        const list = document.querySelectorAll('.list');
+ 
+function activeLink() {
+    list.forEach((item) =>
+    item.classList.remove('active'));
+    this.classList.add('active');
+}
+ 
+list.forEach((item) =>
+item.addEventListener('click',activeLink));
+      </code></pre>
+      <button class="copy-button" onclick="copyToClipboard('codeContent2')">Copy to Clipboard</button>
+  </div>
+  <h1> CSS</h1>
+  <div class="code-box" id="codeBox3">
+      <pre class="pre"><code id="codecontent3" class="code1">
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+ 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+ 
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #06021b;
+}
+ 
+.navigation {
+    position: relative;
+    width: 400px;
+    height: 70px;
+    background:  linear-gradient(155deg, #192b6e, #a6307c);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+ 
+.navigation ul {
+    display: flex;
+    width: 350px;
+}
+ 
+.navigation ul li {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    list-style: none;
+    z-index: 1;
+}
+ 
+.navigation ul li a {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+}
+ 
+.navigation ul li a .icon {
+    position: relative;
+    display: block;
+    line-height: 75px;
+    font-size: 1.5em;
+    text-align: center;
+    color: #fff;
+    transition: .5s;
+}
+ 
+.navigation ul li.active a .icon {
+    transform: translateY(-32px);
+}
+ 
+.navigation ul li a .text {
+    position: absolute;
+    color: #fff;
+    font-weight: 400;
+    font-size: .75em;
+    letter-spacing: .05em;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: .5s;
+}
+ 
+.navigation ul li.active a .text {
+    opacity: 1;
+    transform: translateY(10px);
+}
+ 
+.navigation ul li a .circle {
+    position: absolute;
+    display: block;
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    border-radius: 50%;
+    border: 1.8px solid #fff;
+    transform: translateY(-37px) scale(0);
+}
+ 
+.navigation ul li.active a .circle {
+    transition: .5s;
+    transition-delay: .5s;
+    transform: translateY(-37px) scale(1);
+}
+ 
+.indicator {
+    position: absolute;
+    top: -50%;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(0deg, #ffa576,#0951eb);
+    border: 6px solid #06021b;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .5s;
+}
+ 
+.indicator::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -22px;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border-top-right-radius: 20px;
+    box-shadow: 1px -10px 0 #06021b;
+}
+ 
+.indicator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -22px;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border-top-left-radius: 20px;
+    box-shadow: -1px -10px 0 #06021b;
+}
+ 
+.navigation ul li:nth-child(1).active~.indicator {
+    transform: translateX(calc(70px * 0));
+}
+ 
+.navigation ul li:nth-child(2).active~.indicator {
+    transform: translateX(calc(70px * 1));
+}
+ 
+.navigation ul li:nth-child(3).active~.indicator {
+    transform: translateX(calc(70px * 2));
+}
+ 
+.navigation ul li:nth-child(4).active~.indicator {
+    transform: translateX(calc(70px * 3));
+}
+ 
+.navigation ul li:nth-child(5).active~.indicator {
+    transform: translateX(calc(70px * 4));
+}
+      </code></pre>
+      <button class="copy-button" onclick="copyToClipboard('codeContent3')">Copy to Clipboard</button>
+
+  
+  </div>
+
+
+  <h1>OUTPUT</h1>
+  <div class="output-box">
+    <!DOCTYPE html>
+    <html lang="en">
+     
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Magic Navigation Menu Indicator</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+     
+    <body>
+     
+        <div class="navigation">
+            <ul>
+                <li class="list active">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="text">Home</span>
+                        <span class="circle"></span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="person-outline"></ion-icon>
+                        </span>
+                        <span class="text">Profile</span>
+                        <span class="circle"></span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                        </span>
+                        <span class="text">Message</span>
+                        <span class="circle"></span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="camera-outline"></ion-icon>
+                        </span>
+                        <span class="text">Photos</span>
+                        <span class="circle"></span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="settings-outline"></ion-icon>
+                        </span>
+                        <span class="text">Settings</span>
+                        <span class="circle"></span>
+                    </a>
+                </li>
+                <div class="indicator"></div>
+            </ul>
+        </div>
+     
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <script src="script.js"></script>
+    </body>
+     
+    </html>
+  </div>
+      
+       
+    
 
   <!-- The Contact Section -->
   <div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="contact">
-    <h2 class="w3-wide w3-center">coming soon</h2>
-
+    
 </div>
 
 <!-- Image of location/map -->
@@ -294,6 +592,34 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+function copyToClipboard(elementId) {
+  const codeElement = document.getElementById(elementId);
+  const text = codeElement.textContent;
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  document.body.appendChild(textArea);
+  textArea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textArea);
+
+  const copyButton = codeElement.parentElement.querySelector('.copy-button');
+  copyButton.textContent = 'Copied';
+  setTimeout(() => {
+      copyButton.textContent = 'Copy to Clipboard';
+  }, 1000);
+}
+
+const list = document.querySelectorAll('.list');
+ 
+function activeLink() {
+    list.forEach((item) =>
+    item.classList.remove('active'));
+    this.classList.add('active');
+}
+ 
+list.forEach((item) =>
+item.addEventListener('click',activeLink));
+
 </script>
 
 </body>
