@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>FCI Subjects - NVRGATE</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap and Icons -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- Main CSS -->
+  <style>
+
+
+ .subjects-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  background-color: #5fcf80; /* Corrected with '#' */
+  gap: 30px;
+  padding: 70px 50px;
+  max-width: 1400px;
+  margin: auto;
+  border-radius: 40px;
+}
+
+
+   .subject-card {
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  border-radius: 16px;
+  padding: 40px 20px;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+  box-shadow: 0 0 0 2px transparent;
+  transition: transform 0.3s ease, box-shadow 0.4s ease, color 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  overflow: visible; /* Allow outer glow to show */
+}
+
+.subject-card::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  z-index: -1;
+  border-radius: 20px;
+ background: linear-gradient(135deg, #b2f7ef, #a0eac9);
+
+
+  color: #f0f4f9;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.subject-card:hover {
+  transform: translateY(-6px);
+  color: #3f3f3f;
+}
+
+.subject-card:hover::before {
+  opacity: 1;
+}
+
+
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 900px;
+      position: relative;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 26px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+    }
+
+    #modalTitle {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+    }
+
+    .note-card {
+      background: #f0f4f9;
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+    }
+
+    .note-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .note-title {
+      margin-top: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+  </style>
+</head>
+
+<div class="note-search-wrapper container mt-4">
+  <input
+    type="text"
+    id="noteSearch"
+    class="form-control form-control-lg"
+    placeholder="Search notes by title, subject or keyword..."
+  />
+  <ul id="searchResults" class="list-group mt-3"></ul>
+</div>
+
+
+<div class="container">
+  <h2 class="text-center mt-5 fw-bold">Faculty of Computing & Informatics (FCI) Subjects</h2>
+  <div class="subjects-container">
+    <div class="subject-card" onclick="openModal('MATH 1')">MATH 1</div>
+    <div class="subject-card" onclick="openModal('MATH 2')">MATH 2</div>
+    <div class="subject-card" onclick="openModal('MATH 3')">MATH 3</div>
+    <div class="subject-card" onclick="openModal('CALCULUS')">CALCULUS</div>
+    <div class="subject-card" onclick="openModal('DISCRETE STRUCTURE')">DISCRETE STRUCTURE</div>
+    <div class="subject-card" onclick="openModal('OOPDS')">OOPDS</div>
+    <div class="subject-card" onclick="openModal('COMPUTER ARC')">COMPUTER ARC</div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="modalOverlay" class="modal-overlay" style="display:none;">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal()">×</span>
+    <h4 id="modalTitle">Subject Name</h4>
+    <div class="notes-grid" id="notesGrid">
+      <!-- Notes will be generated here -->
+    </div>
+  </div>
+</div>
+<script>
+  const subjectFiles = {
+    "MATH 1": [
+      { title: "Lecture 1", folder: "lec", file: "lec1.pdf" },
+      { title: "Lecture 2", folder: "lec", file: "lec2.pdf" },
+      { title: "Tutorial 1", folder: "tuto", file: "tuto1.pdf" },
+      { title: "Answer 1", folder: "ans", file: "ans1.pdf" },
+      { title: "Answer 2", folder: "ans", file: "ans2.pdf" }
+    ],
+    "MATH 2": [
+      { title: "Lecture 1", folder: "lec", file: "lec1.pdf" },
+      { title: "Tutorial 1", folder: "tuto", file: "tuto1.pdf" },
+      { title: "Answer 1", folder: "ans", file: "ans1.pdf" }
+    ],
+    "MATH 3": [
+      { title: "Lecture 1", folder: "lec", file: "lec1.pdf" }
+    ],
+    "CALCULUS": [
+      { title: "Lecture A", folder: "lec", file: "calc1.pdf" }
+    ],
+    "DISCRETE STRUCTURE": [
+      { title: "Week 1", folder: "lec", file: "week1.pdf" },
+      { title: "Tutorial 1", folder: "tuto", file: "tuto1.pdf" }
+    ],
+    "OOPDS": [
+      { title: "Lecture 1", folder: "lec", file: "oop1.pdf" },
+      { title: "Lab 1", folder: "tuto", file: "lab1.pdf" }
+    ],
+    "COMPUTER ARC": [
+      { title: "Lecture 1", folder: "lec", file: "arch1.pdf" },
+      { title: "Tutorial 1", folder: "tuto", file: "tuto1.pdf" }
+    ]
+  };
+
+  let currentSubject = null;
+
+  function openModal(subject) {
+    currentSubject = subject;
+    document.getElementById("modalOverlay").style.display = "flex";
+    document.getElementById("modalTitle").innerText = subject;
+
+    const notesGrid = document.getElementById("notesGrid");
+    notesGrid.innerHTML = '';
+
+    const files = subjectFiles[subject];
+
+    if (!files || files.length === 0) {
+      notesGrid.innerHTML = "<p>No files available for this subject.</p>";
+      return;
+    }
+
+    files.forEach(file => {
+      const anchor = document.createElement('a');
+      anchor.href = `FCI/${subject}/${file.folder}/${file.file}`;
+      anchor.target = '_blank';
+
+      const card = document.createElement('div');
+      card.className = 'note-card';
+
+      const img = document.createElement('img');
+      img.src = 'https://via.placeholder.com/150';
+      img.alt = file.title;
+
+      const title = document.createElement('div');
+      title.className = 'note-title';
+      title.innerText = file.title;
+
+      card.appendChild(img);
+      card.appendChild(title);
+      anchor.appendChild(card);
+      notesGrid.appendChild(anchor);
+    });
+  }
+
+  function closeModal() {
+    document.getElementById("modalOverlay").style.display = "none";
+    currentSubject = null;
+  }
+
+  // Modal search (only filters notes inside modal if modal is open)
+  document.getElementById('search-btn')?.addEventListener('click', function () {
+    const keyword = document.getElementById('search-input').value.toLowerCase();
+
+    const notes = document.querySelectorAll('#notesGrid .note-card');
+
+    if (!notes.length) {
+      alert("Open a subject first to search its notes.");
+      return;
+    }
+
+    notes.forEach(note => {
+      const text = note.innerText.toLowerCase();
+      note.style.display = text.includes(keyword) ? 'block' : 'none';
+    });
+  });
+
+  // Global search (search from all subjects)
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("noteSearch");
+    const resultsList = document.getElementById("searchResults");
+
+    function highlightMatch(text, keyword) {
+      const regex = new RegExp(`(${keyword})`, "gi");
+      return text.replace(regex, `<span class="highlight">$1</span>`);
+    }
+
+    function getAllNotesFromSubjects() {
+      const notes = [];
+
+      Object.entries(subjectFiles).forEach(([subject, files]) => {
+        files.forEach(file => {
+          const title = file.title;
+          const filePath = `FCI/${subject}/${file.folder}/${file.file}`;
+          const keywords = `${subject} ${title} ${filePath}`.toLowerCase();
+
+          notes.push({
+            subject,
+            title,
+            url: filePath,
+            keywords
+          });
+        });
+      });
+
+      return notes;
+    }
+
+    searchInput?.addEventListener("input", function () {
+      const query = this.value.trim().toLowerCase();
+      resultsList.innerHTML = "";
+
+      if (!query) return;
+
+      const notes = getAllNotesFromSubjects();
+      const filtered = notes.filter(note =>
+        note.keywords.includes(query)
+      );
+
+      if (filtered.length === 0) {
+        resultsList.innerHTML = `<li class="list-group-item">No matching notes found.</li>`;
+        return;
+      }
+
+      filtered.forEach(note => {
+        const li = document.createElement("li");
+        li.className = "list-group-item";
+
+        li.innerHTML = `
+          <a href="${note.url}" class="text-decoration-none text-dark" target="_blank">
+            <strong>${highlightMatch(note.subject, query)}</strong>: ${highlightMatch(note.title, query)}
+          </a>
+        `;
+
+        resultsList.appendChild(li);
+      });
+    });
+  });
+</script>
+
+
+
+
+<footer id="footer" class="footer position-relative light-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">NVRGATE</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>Persiaran Multimedia, </p>
+            <p>63100 Cyberjaya, Selangor</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+60 1300 800 668</span></p>
+           
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href="https://x.com/mmumalaysia"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.facebook.com/mmumalaysia/"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/mmumalaysia/"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.linkedin.com/school/mmumalaysia/posts/?feedView=all"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#about.html">About us</a></li>
+          </ul>
+        </div>
+
+
+   <div class="col-lg-4 col-md-12 footer-feedback">
+  <h4>Feedback</h4>
+  <p>We'd love to hear your thoughts, suggestions, or concerns!</p>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSerYewvTOyfGejf9H9WI8U_Pab-WcCY8MUkMKeqvyBOEaTHXA/viewform" target="_blank">
+    <button type="button" class="custom-green-btn">Feedback</button>
+  </a>
+</div>
+
+
+
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+  <p>© <span>2025</span> <strong class="px-1 sitename">Ryan</strong> <span>All Rights Reserved</span></p>
+  <div class="credits">
+    This website was created by <a href="https://www.linkedin.com/in/lai-ting-hong-734070291/" target="_blank">Ryan</a> using a public GitHub repository.
+  </div>
+</div>
+
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+
+  
+</body>
+</html>

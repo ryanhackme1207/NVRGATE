@@ -2287,3 +2287,116 @@ button:hover {
     background-position: 0% 50%;
   }
 }
+
+.subjects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    padding: 60px;
+  }
+
+  .subject-card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    padding: 30px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .subject-card:hover {
+    transform: scale(1.05);
+  }
+
+  /* Modal Styles */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+
+  .modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+  }
+
+  .note-card {
+    background: #eef1f5;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .note-card img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .note-title {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .note-search-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#noteSearch {
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+#searchResults li {
+  padding: 12px 18px;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  background: #f8f9fa;
+  transition: background 0.2s;
+}
+
+#searchResults li:hover {
+  background: #e6f0ff;
+}
+
+.highlight {
+  background-color: yellow;
+  font-weight: bold;
+}
