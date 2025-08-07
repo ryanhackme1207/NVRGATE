@@ -291,35 +291,94 @@ h6 {
   }
 }
 
-.scrolled .header {
-  box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
-}
-.faculty.section {
-  padding: 60px 0;
-  background: #f9f9f9;
+.scrolling-wrapper {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 15px 0;
+  
 }
 
-.scrolling-wrapper {
+.scrolling-track {
   display: flex;
-  gap: 20px;
-  animation: scroll-horizontal 80s linear infinite;
   width: max-content;
+  animation: scroll-left 60s linear infinite;
+}
+
+.faculty-cards {
+  display: flex;
+  gap: 35px; /* Increased from 16px to 24px for clearer spacing */
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 20px 0;
 }
 
 .faculty-card {
+  position: relative;
   flex: 0 0 auto;
-  width: 300px;
-  background: #fff;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  min-width: 280px;
+  max-width: 300px;
+  background-color: rgba(255, 255, 255, 0.2); /* translucent white */
+  backdrop-filter: blur(10px);                /* blur effect */
+  -webkit-backdrop-filter: blur(20px);  
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease;
+  scroll-snap-align: start;
+  z-index: 1;
+  overflow: hidden;
 }
 
+/* Gradient border animation using ::before */
+.faculty-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  z-index: -1;
+  background: linear-gradient(270deg,
+    #ff6ec4, #7873f5, #4ade80, #22d3ee, #facc15, #fb7185, #ff6ec4);
+  background-size: 400% 400%;
+  border-radius: 14px;
+  animation: animated-gradient 10s ease infinite;
+}
+
+/* Mask the inside to appear like border only */
+.faculty-card::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  background: #f8f8f8;
+  border-radius: 10px;
+  z-index: -1;
+}
+
+@keyframes animated-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+/* Hover effect */
 .faculty-card:hover {
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
+/* Headings and text */
 .faculty-card h3 {
   font-size: 20px;
   font-weight: 700;
@@ -328,7 +387,7 @@ h6 {
 
 .faculty-card p {
   font-size: 14px;
-  color: #777;
+  color: #555;
 }
 
 .faculty-card ul {
@@ -342,24 +401,32 @@ h6 {
   list-style-type: disc;
 }
 
-/* Horizontal scroll animation */
-@keyframes scroll-horizontal {
+/* Horizontal scroll animation (optional for desktop autoplay) */
+@keyframes scroll-left {
   0% {
     transform: translateX(0%);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
 
-/* Make sure it's scrollable on small screens */
+/* Mobile-friendly adjustments */
 @media (max-width: 768px) {
-  .scrolling-wrapper {
+  .scrolling-track {
     animation: none;
-    overflow-x: auto;
     flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .faculty-cards {
+    flex-wrap: nowrap;
+    gap: 16px; /* Slightly smaller spacing for mobile if needed */
+    padding: 10px 0;
   }
 }
+
+
 
 /*--------------------------------------------------------------
 # Navigation Menu
@@ -957,7 +1024,30 @@ section,
   align-items: center;
   justify-content: center;
   color: var(--default-color);
+
+  background: linear-gradient(-45deg, #8e44ad, #3498db, #1abc9c, #f1c40f);
+  background-size: 600% 600%;
+  animation: coolGradient 16s ease-in-out infinite;
 }
+
+@keyframes coolGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 50% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 50% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 
 .hero img {
   position: absolute;
@@ -2023,4 +2113,137 @@ section,
 
 .member-content .social a:hover {
   color: #007bff;
+}
+ .custom-green-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .custom-green-btn:hover {
+    background-color: #218838;
+  }
+
+  .custom-size {
+  width: 60%;      /* Adjust this value to your desired size */
+  max-width: 400px; /* Optional: set a maximum size */
+  height: auto;     /* Maintains aspect ratio */
+  display: block;   /* Optional: remove inline gap */
+  margin: 0 auto;   /* Optional: center the image */
+}
+
+.about-img {
+  max-width: 50%;
+  width: 370px;     /* You can increase or decrease this value */
+  height: auto;
+  display: block;
+  margin: 0 auto;   /* Center the image */
+}
+
+.blurred-gradient-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.blurred-gradient-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: linear-gradient(-45deg, #6a11cb, #2575fc, #ff6a00, #00c9ff);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  opacity: 0.85;
+  border-radius: 0 0 40px 40px;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.search-container {
+  position: relative;
+  width: 300px;
+  margin: 12px auto; /* Reduced top & bottom margin */
+  border-radius: 0 15px 15px 0;
+  display: flex;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  font-size: 14px;
+}
+
+button {
+  padding: 8px 12px;
+  background-color: #289f55;
+  color: white;
+  border: none;
+  border-radius: 0 15px 15px 0;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+#faculty-list {
+  display: none;
+  position: absolute;
+  top: 38px; /* Slightly reduced space */
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#faculty-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#faculty-list li {
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#faculty-list li:hover {
+  background-color: #f0f0f0;
+}
+
+#faculty-list li a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+  height: 100%;
 }

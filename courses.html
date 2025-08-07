@@ -47,37 +47,110 @@
         <h1 class="sitename">Mentor</h1>
       </a>
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.html">Home<br></a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="courses.html" class="active">Courses</a></li>
-          <li><a href="trainers.html">Trainers</a></li>
-          <li><a href="events.html">Events</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+     <nav id="navmenu" class="navmenu">
+  <ul>
+    <li><a href="index.html">Home<br></a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="courses.html" class="active">Note</a></li>
+    <li><a href="trainers.html">Coders</a></li>
+    <li><a href="events.html">Gamers</a></li>
+    <li class="dropdown">
+      <a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+      <ul>
+        <li><a href="#">Dropdown 1</a></li>
+        <li class="dropdown">
+          <a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <ul>
+            <li><a href="#">Deep Dropdown 1</a></li>
+            <li><a href="#">Deep Dropdown 2</a></li>
+            <li><a href="#">Deep Dropdown 3</a></li>
+            <li><a href="#">Deep Dropdown 4</a></li>
+            <li><a href="#">Deep Dropdown 5</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Dropdown 2</a></li>
+        <li><a href="#">Dropdown 3</a></li>
+        <li><a href="#">Dropdown 4</a></li>
+      </ul>
+    </li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+ 
 
-      <a class="btn-getstarted" href="courses.html">Get Started</a>
+
+  <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+</nav>
+<div class="search-container">
+    <input type="text" id="search-input" placeholder="Search faculty..." onfocus="showFacultyList()" onblur="hideFacultyList()" oninput="filterFacultyList()">
+    <button onclick="searchFaculty()">Search</button>
+
+    <div id="faculty-list">
+      <ul id="faculty-ul">
+        <li><a href="fke.html">FKE</a></li>
+        <li><a href="fci.html">FCI</a></li>
+        <li><a href="fom.html">FOM</a></li>
+        <li><a href="foe.html">FOE</a></li>
+        <li><a href="fcm.html">FCM</a></li>
+        <li><a href="fit.html">FIT</a></li>
+        <li><a href="fist.html">FIST</a></li>
+      </ul>
+    </div>
+  </div>
+  
+
+  <script>
+    function showFacultyList() {
+      document.getElementById('faculty-list').style.display = 'block';
+    }
+
+    function hideFacultyList() {
+      setTimeout(() => {
+        document.getElementById('faculty-list').style.display = 'none';
+      }, 150);
+    }
+
+    function filterFacultyList() {
+      const input = document.getElementById('search-input').value.toLowerCase();
+      const listItems = document.querySelectorAll('#faculty-ul li');
+      let found = false;
+
+      listItems.forEach(li => {
+        const text = li.textContent.toLowerCase();
+        if (text.includes(input)) {
+          li.style.display = 'block';
+          found = true;
+        } else {
+          li.style.display = 'none';
+        }
+      });
+
+      if (!found && input !== "") {
+        document.getElementById('faculty-ul').innerHTML = `<li style="color: red; padding: 10px;">Nothing found</li>`;
+      } else if (input === "") {
+        // Reset list if input is empty
+        document.getElementById('faculty-ul').innerHTML = `
+          <li><a href="fci.html">FCI</a></li>
+          <li><a href="fom.html">FOM</a></li>
+          <li><a href="foe.html">FOE</a></li>
+          <li><a href="fcm.html">FCM</a></li>
+          <li><a href="fit.html">FIT</a></li>
+          <li><a href="fist.html">FIST</a></li>
+        `;
+      }
+    }
+
+    function searchFaculty() {
+      const input = document.getElementById('search-input').value.toLowerCase();
+      const links = document.querySelectorAll('#faculty-ul li a');
+      for (const link of links) {
+        if (link.textContent.toLowerCase() === input) {
+          window.location.href = link.getAttribute('href');
+          return;
+        }
+      }
+      alert("Faculty not found");
+    }
+  </script>
 
     </div>
   </header>
