@@ -304,6 +304,16 @@ h6 {
   width: max-content;
   animation: scroll-left 60s linear infinite;
 }
+.scrolling-track {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* smooth iOS scrolling */
+}
+
+.faculty-card {
+  flex: 0 0 auto; /* prevent shrinking so they overflow horizontally */
+}
 
 .faculty-cards {
   display: flex;
@@ -411,20 +421,9 @@ h6 {
   }
 }
 
-/* Mobile-friendly adjustments */
-@media (max-width: 768px) {
-  .scrolling-track {
-    animation: none;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-  }
 
-  .faculty-cards {
-    flex-wrap: nowrap;
-    gap: 16px; /* Slightly smaller spacing for mobile if needed */
-    padding: 10px 0;
-  }
-}
+
+
 
 
 
