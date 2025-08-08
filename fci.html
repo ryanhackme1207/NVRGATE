@@ -17,144 +17,6 @@
   <style>
 
 
- .subjects-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  background-color: #5fcf80; /* Corrected with '#' */
-  gap: 30px;
-  padding: 70px 50px;
-  max-width: 1400px;
-  margin: auto;
-  border-radius: 40px;
-}
-
-
-   .subject-card {
-  background: linear-gradient(135deg, #ffffff, #f8f9fa);
-  border-radius: 16px;
-  padding: 40px 20px;
-  text-align: center;
-  font-weight: 600;
-  color: #333;
-  box-shadow: 0 0 0 2px transparent;
-  transition: transform 0.3s ease, box-shadow 0.4s ease, color 0.3s ease;
-  cursor: pointer;
-  position: relative;
-  z-index: 0;
-  overflow: visible; /* Allow outer glow to show */
-}
-
-.subject-card::before {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: -4px;
-  right: -4px;
-  bottom: -4px;
-  z-index: -1;
-  border-radius: 20px;
- background: linear-gradient(135deg, #b2f7ef, #a0eac9);
-
-
-  color: #f0f4f9;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  filter: blur(10px);
-  pointer-events: none;
-}
-
-.subject-card:hover {
-  transform: translateY(-6px);
-  color: #3f3f3f;
-}
-
-.subject-card:hover::before {
-  opacity: 1;
-}
-
-
-
-    /* Modal Styles */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    .modal-content {
-      background: #fff;
-      padding: 30px;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 900px;
-      position: relative;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .close-modal {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 26px;
-      font-weight: bold;
-      color: #333;
-      cursor: pointer;
-    }
-
-    #modalTitle {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .notes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 20px;
-    }
-
-    .note-card {
-      background: #f0f4f9;
-      border-radius: 12px;
-      padding: 10px;
-      text-align: center;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.06);
-    }
-
-    .note-card img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-
-    .note-title {
-      margin-top: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #333;
-    }
   </style>
 </head>
 
@@ -195,34 +57,67 @@
 <script>
   const subjectFiles = {
     "MATH 1": [
-      { title: "Lecture 1", folder: "lec", file: "lec1.pdf" },
-      { title: "Lecture 2", folder: "lec", file: "lec2.pdf" },
-      { title: "Tutorial 1", folder: "tuto", file: "tuto1.pdf" },
-      { title: "Answer 1", folder: "ans", file: "ans1.pdf" },
-      { title: "Answer 2", folder: "ans", file: "ans2.pdf" }
+      { title: "Topic 1 - lecture", folder: "lec", file: "PMT0101_Topic_1.pdf", image: "FCI/MATH 1/img/math1c1.jpeg" },
+      { title: "Topic 2 - lecture", folder: "lec", file: "PMT0101_Topic_2.pdf", image: "FCI/MATH 1/img/math1c2.jpeg" },
+      { title: "Topic 3 - lecture", folder: "lec", file: "PMT0101_Topic_3.pdf", image: "FCI/MATH 1/img/math1c3.jpeg" },
+      { title: "Topic 4 - lecture", folder: "lec", file: "PMT0101_Topic_4.pdf", image: "FCI/MATH 1/img/math1c4.jpeg" },
+      { title: "Topic 5 - lecture", folder: "lec", file: "PMT0101_Topic_5.pdf", image: "FCI/MATH 1/img/math1c5.jpeg" },
+      { title: "Topic 6 - lecture", folder: "lec", file: "PMT0101_Topic_6.pdf", image: "FCI/MATH 1/img/math1c6.jpeg" },
+      { title: "Past Year Paper -SET 1", folder: "psy", file: "SET1-1510-Q-NBY.pdf", image: "FCI/MATH 1/img/re1.jpeg" },
+      { title: "Past Year Paper -SET 2", folder: "psy", file: "SET2-1520-Q-JMJ.pdf", image: "FCI/MATH 1/img/re2.jpeg" },
+      { title: "Past Year Paper -SET 3", folder: "psy", file: "SET3-1530-Q-NBY.pdf", image: "FCI/MATH 1/img/re3.jpeg" },
+      { title: "Past Year Paper -SET 4", folder: "psy", file: "SET4-1610-Q-JMJ.pdf", image: "FCI/MATH 1/img/re4.jpeg" },
+      { title: "Past Year Paper -SET 5", folder: "psy", file: "SET5-1620-Q-JMJ.pdf", image: "FCI/MATH 1/img/re4.2.jpeg" },
+      { title: "Past Year Paper -SET 6", folder: "psy", file: "SET6-1630-Q-NBY.pdf", image: "FCI/MATH 1/img/re6.jpeg" },
+      { title: "Past Year Paper -SET 7", folder: "psy", file: "SET7-1710-Q-JMJ.pdf", image: "FCI/MATH 1/img/re7.jpeg" },
+      { title: "Past Year Paper -SET 8", folder: "psy", file: "SET8-1720-Q-JMJ.pdf", image: "FCI/MATH 1/img/re8.jpeg" },
+      { title: "Past Year Paper -SET 9", folder: "psy", file: "SET9-1730-Q-NBY.pdf", image: "FCI/MATH 1/img/re9.jpeg" },
+      { title: "Past Year Paper -SET 10", folder: "psy", file: "SET10-2020-AFE1-Q-NSL.pdf", image: "FCI/MATH 1/img/re10.jpeg" },
+      { title: "Past Year Paper Answer -SET 1", folder: "ans", file: "SET1-1510-A-NBY.pdf", image: "FCI/MATH 1/img/reans1.jpeg" },
+      { title: "Past Year Paper Answer -SET 2", folder: "ans", file: "SET2-1520-A-JMJ.pdf", image: "FCI/MATH 1/img/reans2.jpeg" },
+      { title: "Past Year Paper Answer -SET 3", folder: "ans", file: "SET3-1530-A-NBY.pdf", image: "FCI/MATH 1/img/reans3.jpeg" },
+      { title: "Past Year Paper Answer -SET 4", folder: "ans", file: "SET4-1610-A-JMJ.pdf", image: "FCI/MATH 1/img/reans4.jpeg" },
+      { title: "Past Year Paper Answer -SET 5", folder: "ans", file: "SET5-1620-A-JMJ.pdf", image: "FCI/MATH 1/img/reans5.jpeg" },
+      { title: "Past Year Paper Answer -SET 6", folder: "ans", file: "SET6-1630-A-NBY.pdf", image: "FCI/MATH 1/img/reans6.jpeg" },
+      { title: "Past Year Paper Answer -SET 7", folder: "ans", file: "SET7-1710-A-JMJ.pdf", image: "FCI/MATH 1/img/reans7.jpeg" },
+      { title: "Past Year Paper Answer -SET 8", folder: "ans", file: "SET8-1720-A-JMJ.pdf", image: "FCI/MATH 1/img/reans8.jpeg" },
+      { title: "Past Year Paper Answer -SET 9", folder: "ans", file: "SET9-1730-A-NBY.pdf", image: "FCI/MATH 1/img/reans9.jpeg" },
+      { title: "Past Year Paper Answer -SET 10", folder: "ans", file: "SET10-2020-AFE1-A-NSL.pdf", image: "FCI/MATH 1/img/reans10.jpeg" },
+ 
     ],
     "MATH 2": [
-      { title: "Lecture 1", folder: "lec", file: "lec1.pdf" },
-      { title: "Tutorial 1", folder: "tuto", file: "tuto1.pdf" },
-      { title: "Answer 1", folder: "ans", file: "ans1.pdf" }
+      { title: "Chapter 1 (part 1)", folder: "lec", file: "Chapter 1 (Part 1).pdf", image: "FCI/MATH 2/img/math2c1.jpeg" },
+      { title: "Chapter 1 (part 2)", folder: "lec", file: "Chapter 1 (Part 2).pdf", image: "FCI/MATH 2/img/math2c1p1.jpeg" },
+      { title: "Chapter 2 (part 1)", folder: "lec", file: "Chapter 2 (Part 1).pdf", image: "FCI/MATH 2/img/math2c2.jpeg" },
+      { title: "Chapter 2 (part 2)", folder: "lec", file: "Chapter 2 (Part 2).pdf", image: "FCI/MATH 2/img/math2c2p1.jpeg" },
+      { title: "Chapter 3 ", folder: "lec", file: "Chapter 3 (1).pdf", image: "FCI/MATH 2/img/math2c3.jpeg" },
+      { title: "Chapter 4", folder: "lec", file: "Chapter 4 (1).pdf", image: "FCI/MATH 2/img/math2c4.jpeg" },
+      { title: "Chapter 5", folder: "lec", file: "Chapter 5.pdf", image: "FCI/MATH 2/img/math2c5.jpeg" },
+      { title: "Tutorial 1 (part 1)", folder: "tuto", file: "tuto1.pdf", image: "FCI/MATH 2/img/tuto1.jpeg" },
+      { title: "Tutorial 1 (part 2)", folder: "tuto", file: "tuto12.pdf", image: "FCI/MATH 2/img/tuto1.2.jpeg" },
+      { title: "Tutorial 2 (part 1)", folder: "tuto", file: "tuto2.pdf", image: "FCI/MATH 2/img/tuto2.jpeg" },
+      { title: "Tutorial 2 (part 2)", folder: "tuto", file: "tuto2.2.pdf", image: "FCI/MATH 2/img/tuto2.2.jpeg" },
+      { title: "Tutorial 3", folder: "tuto", file: "tuto3.pdf", image: "FCI/MATH 2/img/tuto3.jpeg" },
+      { title: "Tutorial 4", folder: "tuto", file: "tuto4.pdf", image: "FCI/MATH 2/img/tuto4.jpeg" },
+      { title: "Tutorial 5", folder: "tuto", file: "tuto5.pdf", image: "FCI/MATH 2/img/tuto5.jpeg" },
     ],
     "MATH 3": [
-      { title: "Lecture 1", folder: "lec", file: "lec1.pdf" }
+      { title: "Lecture 1", folder: "lec", file: "lec1.pdf", image: "FCI/MATH 3/lec/lec1.png" }
     ],
     "CALCULUS": [
-      { title: "Lecture A", folder: "lec", file: "calc1.pdf" }
+      { title: "Lecture A", folder: "lec", file: "calc1.pdf", image: "FCI/CALCULUS/lec/calc1.png" }
     ],
     "DISCRETE STRUCTURE": [
-      { title: "Week 1", folder: "lec", file: "week1.pdf" },
-      { title: "Tutorial 1", folder: "tuto", file: "tuto1.pdf" }
+      { title: "Week 1", folder: "lec", file: "week1.pdf", image: "FCI/DISCRETE STRUCTURE/lec/week1.png" },
+      { title: "Tutorial 1", folder: "tuto", file: "tuto1.pdf", image: "FCI/DISCRETE STRUCTURE/tuto/tuto1.png" }
     ],
     "OOPDS": [
-      { title: "Lecture 1", folder: "lec", file: "oop1.pdf" },
-      { title: "Lab 1", folder: "tuto", file: "lab1.pdf" }
+      { title: "Lecture 1", folder: "lec", file: "oop1.pdf", image: "FCI/OOPDS/lec/oop1.png" },
+      { title: "Lab 1", folder: "tuto", file: "lab1.pdf", image: "FCI/OOPDS/tuto/lab1.png" }
     ],
     "COMPUTER ARC": [
-      { title: "Lecture 1", folder: "lec", file: "arch1.pdf" },
-      { title: "Tutorial 1", folder: "tuto", file: "tuto1.pdf" }
+      { title: "Lecture 1", folder: "lec", file: "arch1.pdf", image: "FCI/COMPUTER ARC/lec/arch1.png" },
+      { title: "Tutorial 1", folder: "tuto", file: "tuto1.pdf", image: "FCI/COMPUTER ARC/tuto/tuto1.png" }
     ]
   };
 
@@ -252,7 +147,7 @@
       card.className = 'note-card';
 
       const img = document.createElement('img');
-      img.src = 'https://via.placeholder.com/150';
+      img.src = file.image || 'default-cover.png'; // fallback
       img.alt = file.title;
 
       const title = document.createElement('div');
@@ -271,7 +166,7 @@
     currentSubject = null;
   }
 
-  // Modal search (only filters notes inside modal if modal is open)
+  // Modal search (only filters notes inside modal)
   document.getElementById('search-btn')?.addEventListener('click', function () {
     const keyword = document.getElementById('search-input').value.toLowerCase();
 
@@ -288,7 +183,7 @@
     });
   });
 
-  // Global search (search from all subjects)
+  // Global search (search from all subjects with images)
   document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("noteSearch");
     const resultsList = document.getElementById("searchResults");
@@ -311,6 +206,7 @@
             subject,
             title,
             url: filePath,
+            image: file.image || 'default-cover.png',
             keywords
           });
         });
@@ -337,9 +233,10 @@
 
       filtered.forEach(note => {
         const li = document.createElement("li");
-        li.className = "list-group-item";
+        li.className = "list-group-item d-flex align-items-center";
 
         li.innerHTML = `
+          <img src="${note.image}" alt="${note.title}" style="width:40px;height:40px;object-fit:cover;margin-right:10px;border-radius:5px;">
           <a href="${note.url}" class="text-decoration-none text-dark" target="_blank">
             <strong>${highlightMatch(note.subject, query)}</strong>: ${highlightMatch(note.title, query)}
           </a>
@@ -350,6 +247,7 @@
     });
   });
 </script>
+
 
 
 
