@@ -41,6 +41,7 @@
     <div class="subject-card" onclick="openModal('DISCRETE STRUCTURE')">DISCRETE STRUCTURE</div>
     <div class="subject-card" onclick="openModal('OOPDS')">OOPDS</div>
     <div class="subject-card" onclick="openModal('COMPUTER ARC')">COMPUTER ARC</div>
+    <div class="subject-card" onclick="openModal('COMPUTER METHOD')">COMPUTER METHOD</div>
   </div>
 </div>
 
@@ -217,7 +218,7 @@
 
     ],
     "OOPDS": [
-      { title: "Lecture 1", folder: "lec", file: "week_1_part1.pdg", image: "FCI/OOPDS/img/1l.jpg" },
+      { title: "Lecture 1", folder: "lec", file: "week_1_part1.pdf", image: "FCI/OOPDS/img/1l.jpg" },
       { title: "Lecture 1.2", folder: "lec", file: "week_1_part2.pdf", image: "FCI/OOPDS/img/2l.jpg" },
       { title: "Lecture 2", folder: "lec", file: "Week_2_part1.pdf", image: "FCI/OOPDS/img/3l.jpg" },
       { title: "Lecture 2.2", folder: "lec", file: "Week_2_part2.pdf", image: "FCI/OOPDS/img/4l.jpg" },
@@ -250,11 +251,51 @@
       
     ],
     "COMPUTER ARC": [
-      { title: "Lecture 1", folder: "lec", file: "arch1.pdf", image: "FCI/COMPUTER ARC/lec/arch1.png" },
-      { title: "Tutorial 1", folder: "tuto", file: "tuto1.pdf", image: "FCI/COMPUTER ARC/tuto/tuto1.png" }
-    ]
-  };
-
+      { title: "Lecture 1", folder: "lec", file: "archlec1.pdf", image: "FCI/COMPUTER ARC/img/arclec1.jpg" },
+      { title: "Lecture 2", folder: "lec", file: "arclec2.pdf", image: "FCI/COMPUTER ARC/img/arclec2.jpg" },
+      { title: "Lecture 3", folder: "lec", file: "arclec3.pdf", image: "FCI/COMPUTER ARC/img/arclec3.jpg" },
+      { title: "Lecture 4", folder: "lec", file: "arclec4.pdf", image: "FCI/COMPUTER ARC/img/arclec4.jpg" },
+      { title: "Lecture 5", folder: "lec", file: "arclec5.pdf", image: "FCI/COMPUTER ARC/img/arclec5.jpg" },
+      { title: "Lecture 6", folder: "lec", file: "arclec6.pdf", image: "FCI/COMPUTER ARC/img/arclec6.jpg" },
+      { title: "Lecture 7", folder: "lec", file: "arclec7.pdf", image: "FCI/COMPUTER ARC/img/arclec7.jpg" },
+      { title: "Lab 1", folder: "tuto", file: "LABARC1.pdf", image: "FCI/COMPUTER ARC/img/arclab1.jpg" },
+      { title: "Lab 2", folder: "tuto", file: "LABARC2.pdf", image: "FCI/COMPUTER ARC/img/arclab2.jpg" },
+      { title: "Lab 3", folder: "tuto", file: "LABARC3.pdf", image: "FCI/COMPUTER ARC/img/arclab3.jpg" },
+      { title: "Lab 4", folder: "tuto", file: "LABARC4.pdf", image: "FCI/COMPUTER ARC/img/arclab4.jpg" },
+      { title: "Lab 5", folder: "tuto", file: "LABARC5.pdf", image: "FCI/COMPUTER ARC/img/arclab5.jpg" },
+      { title: "Lab 6", folder: "tuto", file: "LABARC6.pdf", image: "FCI/COMPUTER ARC/img/arclab6.jpg" },
+      { title: "ARM LEC 1", folder: "arm-lec", file: "lec_b-01 -  Basic Concepts and System Buses Term2210.pdf", image: "FCI/COMPUTER ARC/img/ARM1.jpg" },
+      { title: "ARM LEC 2", folder: "arm-lec", file: "lec_b-02 - Structure and Function of Central Processing Unit term2210.pdf", image: "FCI/COMPUTER ARC/img/ARM2.jpg" },
+      { title: "ARM LEC 3", folder: "arm-lec", file: "lec_b-03 - Instruction pipelining and operation of control unit term2210.pdf", image: "FCI/COMPUTER ARC/img/ARM3.jpg" },
+      { title: "ARM LEC 4", folder: "arm-lec", file: "lec_b-04 - Instruction Sets Architecture and Design term2220.pdf", image: "FCI/COMPUTER ARC/img/ARM4.jpg" },
+      { title: "ARM LEC 5", folder: "arm-lec", file: "lec_b-05 - Memory Architecture term2210.pdf", image: "FCI/COMPUTER ARC/img/ARM5.jpg" },
+      { title: "ARM LEC 6", folder: "arm-lec", file: "lec_b-06 - Interfacing input output strategies 2022.pdf", image: "FCI/COMPUTER ARC/img/ARM6.jpg" },
+      { title: "ARM LEC 7", folder: "arm-lec", file: "lec_b-07 - Multiprocessing 2022.pdf", image: "FCI/COMPUTER ARC/img/ARM7.jpg" },
+      { title: "ARM LAB 1 & 2", folder: "arm-lab", file: "lab_b_01_02_ARM_architecture_Term2210.pdf", image: "FCI/COMPUTER ARC/img/ARMLAB1.jpg" },
+      { title: "ARM LAB 3", folder: "arm-lab", file: "lab_b-03_programming_exercise_1_2023.pdf", image: "FCI/COMPUTER ARC/img/ARMLAB2.jpg" },
+      { title: "ARM LAB 4", folder: "arm-lab", file: "lab b-04 Programming Exercise 2 _2023.pdf", image: "FCI/COMPUTER ARC/img/ARMLAB3.jpg" },
+      { title: "ARM LAB 5", folder: "arm-lab", file: "lab_b-05_programming_exercise_3_2023.pdf", image: "FCI/COMPUTER ARC/img/ARMLAB4.jpg" },
+      { title: "ARM LAB 6", folder: "arm-lab", file: "lab_b-06_programming_exercise_4_2023.pdf", image: "FCI/COMPUTER ARC/img/ARMLAB5.jpg" },
+      
+  ],
+"COMPUTER METHOD": [
+      { title: "Lecture 1", folder: "lec", file: "comet1.pdf", image: "FCI/COMPUTER METHOD/img/comet1.jpg" },
+      { title: "Lecture 2", folder: "lec", file: "comet2.pdf", image: "FCI/COMPUTER METHOD/img/comet2.jpg" },
+      { title: "Lecture 3", folder: "lec", file: "comet3.pdf", image: "FCI/COMPUTER METHOD/img/comet3.jpg" },
+      { title: "Lecture 4", folder: "lec", file: "comet4.pdf", image: "FCI/COMPUTER METHOD/img/comet4.jpg" },
+      { title: "Lecture 5", folder: "lec", file: "comet5.pdf", image: "FCI/COMPUTER METHOD/img/comet5.jpg" },
+      { title: "Lecture 6", folder: "lec", file: "comet6.pdf", image: "FCI/COMPUTER METHOD/img/comt6.jpg" },
+      
+      { title: "Lab 1", folder: "tuto", file: "comet1t.pdf", image: "FCI/COMPUTER METHOD/img/comet1t.jpg" },
+      { title: "Lab 2", folder: "tuto", file: "comet2t.pdf", image: "FCI/COMPUTER METHOD/img/comet2t.jpg" },
+      { title: "Lab 3", folder: "tuto", file: "comet3t.pdf", image: "FCI/COMPUTER METHOD/img/comet3t.jpg" },
+      { title: "Lab 4", folder: "tuto", file: "comet4t.pdf", image: "FCI/COMPUTER METHOD/img/comet4t.jpg" },
+      { title: "Lab 5", folder: "tuto", file: "comet5t.pdf", image: "FCI/COMPUTER METHOD/img/comet5t.jpg" },
+      { title: "Lab 6", folder: "tuto", file: "comet6t.pdf", image: "FCI/COMPUTER METHOD/img/comet6t.jpg" },
+      { title: "Lab 6", folder: "tuto", file: "comet7t.pdf", image: "FCI/COMPUTER METHOD/img/comet7t.jpg" },
+      { title: "Lab 6", folder: "tuto", file: "comet8t.pdf", image: "FCI/COMPUTER METHOD/img/comet8t.jpg" },
+      
+  ]};
   let currentSubject = null;
 
   function openModal(subject) {
