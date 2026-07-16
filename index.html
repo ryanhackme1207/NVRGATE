@@ -49,34 +49,13 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html" class="active">Home<br></a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="courses.html">Note</a></li>
-          <li><a href="trainers.html">Coders</a></li>
-          <li><a href="ANIME/index.html">Anime</a></li>
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="fci.html">FCI Notes</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="courses.html">Get Started</a>
+      <a class="btn-getstarted" href="fci.html">Get Started</a>
 
     </div>
   </header>
@@ -97,7 +76,7 @@
     We have all the notes you need — organized, accessible, and just a click away.
   </p>
   <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
-    <a href="courses.html" class="btn-get-started">Get Started</a>
+    <a href="fci.html" class="btn-get-started">Get Started</a>
   </div>
 </div>
 
@@ -126,7 +105,7 @@
     <li><i class="bi bi-check-circle"></i> <span>No more digging through tabs and folders — just search and study.</span></li>
     <li><i class="bi bi-check-circle"></i> <span>Save time and focus on learning, not finding the right files.</span></li>
   </ul>
-  <a href="#" class="read-more"><span>Explore Notes</span><i class="bi bi-arrow-right"></i></a>
+  <a href="fci.html" class="read-more"><span>Explore Notes</span><i class="bi bi-arrow-right"></i></a>
 </div>
 
 
@@ -193,7 +172,7 @@
       You can also <strong>share your notes with me</strong> — just click the <strong>Share Now</strong> button below!
     </p>
     <div class="text-center">
-      <a href="#" class="more-btn"><span>Share Now</span> <i class="bi bi-share-fill"></i></a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSerYewvTOyfGejf9H9WI8U_Pab-WcCY8MUkMKeqvyBOEaTHXA/viewform" target="_blank" class="more-btn"><span>Share Now</span> <i class="bi bi-share-fill"></i></a>
     </div>
   </div>
 </div>
@@ -352,7 +331,8 @@
       <div class="faculty-cards">
         <!-- Your 9 cards go here -->
         <!-- Card template -->
-        <div class="faculty-card">
+        <div class="faculty-card active-faculty" onclick="location.href='fci.html'" style="cursor: pointer; position: relative;">
+          <span class="badge bg-success" style="position: absolute; top: 15px; right: 15px; font-size: 11px; z-index: 10;">Active</span>
           <h3>FCI</h3>
           <p>Faculty of Computing & Informatics</p>
           <ul>
@@ -436,7 +416,8 @@
 
       <!-- Duplicate cards for infinite scroll -->
       <div class="faculty-cards">
-       <div class="faculty-card">
+        <div class="faculty-card active-faculty" onclick="location.href='fci.html'" style="cursor: pointer; position: relative;">
+          <span class="badge bg-success" style="position: absolute; top: 15px; right: 15px; font-size: 11px; z-index: 10;">Active</span>
           <h3>FCI</h3>
           <p>Faculty of Computing & Informatics</p>
           <ul>
@@ -609,8 +590,8 @@
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Useful Links</h4>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#about.html">About us</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About us</a></li>
           </ul>
         </div>
 
@@ -630,9 +611,9 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-  <p>© <span>2025</span> <strong class="px-1 sitename">Ryan</strong> <span>All Rights Reserved</span></p>
+  <p>© <span>2025</span> <strong class="px-1 sitename"><a href="https://ryan-sec.dev/" target="_blank" style="color: inherit; text-decoration: none;">Ryan</a></strong> <span>All Rights Reserved</span></p>
   <div class="credits">
-    This website was created by <a href="https://www.linkedin.com/in/lai-ting-hong-734070291/" target="_blank">Ryan</a> using a public GitHub repository.
+    This website was created by <a href="https://ryan-sec.dev/" target="_blank">Ryan</a>. Connect with me on <a href="https://www.linkedin.com/in/lai-ting-hong-692a243b7/" target="_blank">LinkedIn</a>.
   </div>
 </div>
 

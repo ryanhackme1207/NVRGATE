@@ -15,10 +15,333 @@
 
   <!-- Main CSS -->
   <style>
+  /* General Premium Settings */
+  body.fci-page {
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-family: 'Poppins', sans-serif;
+  }
 
+  /* Note Search and Highlight */
+  .note-search-wrapper {
+    max-width: 650px;
+    margin: 40px auto 20px auto;
+    position: relative;
+  }
+  #noteSearch {
+    border: 2px solid #e2e8f0;
+    border-radius: 50px;
+    padding: 16px 28px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
+    background: #ffffff;
+  }
+  #noteSearch:focus {
+    border-color: #10b981;
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.15);
+    outline: none;
+  }
 
-  </style>
+  /* Category Filter Pill Tabs */
+  .category-filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background: #e2e8f0;
+    padding: 6px;
+    border-radius: 40px;
+    gap: 4px;
+    margin: 30px auto;
+    max-width: fit-content;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+  }
+  .filter-btn {
+    background: transparent;
+    color: #475569;
+    border: none;
+    padding: 10px 24px;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .filter-btn:hover {
+    color: #0f172a;
+    background: rgba(255, 255, 255, 0.4);
+  }
+  .filter-btn.active {
+    background: #ffffff;
+    color: #0f172a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Grid Layout override */
+  .subjects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto 80px auto;
+    background: transparent !important; /* Remove solid green */
+    border-radius: 0 !important;
+  }
+
+  /* Subject Cards Override */
+  .subject-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 35px 20px;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    position: relative;
+    overflow: hidden;
+  }
+  .subject-card::before {
+    display: none !important; /* Hide old gradient border */
+  }
+  .subject-card::after {
+    display: none !important; /* Hide old inner mask */
+  }
+  .subject-card:hover {
+    transform: translateY(-6px);
+    border-color: #10b981;
+    box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.1), 0 10px 10px -5px rgba(16, 185, 129, 0.04);
+  }
+  .subject-icon {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    color: #10b981;
+    transition: transform 0.3s ease;
+  }
+  .subject-card:hover .subject-icon {
+    transform: scale(1.15) rotate(5deg);
+  }
+  .subject-title {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #0f172a;
+  }
+
+  /* Categories Color Coding Accent on hover */
+  .subject-card[data-category="math"]:hover .subject-icon {
+    color: #3b82f6; /* Blue for math */
+  }
+  .subject-card[data-category="math"]:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.1);
+  }
+  .subject-card[data-category="cs"]:hover .subject-icon {
+    color: #10b981; /* Emerald for CS */
+  }
+  .subject-card[data-category="cs"]:hover {
+    border-color: #10b981;
+    box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.1);
+  }
+  .subject-card[data-category="cyber"]:hover .subject-icon {
+    color: #ef4444; /* Red for Cyber */
+  }
+  .subject-card[data-category="cyber"]:hover {
+    border-color: #ef4444;
+    box-shadow: 0 20px 25px -5px rgba(239, 68, 68, 0.1);
+  }
+  .subject-card[data-category="science"]:hover .subject-icon {
+    color: #f59e0b; /* Amber for Science */
+  }
+  .subject-card[data-category="science"]:hover {
+    border-color: #f59e0b;
+    box-shadow: 0 20px 25px -5px rgba(245, 158, 11, 0.1);
+  }
+
+  /* Modal Enhancements */
+  .modal-overlay {
+    backdrop-filter: blur(12px);
+    background: rgba(15, 23, 42, 0.4) !important;
+    animation: modalFadeIn 0.3s ease;
+  }
+  .modal-content {
+    border-radius: 24px !important;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    padding: 30px;
+  }
+  .close-modal {
+    position: absolute !important;
+    top: 20px !important;
+    right: 20px !important;
+    font-size: 24px !important;
+    font-weight: bold !important;
+    color: #64748b !important;
+    background: #f1f5f9 !important;
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    z-index: 10 !important;
+    line-height: 1 !important;
+  }
+  .close-modal:hover {
+    background: #e2e8f0 !important;
+    color: #0f172a !important;
+  }
+  @keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Note Card Styling inside Modal */
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
+    gap: 20px !important;
+  }
+  .note-card {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    padding: 12px !important;
+    transition: all 0.25s ease !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+  .note-card img {
+    border-radius: 12px !important;
+    margin-bottom: 10px !important;
+    border: 1px solid #f1f5f9 !important;
+  }
+  .note-title {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+    margin-top: 5px !important;
+    line-height: 1.3 !important;
+  }
+  .note-card:hover {
+    transform: translateY(-4px) !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* Mobile Responsiveness Improvements */
+  @media (max-width: 768px) {
+    .note-search-wrapper {
+      padding: 0 10px !important;
+      margin-bottom: 20px !important;
+    }
+    .note-search-wrapper input {
+      font-size: 14px !important;
+      padding: 12px 20px !important;
+    }
+    .category-filters {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      gap: 5px !important;
+      padding: 8px !important;
+      border-radius: 15px !important;
+    }
+    .filter-btn {
+      padding: 8px 12px !important;
+      font-size: 12px !important;
+      flex: 1 1 auto !important;
+      text-align: center !important;
+    }
+    .subjects-container {
+      grid-template-columns: repeat(auto-fit, minmax(100%, 1fr)) !important;
+      gap: 12px !important;
+      padding: 15px 10px !important;
+    }
+    .subject-card {
+      min-height: 80px !important;
+      padding: 15px 20px !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      text-align: left !important;
+      gap: 15px !important;
+    }
+    .subject-icon {
+      font-size: 1.5rem !important;
+      margin-bottom: 0 !important;
+    }
+    .subject-title {
+      font-size: 13px !important;
+    }
+    .modal-content {
+      padding: 15px !important;
+      border-radius: 16px !important;
+      width: 95% !important;
+      margin: 10px !important;
+      max-height: 85vh !important;
+    }
+    .notes-grid {
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)) !important;
+      gap: 10px !important;
+    }
+    .note-card {
+      padding: 8px !important;
+    }
+    .note-card img {
+      margin-bottom: 6px !important;
+    }
+    .note-title {
+      font-size: 11px !important;
+    }
+    .scroll-top {
+      width: 36px !important;
+      height: 36px !important;
+      bottom: 10px !important;
+      right: 10px !important;
+    }
+    .close-modal {
+      top: 15px !important;
+      right: 15px !important;
+      width: 32px !important;
+      height: 32px !important;
+      font-size: 20px !important;
+    }
+  }
+</style>
 </head>
+<body class="fci-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <h1 class="sitename">NVRGATE</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="fci.html" class="active">FCI Notes</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="fci.html">Get Started</a>
+
+    </div>
+  </header>
 
 <div class="note-search-wrapper container mt-4">
   <input
@@ -33,17 +356,112 @@
 
 <div class="container">
   <h2 class="text-center mt-5 fw-bold">Faculty of Computing & Informatics (FCI) Subjects</h2>
+  <!-- Category Filters -->
+  <div class="category-filters">
+    <button class="filter-btn active" onclick="filterCategory('all', this)">All Subjects</button>
+    <button class="filter-btn" onclick="filterCategory('math', this)">Mathematics</button>
+    <button class="filter-btn" onclick="filterCategory('cs', this)">Computer Science & Coding</button>
+    <button class="filter-btn" onclick="filterCategory('cyber', this)">Cybersecurity</button>
+    <button class="filter-btn" onclick="filterCategory('science', this)">Science & Others</button>
+  </div>
+
   <div class="subjects-container">
-    <div class="subject-card" onclick="openModal('MATH 1')">MATH 1</div>
-    <div class="subject-card" onclick="openModal('MATH 2')">MATH 2</div>
-    <div class="subject-card" onclick="openModal('MATH 3')">MATH 3</div>
-    <div class="subject-card" onclick="openModal('CALCULUS')">CALCULUS</div>
-    <div class="subject-card" onclick="openModal('DISCRETE STRUCTURE')">DISCRETE STRUCTURE</div>
-    <div class="subject-card" onclick="openModal('OOPDS')">OOPDS</div>
-    <div class="subject-card" onclick="openModal('COMPUTER ARC')">COMPUTER ARC</div>
-    <div class="subject-card" onclick="openModal('COMPUTER METHOD')">COMPUTER METHOD</div>
-    <div class="subject-card" onclick="openModal('DIGITAL COMP')">DIGITAL COMP</div>
-    <div class="subject-card" onclick="openModal('COMPUTER GRAPHICS')">COMPUTER GRAPHICS</div>
+    <div class="subject-card" data-category="cs" onclick="openModal('ALGORITHM DESIGN AND ANALYSIS')">
+      <div class="subject-icon"><i class="bi bi-terminal"></i></div>
+      <div class="subject-title">ALGORITHM DESIGN AND ANALYSIS</div>
+    </div>
+    <div class="subject-card" data-category="math" onclick="openModal('CALCULUS')">
+      <div class="subject-icon"><i class="bi bi-calculator"></i></div>
+      <div class="subject-title">CALCULUS</div>
+    </div>
+    <div class="subject-card" data-category="cs" onclick="openModal('CCP6224-OOAD')">
+      <div class="subject-icon"><i class="bi bi-code-slash"></i></div>
+      <div class="subject-title">CCP6224-OOAD</div>
+    </div>
+    <div class="subject-card" data-category="cyber" onclick="openModal('CCS6214-CYBERSECURITY FUNDAMENTALS')">
+      <div class="subject-icon"><i class="bi bi-shield-lock"></i></div>
+      <div class="subject-title">CCS6214-CYBERSECURITY FUNDAMENTALS</div>
+    </div>
+    <div class="subject-card" data-category="cyber" onclick="openModal('CCS6224-NETWORK SECURITY')">
+      <div class="subject-icon"><i class="bi bi-shield-shaded"></i></div>
+      <div class="subject-title">CCS6224-NETWORK SECURITY</div>
+    </div>
+    <div class="subject-card" data-category="cyber" onclick="openModal('CCS6314-CRYPTOGRAPHY & DATA SECURITY')">
+      <div class="subject-icon"><i class="bi bi-key"></i></div>
+      <div class="subject-title">CCS6314-CRYPTOGRAPHY & DATA SECURITY</div>
+    </div>
+    <div class="subject-card" data-category="cyber" onclick="openModal('CCS6324-ETHICAL HACKING & PENETRATION')">
+      <div class="subject-icon"><i class="bi bi-bug"></i></div>
+      <div class="subject-title">CCS6324-ETHICAL HACKING & PENETRATION</div>
+    </div>
+    <div class="subject-card" data-category="cyber" onclick="openModal('CCS6334-DIGITAL & COMPUTER FORENSICS')">
+      <div class="subject-icon"><i class="bi bi-search"></i></div>
+      <div class="subject-title">CCS6334-DIGITAL & COMPUTER FORENSICS</div>
+    </div>
+    <div class="subject-card" data-category="cyber" onclick="openModal('CCS6344-DATABASE AND CLOUD SECURITY')">
+      <div class="subject-icon"><i class="bi bi-cloud-check"></i></div>
+      <div class="subject-title">CCS6344-DATABASE AND CLOUD SECURITY</div>
+    </div>
+    <div class="subject-card" data-category="cs" onclick="openModal('COMPUTER ARC')">
+      <div class="subject-icon"><i class="bi bi-cpu"></i></div>
+      <div class="subject-title">COMPUTER ARC</div>
+    </div>
+    <div class="subject-card" data-category="cs" onclick="openModal('COMPUTER GRAPHICS')">
+      <div class="subject-icon"><i class="bi bi-palette"></i></div>
+      <div class="subject-title">COMPUTER GRAPHICS</div>
+    </div>
+    <div class="subject-card" data-category="math" onclick="openModal('COMPUTER METHOD')">
+      <div class="subject-icon"><i class="bi bi-graph-up-arrow"></i></div>
+      <div class="subject-title">COMPUTER METHOD</div>
+    </div>
+    <div class="subject-card" data-category="cs" onclick="openModal('CSE6214-SOFTWARE ENG FUNDAMENTALS')">
+      <div class="subject-icon"><i class="bi bi-cone-striped"></i></div>
+      <div class="subject-title">CSE6214-SOFTWARE ENG FUNDAMENTALS</div>
+    </div>
+    <div class="subject-card" data-category="cs" onclick="openModal('DATABASE')">
+      <div class="subject-icon"><i class="bi bi-database"></i></div>
+      <div class="subject-title">DATABASE</div>
+    </div>
+    <div class="subject-card" data-category="cs" onclick="openModal('DIGITAL COMP')">
+      <div class="subject-icon"><i class="bi bi-binary"></i></div>
+      <div class="subject-title">DIGITAL COMP</div>
+    </div>
+    <div class="subject-card" data-category="math" onclick="openModal('DISCRETE STRUCTURE')">
+      <div class="subject-icon"><i class="bi bi-diagram-3"></i></div>
+      <div class="subject-title">DISCRETE STRUCTURE</div>
+    </div>
+    <div class="subject-card" data-category="math" onclick="openModal('MATH 1')">
+      <div class="subject-icon"><i class="bi bi-hash"></i></div>
+      <div class="subject-title">MATH 1</div>
+    </div>
+    <div class="subject-card" data-category="math" onclick="openModal('MATH 2')">
+      <div class="subject-icon"><i class="bi bi-plus-slash-minus"></i></div>
+      <div class="subject-title">MATH 2</div>
+    </div>
+    <div class="subject-card" data-category="math" onclick="openModal('MATH 3')">
+      <div class="subject-icon"><i class="bi bi-infinity"></i></div>
+      <div class="subject-title">MATH 3</div>
+    </div>
+    <div class="subject-card" data-category="cs" onclick="openModal('OOPDS')">
+      <div class="subject-icon"><i class="bi bi-folder-symlink"></i></div>
+      <div class="subject-title">OOPDS</div>
+    </div>
+    <div class="subject-card" data-category="cs" onclick="openModal('PDS')">
+      <div class="subject-icon"><i class="bi bi-box"></i></div>
+      <div class="subject-title">PDS</div>
+    </div>
+    <div class="subject-card" data-category="science" onclick="openModal('PHS')">
+      <div class="subject-icon"><i class="bi bi-speedometer2"></i></div>
+      <div class="subject-title">PHS</div>
+    </div>
+    <div class="subject-card" data-category="science" onclick="openModal('RESEARCH')">
+      <div class="subject-icon"><i class="bi bi-journal-text"></i></div>
+      <div class="subject-title">RESEARCH</div>
+    </div>
+    <div class="subject-card" data-category="cs" onclick="openModal('TCP1101')">
+      <div class="subject-icon"><i class="bi bi-terminal-fill"></i></div>
+      <div class="subject-title">TCP1101</div>
+    </div>
   </div>
 </div>
 
@@ -59,268 +477,615 @@
 </div>
 <script>
   const subjectFiles = {
-    "MATH 1": [
-      { title: "Topic 1 - lecture", folder: "lec", file: "PMT0101_Topic_1.pdf", image: "FCI/MATH 1/img/math1c1.jpeg" },
-      { title: "Topic 2 - lecture", folder: "lec", file: "PMT0101_Topic_2.pdf", image: "FCI/MATH 1/img/math1c2.jpeg" },
-      { title: "Topic 3 - lecture", folder: "lec", file: "PMT0101_Topic_3.pdf", image: "FCI/MATH 1/img/math1c3.jpeg" },
-      { title: "Topic 4 - lecture", folder: "lec", file: "PMT0101_Topic_4.pdf", image: "FCI/MATH 1/img/math1c4.jpeg" },
-      { title: "Topic 5 - lecture", folder: "lec", file: "PMT0101_Topic_5.pdf", image: "FCI/MATH 1/img/math1c5.jpeg" },
-      { title: "Topic 6 - lecture", folder: "lec", file: "PMT0101_Topic_6.pdf", image: "FCI/MATH 1/img/math1c6.jpeg" },
-      { title: "Past Year Paper -SET 1", folder: "psy", file: "SET1-1510-Q-NBY.pdf", image: "FCI/MATH 1/img/re1.jpeg" },
-      { title: "Past Year Paper -SET 2", folder: "psy", file: "SET2-1520-Q-JMJ.pdf", image: "FCI/MATH 1/img/re2.jpeg" },
-      { title: "Past Year Paper -SET 3", folder: "psy", file: "SET3-1530-Q-NBY.pdf", image: "FCI/MATH 1/img/re3.jpeg" },
-      { title: "Past Year Paper -SET 4", folder: "psy", file: "SET4-1610-Q-JMJ.pdf", image: "FCI/MATH 1/img/re4.jpeg" },
-      { title: "Past Year Paper -SET 5", folder: "psy", file: "SET5-1620-Q-JMJ.pdf", image: "FCI/MATH 1/img/re4.2.jpeg" },
-      { title: "Past Year Paper -SET 6", folder: "psy", file: "SET6-1630-Q-NBY.pdf", image: "FCI/MATH 1/img/re6.jpeg" },
-      { title: "Past Year Paper -SET 7", folder: "psy", file: "SET7-1710-Q-JMJ.pdf", image: "FCI/MATH 1/img/re7.jpeg" },
-      { title: "Past Year Paper -SET 8", folder: "psy", file: "SET8-1720-Q-JMJ.pdf", image: "FCI/MATH 1/img/re8.jpeg" },
-      { title: "Past Year Paper -SET 9", folder: "psy", file: "SET9-1730-Q-NBY.pdf", image: "FCI/MATH 1/img/re9.jpeg" },
-      { title: "Past Year Paper -SET 10", folder: "psy", file: "SET10-2020-AFE1-Q-NSL.pdf", image: "FCI/MATH 1/img/re10.jpeg" },
-      { title: "Past Year Paper Answer -SET 1", folder: "ans", file: "SET1-1510-A-NBY.pdf", image: "FCI/MATH 1/img/reans1.jpeg" },
-      { title: "Past Year Paper Answer -SET 2", folder: "ans", file: "SET2-1520-A-JMJ.pdf", image: "FCI/MATH 1/img/reans2.jpeg" },
-      { title: "Past Year Paper Answer -SET 3", folder: "ans", file: "SET3-1530-A-NBY.pdf", image: "FCI/MATH 1/img/reans3.jpeg" },
-      { title: "Past Year Paper Answer -SET 4", folder: "ans", file: "SET4-1610-A-JMJ.pdf", image: "FCI/MATH 1/img/reans4.jpeg" },
-      { title: "Past Year Paper Answer -SET 5", folder: "ans", file: "SET5-1620-A-JMJ.pdf", image: "FCI/MATH 1/img/reans5.jpeg" },
-      { title: "Past Year Paper Answer -SET 6", folder: "ans", file: "SET6-1630-A-NBY.pdf", image: "FCI/MATH 1/img/reans6.jpeg" },
-      { title: "Past Year Paper Answer -SET 7", folder: "ans", file: "SET7-1710-A-JMJ.pdf", image: "FCI/MATH 1/img/reans7.jpeg" },
-      { title: "Past Year Paper Answer -SET 8", folder: "ans", file: "SET8-1720-A-JMJ.pdf", image: "FCI/MATH 1/img/reans8.jpeg" },
-      { title: "Past Year Paper Answer -SET 9", folder: "ans", file: "SET9-1730-A-NBY.pdf", image: "FCI/MATH 1/img/reans9.jpeg" },
-      { title: "Past Year Paper Answer -SET 10", folder: "ans", file: "SET10-2020-AFE1-A-NSL.pdf", image: "FCI/MATH 1/img/reans10.jpeg" },
- 
-    ],
-    "MATH 2": [
-      { title: "Chapter 1 (part 1)", folder: "lec", file: "Chapter 1 (Part 1).pdf", image: "FCI/MATH 2/img/math2c1.jpeg" },
-      { title: "Chapter 1 (part 2)", folder: "lec", file: "Chapter 1 (Part 2).pdf", image: "FCI/MATH 2/img/math2c1p1.jpeg" },
-      { title: "Chapter 2 (part 1)", folder: "lec", file: "Chapter 2 (Part 1).pdf", image: "FCI/MATH 2/img/math2c2.jpeg" },
-      { title: "Chapter 2 (part 2)", folder: "lec", file: "Chapter 2 (Part 2).pdf", image: "FCI/MATH 2/img/math2c2p1.jpeg" },
-      { title: "Chapter 3 ", folder: "lec", file: "Chapter 3 (1).pdf", image: "FCI/MATH 2/img/math2c3.jpeg" },
-      { title: "Chapter 4", folder: "lec", file: "Chapter 4 (1).pdf", image: "FCI/MATH 2/img/math2c4.jpeg" },
-      { title: "Chapter 5", folder: "lec", file: "Chapter 5.pdf", image: "FCI/MATH 2/img/math2c5.jpeg" },
-      { title: "Tutorial 1 (part 1)", folder: "tuto", file: "tuto1.pdf", image: "FCI/MATH 2/img/tuto1.jpeg" },
-      { title: "Tutorial 1 (part 2)", folder: "tuto", file: "tuto12.pdf", image: "FCI/MATH 2/img/tuto1.2.jpeg" },
-      { title: "Tutorial 2 (part 1)", folder: "tuto", file: "tuto2.pdf", image: "FCI/MATH 2/img/tuto2.jpeg" },
-      { title: "Tutorial 2 (part 2)", folder: "tuto", file: "tuto2.2.pdf", image: "FCI/MATH 2/img/tuto2.2.jpeg" },
-      { title: "Tutorial 3", folder: "tuto", file: "tuto3.pdf", image: "FCI/MATH 2/img/tuto3.jpeg" },
-      { title: "Tutorial 4", folder: "tuto", file: "tuto4.pdf", image: "FCI/MATH 2/img/tuto4.jpeg" },
-      { title: "Tutorial 5", folder: "tuto", file: "tuto5.pdf", image: "FCI/MATH 2/img/tuto5.jpeg" },
-      { title: "Tutorial Answer -1 (part 1)", folder: "ans", file: "Chapter 1 (Part 1) - Answer.pdf", image: "FCI/MATH 2/img/ans1.jpeg" },
-      { title: "Tutorial Answer -1 (part 2)", folder: "ans", file: "Chapter 1 (Part 2) - Answer.pdf", image: "FCI/MATH 2/img/ans1.2.jpeg" },
-      { title: "Tutorial Answer -2 (part 1)", folder: "ans", file: "Chapter 2 (Part 1) - Updated Answers.pdf", image: "FCI/MATH 2/img/ans2.jpeg" },
-      { title: "Tutorial Answer -2 (part 2)", folder: "ans", file: "Chapter 2 (Part 2) - Answer.pdf", image: "FCI/MATH 2/img/ans2.2.jpeg" },
-      { title: "Tutorial Answer -3", folder: "ans", file: "Chapter 3 - Answer.pdf", image: "FCI/MATH 2/img/ans3.jpeg" },
-      { title: "Tutorial Answer -4", folder: "ans", file: "Topic 4 - Answer.pdf", image: "FCI/MATH 2/img/ans4.jpeg" },
-      { title: "Tutorial Answer -5", folder: "ans", file: "Topic 5 - Answer.pdf", image: "FCI/MATH 2/img/ans5.jpeg" },
-      
-    ],
-    "MATH 3": [
-      { title: "Topic 1 Sequences and Series", folder: "lec", file: "Topic 1 Sequences and Series.pdf", image: "FCI/MATH 3/img/math3c1.jpeg" },
-      { title: "Topic 2 Matrices and Systems of Equations", folder: "lec", file: "Topic 2 Matrices and Systems of Equations.pdf", image: "FCI/MATH 3/img/math3c2.jpeg" },
-      { title: "Topic 3 Vectors", folder: "lec", file: "Topic 3 Vectors.pdf", image: "FCI/MATH 3/img/math3c3.jpeg" },
-      { title: "Topic 4 Descriptive Statistics_4.1", folder: "lec", file: "Topic 4 Descriptive Statistics_4.1.pdf", image: "FCI/MATH 3/img/math3c4.jpeg" },
-      { title: "Topic 4 Descriptive Statistics_4.2", folder: "lec", file: "Topic 4 Descriptive Statistics_4.2.pdf", image: "FCI/MATH 3/img/math3c4.2.jpeg" },
-      { title: "Topic 4 Descriptive Statistics_4.3", folder: "lec", file: "Topic 4 Descriptive Statistics_4.3.pdf", image: "FCI/MATH 3/img/math3c4.3.jpeg" },
-      { title: "TOPIC_4.4 Transformations of Graphs", folder: "lec", file: "TOPIC_4.4_Transformations_of_Graphs.pdf", image: "FCI/MATH 3/img/math3c4.4.jpeg" },
-      { title: "Topic 5 Events and Probability 5.1", folder: "lec", file: "Topic 5 Events and Probability 5.1.pdf", image: "FCI/MATH 3/img/math3c5.jpeg" },
-      { title: "Topic 5 Events and Probability 5.2", folder: "lec", file: "Topic 5 Events and Probability 5.2.pdf", image: "FCI/MATH 3/img/math3c5.2.jpeg" },
-      { title: "Topic 6 Probability Distributions", folder: "lec", file: "Topic 6 Probability Distributions.pdf", image: "FCI/MATH 3/img/math3c6.jpeg" },
-      { title: "Vector-Summarized Notes-JMJ", folder: "lec", file: "Vector-Summarized Notes-JMJ.pdf", image: "FCI/MATH 3/img/math3c6.2.jpeg" },
-      { title: "Tutorial 1", folder: "tuto", file: "Topic 1 (Compulsory questions).pdf", image: "FCI/MATH 3/img/tutor1.jpeg" },
-      { title: "Tutorial 2", folder: "tuto", file: "Topic 2 (Compulsory questions).pdf", image: "FCI/MATH 3/img/tutor2.jpeg" },
-      { title: "Tutorial 3", folder: "tuto", file: "Topic 3 (Compulsory questions)-120522.pdf", image: "FCI/MATH 3/img/tutor3.jpeg" },
-      { title: "Tutorial 4", folder: "tuto", file: "Topic 4 (Compulsory questions).pdf", image: "FCI/MATH 3/img/tutor4.jpeg" },
-      { title: "Tutorial 5", folder: "tuto", file: "Topic 5 (Compulsory questions).pdf", image: "FCI/MATH 3/img/tutor5.jpeg" },
-      { title: "Tutorial 6", folder: "tuto", file: "Topic 6 (Compulsory questions).pdf", image: "FCI/MATH 3/img/tutor6.jpeg" },
-      { title: "Past Year Paper SET 1", folder: "py", file: "Past exam paper_Set 1.pdf", image: "FCI/MATH 3/img/py1.jpeg" },
-      { title: "Past Year Paper SET 2", folder: "py", file: "Past exam paper_Set 2.pdf", image: "FCI/MATH 3/img/py2.jpeg" },
-      { title: "Past Year Paper SET 3", folder: "py", file: "Past exam paper_Set 3.pdf", image: "FCI/MATH 3/img/py3.jpeg" },
-      { title: "Past Year Paper SET 4", folder: "py", file: "Past exam paper_Set 4.pdf", image: "FCI/MATH 3/img/py4.jpeg" },
-      { title: "Past Year Paper SET 5", folder: "py", file: "Past exam paper_Set 5.pdf", image: "FCI/MATH 3/img/py5.jpeg" },
-      { title: "Past Year Paper SET 6", folder: "py", file: "Past exam paper_Set 6.pdf", image: "FCI/MATH 3/img/py6.jpeg" },
-      { title: "Past Year Paper SET 7", folder: "py", file: "Past exam paper_Set 7.pdf", image: "FCI/MATH 3/img/py7.jpeg" },
-      
+    "ALGORITHM DESIGN AND ANALYSIS": [
+      { title: "Lec00 Software Installation", folder: "", file: "Lec00_Software_Installation.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec00_Software_Installation.jpg" },
+      { title: "Lec01 Analysis of Algorithms", folder: "", file: "Lec01_Analysis_of_Algorithms.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec01_Analysis_of_Algorithms.jpg" },
+      { title: "Lec02 Hash Tables", folder: "", file: "Lec02_Hash_Tables.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec02_Hash_Tables.jpg" },
+      { title: "Lec03 BSTs", folder: "", file: "Lec03_BSTs.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec03_BSTs.jpg" },
+      { title: "Lec04 Priority Queues and Heaps", folder: "", file: "Lec04_Priority_Queues_and_Heaps.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec04_Priority_Queues_and_Heaps.jpg" },
+      { title: "Lec05a Sorting Part I", folder: "", file: "Lec05a_Sorting_Part_I.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec05a_Sorting_Part_I.jpg" },
+      { title: "Lec05b Quicksort", folder: "", file: "Lec05b_Quicksort.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec05b_Quicksort.jpg" },
+      { title: "Lec06 Sorting Part II and Selection", folder: "", file: "Lec06_Sorting_Part_II_and_Selection.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec06_Sorting_Part_II_and_Selection.jpg" },
+      { title: "Lec07 Divide and Conquer", folder: "", file: "Lec07_Divide_and_Conquer.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec07_Divide_and_Conquer.jpg" },
+      { title: "Lec08a Graphs", folder: "", file: "Lec08a_Graphs.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec08a_Graphs.jpg" },
+      { title: "Lec08b Graph Algorithms", folder: "", file: "Lec08b_Graph_Algorithms.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec08b_Graph_Algorithms.jpg" },
+      { title: "Lec09 Greedy Algorithms", folder: "", file: "Lec09_Greedy_Algorithms.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec09_Greedy_Algorithms.jpg" },
+      { title: "Lec10 Dynamic Programming", folder: "", file: "Lec10_Dynamic_Programming.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec10_Dynamic_Programming.jpg" },
+      { title: "Lec11 Text Processing", folder: "", file: "Lec11_Text_Processing.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec11_Text_Processing.jpg" },
+      { title: "Lec12 P and NP", folder: "", file: "Lec12_P_and_NP.pdf", image: "FCI/ALGORITHM DESIGN AND ANALYSIS/img/Lec12_P_and_NP.jpg" }
     ],
     "CALCULUS": [
-      { title: "Topic 1", folder: "lec", file: "Topic 01 Functions.pdf", image: "FCI/CALCULUS/img/TMA1.jpg" },
-      { title: "Topic 2", folder: "lec", file: "Topic 02 ComplexNum+TrigIdentities.pdf", image: "FCI/CALCULUS/img/TMA2.jpg" },
-      { title: "Topic 3", folder: "lec", file: "Topic 03 Limits _ Continuity.pdf", image: "FCI/CALCULUS/img/TMA3.jpg" },
-      { title: "Topic 4", folder: "lec", file: "Topic 04 Differentiation.pdf", image: "FCI/CALCULUS/img/TMA4.jpg" },
-      { title: "Topic 5", folder: "lec", file: "Topic 05  IndefiniteIntegrals+IntegrationTechniques.pdf", image: "FCI/CALCULUS/img/TMA5.jpg" },
-      { title: "Topic 6", folder: "lec", file: "Topic 06 DefiniteIntegrals+IntegrationApplications.pdf", image: "FCI/CALCULUS/img/TMA6.jpg" },
-      { title: "Topic 7", folder: "lec", file: "Topic 07_Sequences and Series.pdf", image: "FCI/CALCULUS/img/TMA7.jpg" },
-      { title: "Topic 8", folder: "lec", file: "Topic 08_Functions of Several variables and Partial Differentiation.pdf", image: "FCI/CALCULUS/img/TMA8.jpg" },
-      { title: "Topic 9a", folder: "lec", file: "Topic 09a_ODE-1stOrder.pdf", image: "FCI/CALCULUS/img/TMA9A.jpg" },
-      { title: "Topic 9b", folder: "lec", file: "Topic 09b_ODE-2ndOrder.pdf", image: "FCI/CALCULUS/img/TMA9B.jpg" },
-      { title: "Tutorial 1", folder: "tuto", file: "TMA1101__Tutorial 01-  Functions.pdf", image: "FCI/CALCULUS/img/TMAT1.jpg" },
-      { title: "Tutorial 2", folder: "tuto", file: "TMA1101__Tutorial 02-  ComplexNum+TrigIdentities.pdf", image: "FCI/CALCULUS/img/TMAT2.jpg" },
-      { title: "Tutorial 3", folder: "tuto", file: "TMA1101__Tutorial 03-  Limits_Continuity.pdf", image: "FCI/CALCULUS/img/TMAT3.jpg" },
-      { title: "Tutorial 4", folder: "tuto", file: "TMA1101__Tutorial 04-  Differentiation.pdf", image: "FCI/CALCULUS/img/TMAT4.jpg" },
-      { title: "Tutorial 5", folder: "tuto", file: "TMA1101__Tutorial 05-  IndefiniteIntegrals+IntegrationTechniques.pdf", image: "FCI/CALCULUS/img/TMAT5.jpg" },
-      { title: "Tutorial 6", folder: "tuto", file: "TMA1101__Tutorial 06-  DefiniteIntegrals+Applic of Integration.pdf", image: "FCI/CALCULUS/img/TMAT6.jpg" },
-      { title: "Tutorial 7", folder: "tuto", file: "TMA1101__Tutorial 07-  Sequences and Series.pdf", image: "FCI/CALCULUS/img/TMAT7.jpg" },
-      { title: "Tutorial 8", folder: "tuto", file: "TMA1101__Tutorial 08 - PartialDerivatives.pdf", image: "FCI/CALCULUS/img/TMAT8.jpg" },
-      { title: "Tutorial 9", folder: "tuto", file: "TMA1101__Tutorial 09 - ODE.pdf", image: "FCI/CALCULUS/img/TMAT9.jpg" },
-      
+      { title: "TMA1101 Tutorial 01 Functions", folder: "tuto", file: "TMA1101__Tutorial 01-  Functions.pdf", image: "FCI/CALCULUS/img/TMA1101__Tutorial 01-  Functions.jpg" },
+      { title: "TMA1101 Tutorial 02 ComplexNum+TrigIdentities", folder: "tuto", file: "TMA1101__Tutorial 02-  ComplexNum+TrigIdentities.pdf", image: "FCI/CALCULUS/img/TMA1101__Tutorial 02-  ComplexNum+TrigIdentities.jpg" },
+      { title: "TMA1101 Tutorial 03 Limits Continuity", folder: "tuto", file: "TMA1101__Tutorial 03-  Limits_Continuity.pdf", image: "FCI/CALCULUS/img/TMA1101__Tutorial 03-  Limits_Continuity.jpg" },
+      { title: "TMA1101 Tutorial 04 Differentiation", folder: "tuto", file: "TMA1101__Tutorial 04-  Differentiation.pdf", image: "FCI/CALCULUS/img/TMA1101__Tutorial 04-  Differentiation.jpg" },
+      { title: "TMA1101 Tutorial 05 IndefiniteIntegrals+IntegrationTechniques", folder: "tuto", file: "TMA1101__Tutorial 05-  IndefiniteIntegrals+IntegrationTechniques.pdf", image: "FCI/CALCULUS/img/TMA1101__Tutorial 05-  IndefiniteIntegrals+IntegrationTechniques.jpg" },
+      { title: "TMA1101 Tutorial 06 DefiniteIntegrals+Applic of Integration", folder: "tuto", file: "TMA1101__Tutorial 06-  DefiniteIntegrals+Applic of Integration.pdf", image: "FCI/CALCULUS/img/TMA1101__Tutorial 06-  DefiniteIntegrals+Applic of Integration.jpg" },
+      { title: "TMA1101 Tutorial 07 Sequences and Series", folder: "tuto", file: "TMA1101__Tutorial 07-  Sequences and Series.pdf", image: "FCI/CALCULUS/img/TMA1101__Tutorial 07-  Sequences and Series.jpg" },
+      { title: "TMA1101 Tutorial 08 PartialDerivatives", folder: "tuto", file: "TMA1101__Tutorial 08 - PartialDerivatives.pdf", image: "FCI/CALCULUS/img/TMA1101__Tutorial 08 - PartialDerivatives.jpg" },
+      { title: "TMA1101 Tutorial 09 ODE", folder: "tuto", file: "TMA1101__Tutorial 09 - ODE.pdf", image: "FCI/CALCULUS/img/TMA1101__Tutorial 09 - ODE.jpg" },
+      { title: "Topic 01 Functions", folder: "lec", file: "Topic 01 Functions.pdf", image: "FCI/CALCULUS/img/Topic 01 Functions.jpg" },
+      { title: "Topic 02 ComplexNum+TrigIdentities", folder: "lec", file: "Topic 02 ComplexNum+TrigIdentities.pdf", image: "FCI/CALCULUS/img/Topic 02 ComplexNum+TrigIdentities.jpg" },
+      { title: "Topic 03 Limits Continuity", folder: "lec", file: "Topic 03 Limits _ Continuity.pdf", image: "FCI/CALCULUS/img/Topic 03 Limits _ Continuity.jpg" },
+      { title: "Topic 04 Differentiation", folder: "lec", file: "Topic 04 Differentiation.pdf", image: "FCI/CALCULUS/img/Topic 04 Differentiation.jpg" },
+      { title: "Topic 05 IndefiniteIntegrals+IntegrationTechniques", folder: "lec", file: "Topic 05  IndefiniteIntegrals+IntegrationTechniques.pdf", image: "FCI/CALCULUS/img/Topic 05  IndefiniteIntegrals+IntegrationTechniques.jpg" },
+      { title: "Topic 06 DefiniteIntegrals+IntegrationApplications", folder: "lec", file: "Topic 06 DefiniteIntegrals+IntegrationApplications.pdf", image: "FCI/CALCULUS/img/Topic 06 DefiniteIntegrals+IntegrationApplications.jpg" },
+      { title: "Topic 07 Sequences and Series", folder: "lec", file: "Topic 07_Sequences and Series.pdf", image: "FCI/CALCULUS/img/Topic 07_Sequences and Series.jpg" },
+      { title: "Topic 08 Functions of Several variables and Partial Differentiation", folder: "lec", file: "Topic 08_Functions of Several variables and Partial Differentiation.pdf", image: "FCI/CALCULUS/img/Topic 08_Functions of Several variables and Partial Differentiation.jpg" },
+      { title: "Topic 09a ODE 1stOrder", folder: "lec", file: "Topic 09a_ODE-1stOrder.pdf", image: "FCI/CALCULUS/img/Topic 09a_ODE-1stOrder.jpg" },
+      { title: "Topic 09b ODE 2ndOrder", folder: "lec", file: "Topic 09b_ODE-2ndOrder.pdf", image: "FCI/CALCULUS/img/Topic 09b_ODE-2ndOrder.jpg" }
     ],
-    "DISCRETE STRUCTURE": [
-      { title: "Appendix", folder: "lec", file: "Appendix.pdf", image: "FCI/DISCRETE STRUCTURE/img/disleca.jpg" },
-      { title: "Lecture01 Sets", folder: "lec", file: "Lecture01 Sets.pdf", image: "FCI/DISCRETE STRUCTURE/img/disin.jpg" },
-      { title: "Topic 1.1 Propositional logic-rev2310", folder: "lec", file: "Topic 1.1 Propositional logic-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec1.jpg" },
-      { title: "Topic 1.2 Predicate logic-rev2310", folder: "lec", file: "Topic 1.2 Predicate logic-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec2.jpg" },
-      { title: "Topic 1.3 Formal reasoning-rev2310", folder: "lec", file: "Topic 1.3 Formal reasoning-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec3.jpg" },
-      { title: "Topic 2 Set theory-rev2310", folder: "lec", file: "Topic 2 Set theory-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec4.jpg" },
-      { title: "Topic 3.1 Relation-rev2310", folder: "lec", file: "Topic 3.1 Relation-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec5.jpg" },
-      { title: "Topic 3.2 Function", folder: "lec", file: "Topic 3.2 Function.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec6.jpg" },
-      { title: "Topic 4.1 Induction-rev2310", folder: "lec", file: "Topic 4.1 Induction-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec7.jpg" },
-      { title: "Topic 4.2 Recursion-rev2310", folder: "lec", file: "Topic 4.2 Recursion-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec8.jpg" },
-      { title: "Topic 5 Intro to Complexity of An Algorithm-rev2220", folder: "lec", file: "Topic 5 Intro to Complexity of An Algorithm-rev2220.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec9.jpg" },
-      { title: "Topic 6.1 Intro to Graph-rev2220", folder: "lec", file: "Topic 6.1 Intro to Graph-rev2220.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec10.jpg" },
-      { title: "Topic 6.2 Trail, Path and Circuit-rev2220", folder: "lec", file: "Topic 6.2 Trail, Path and Circuit-rev2220.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec11.jpg" },
-      { title: "Topic 6.3 Tree-rev2220", folder: "lec", file: "Topic 6.3 Tree-rev2220.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec12.jpg" },
-      { title: "Topic 7 Finite state automata", folder: "lec", file: "Topic 7 Finite state automata.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec13.jpg" },
-      { title: "Topic 8 Intro to combinatory", folder: "lec", file: "Topic 8 Intro to combinatory.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec14.jpg" },
-      { title: "Topic 9.1 Intro to probability-rev2020", folder: "lec", file: "Topic 9.1 Intro to probability-rev2020.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec15.jpg" },
-      { title: "Topic 9.2 Random variable", folder: "lec", file: "Topic 9.2 Random variable.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec16.jpg" },
-      { title: "Topic 9.3 Discrete distribution-rev2220", folder: "lec", file: "Topic 9.3 Discrete distribution-rev2220.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec17.jpg" },
-      { title: "Topic 9.4 Normal distribution-rev2020", folder: "lec", file: "Topic 9.4 Normal distribution-rev2020.pdf", image: "FCI/DISCRETE STRUCTURE/img/dislec18.jpg" },
-      { title: "Tutorial 01 - Topic 1.1 Propositional logic", folder: "tuto", file: "Tutorial 01 - Topic 1.1 Propositional logic.pdf", image: "FCI/DISCRETE STRUCTURE/img/a1.jpg" },
-      { title: "Tutorial 02 - Topic 1.2 Predicate Logic", folder: "tuto", file: "Tutorial 02 - Topic 1.2 Predicate Logic.pdf", image: "FCI/DISCRETE STRUCTURE/img/a2.jpg" },
-      { title: "Tutorial 03 - Topic 1.3 Formal reasoning", folder: "tuto", file: "Tutorial 03 - Topic 1.3 Formal reasoning.pdf", image: "FCI/DISCRETE STRUCTURE/img/a3.jpg" },
-      { title: "Tutorial 04 - Topic 2 Set theory", folder: "tuto", file: "Tutorial 04 - Topic 2 Set theory.pdf", image: "FCI/DISCRETE STRUCTURE/img/a4.jpg" },
-      { title: "Tutorial 05 - Topic 3 Relation and function-rev2020", folder: "tuto", file: "Tutorial 05 - Topic 3 Relation and function-rev2020.pdf", image: "FCI/DISCRETE STRUCTURE/img/a5.jpg" },
-      { title: "Tutorial 06 -Topic 4 Recursion and Induction", folder: "tuto", file: "Tutorial 06 -Topic 4 Recursion and Induction.pdf", image: "FCI/DISCRETE STRUCTURE/img/a6.jpg" },
-      { title: "Tutorial 07 - Topic 5 Intro to algo complexity", folder: "tuto", file: "Tutorial 07 - Topic 5 Intro to algo complexity.pdf", image: "FCI/DISCRETE STRUCTURE/img/a7.jpg" },
-      { title: "Tutorial 08 - Topic 6 Graph and tree-rev2220", folder: "tuto", file: "Tutorial 08 - Topic 6 Graph and tree-rev2220.pdf", image: "FCI/DISCRETE STRUCTURE/img/a8.jpg" },
-      { title: "Tutorial 09 - Topic 7 Finite-state automata", folder: "tuto", file: "Tutorial 09 - Topic 7 Finite-state automata.pdf", image: "FCI/DISCRETE STRUCTURE/img/a9.jpg" },
-      { title: "Tutorial 10 - Topic 8 Combinatoric-rev2310", folder: "tuto", file: "Tutorial 10 - Topic 8 Combinatoric-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/a10.jpg" },
-      { title: "Tutorial 11 - Topic 9.1 Probability-rev2020", folder: "tuto", file: "Tutorial 11 - Topic 9.1 Probability-rev2020.pdf", image: "FCI/DISCRETE STRUCTURE/img/a11.jpg" },
-      { title: "Tutorial 12 - Topic 9.2 Random variable", folder: "tuto", file: "Tutorial 12 - Topic 9.2 Random variable.pdf", image: "FCI/DISCRETE STRUCTURE/img/a12.jpg" },
-      { title: "Tutorial 13 - Topic 9.3&4 Distributions- rev2310", folder: "tuto", file: "Tutorial 13 - Topic 9.3&4 Distributions- rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/a13.jpg" },
-      { title: "Tutorial 1 Answer", folder: "ans", file: "solu1.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu1.jpeg" },
-      { title: "Tutorial 1.1 Answer", folder: "ans", file: "solu1.1.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu2.jpeg" },
-      { title: "Tutorial 2 Answer", folder: "ans", file: "solu2.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu3.jpeg" },
-      { title: "Tutorial 2.2 Answer", folder: "ans", file: "solu2.2.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu4.jpeg" },
-      { title: "Tutorial 3 Answer", folder: "ans", file: "solu3.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu5.jpeg" },
-      { title: "Tutorial 3.3 Answer", folder: "ans", file: "solu3.3.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu6.jpeg" },
-      { title: "Tutorial 4 Answer", folder: "ans", file: "solu4.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu7.jpeg" },
-      { title: "Tutorial 4.1 Answer", folder: "ans", file: "solu4.4.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu8.jpeg" },
-      { title: "Tutorial 4.2 Answer", folder: "ans", file: "solu4.4.4.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu9.jpeg" },
-      { title: "Tutorial 5 Answer", folder: "ans", file: "solu5.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu10.jpeg" },
-      { title: "Tutorial 5.5 Answer", folder: "ans", file: "solu5.5.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu11.jpeg" },
-      { title: "Tutorial 6 Answer", folder: "ans", file: "solu6.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu12.jpeg" },
-      { title: "Tutorial 6.6 Answer", folder: "ans", file: "solu6.6.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu13.jpeg" },
-      { title: "Tutorial 7 Answer", folder: "ans", file: "solu7.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu14.jpeg" },
-      { title: "Tutorial 7.7 Answer", folder: "ans", file: "solu7.7.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu15.jpeg" },
-      { title: "Tutorial 8 Answer", folder: "ans", file: "solu8.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu16.jpeg" },
-      { title: "Tutorial 8.8 Answer", folder: "ans", file: "solu8.8.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu17.jpeg" },
-      { title: "Tutorial 9 Answer", folder: "ans", file: "solu9.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu18.jpeg" },
-      { title: "Tutorial 9.9 Answer", folder: "ans", file: "solu9.9.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu19.jpeg" },
-      { title: "Tutorial 10 Answer", folder: "ans", file: "solu10.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu20.jpeg" },
-      { title: "Tutorial 10.10 Answer", folder: "ans", file: "solu10.10.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu21.jpeg" },
-      
-
+    "CCP6224-OOAD": [
+      { title: "Lab 00 For those who have not had Java before", folder: "tutorial", file: "Lab 00 For those who have not had Java before.pdf", image: "FCI/CCP6224-OOAD/img/Lab 00 For those who have not had Java before.jpg" },
+      { title: "Lab 01 IO and control structures revision", folder: "tutorial", file: "Lab 01 IO and control structures revision.pdf", image: "FCI/CCP6224-OOAD/img/Lab 01 IO and control structures revision.jpg" },
+      { title: "Lab 03 Java Swing applications", folder: "tutorial", file: "Lab 03 Java Swing applications.pdf", image: "FCI/CCP6224-OOAD/img/Lab 03 Java Swing applications.jpg" },
+      { title: "Lab 03b JavaFX (optional)", folder: "tutorial", file: "Lab 03b JavaFX (optional).pdf", image: "FCI/CCP6224-OOAD/img/Lab 03b JavaFX (optional).jpg" },
+      { title: "Lab 04 More Swing Components and Listeners", folder: "tutorial", file: "Lab 04 More Swing Components and Listeners.pdf", image: "FCI/CCP6224-OOAD/img/Lab 04 More Swing Components and Listeners.jpg" },
+      { title: "Lab 05 Key Listeners and Multimedia Libraries", folder: "tutorial", file: "Lab 05 Key Listeners and Multimedia Libraries.pdf", image: "FCI/CCP6224-OOAD/img/Lab 05 Key Listeners and Multimedia Libraries.jpg" },
+      { title: "Lab 06 Structural Design Patterns", folder: "tutorial", file: "Lab 06 Structural Design Patterns.pdf", image: "FCI/CCP6224-OOAD/img/Lab 06 Structural Design Patterns.jpg" },
+      { title: "Lab 07 Creational Behavioural Design Patterns", folder: "tutorial", file: "Lab 07 Creational  Behavioural Design Patterns.pdf", image: "FCI/CCP6224-OOAD/img/Lab 07 Creational  Behavioural Design Patterns.jpg" },
+      { title: "Lab 08 Analysis, Design UML", folder: "tutorial", file: "Lab 08 Analysis, Design   UML.pdf", image: "FCI/CCP6224-OOAD/img/Lab 08 Analysis, Design   UML.jpg" },
+      { title: "Lab 09 UML Structural Diagrams", folder: "tutorial", file: "Lab 09 UML Structural Diagrams.pdf", image: "FCI/CCP6224-OOAD/img/Lab 09 UML Structural Diagrams.jpg" },
+      { title: "Lab 10 UML Behavioural Diagrams", folder: "tutorial", file: "Lab 10 UML Behavioural Diagrams.pdf", image: "FCI/CCP6224-OOAD/img/Lab 10 UML Behavioural Diagrams.jpg" },
+      { title: "Lab 11 UML to code", folder: "tutorial", file: "Lab 11 UML to code.pdf", image: "FCI/CCP6224-OOAD/img/Lab 11 UML to code.jpg" },
+      { title: "Lec01 Introduction", folder: "lecturer", file: "Lec01 Introduction.pdf", image: "FCI/CCP6224-OOAD/img/Lec01 Introduction.jpg" },
+      { title: "Lec02 OO concepts Classes Structure", folder: "lecturer", file: "Lec02 OO concepts - Classes  Structure.pdf", image: "FCI/CCP6224-OOAD/img/Lec02 OO concepts - Classes  Structure.jpg" },
+      { title: "Lec03 OO concepts Inheritance", folder: "lecturer", file: "Lec03 OO concepts - Inheritance.pdf", image: "FCI/CCP6224-OOAD/img/Lec03 OO concepts - Inheritance.jpg" },
+      { title: "Lec04 OO concepts Event Handling", folder: "lecturer", file: "Lec04 OO concepts - Event Handling.pdf", image: "FCI/CCP6224-OOAD/img/Lec04 OO concepts - Event Handling.jpg" },
+      { title: "Lec05 DP Intro Structural", folder: "lecturer", file: "Lec05 DP Intro  Structural.pdf", image: "FCI/CCP6224-OOAD/img/Lec05 DP Intro  Structural.jpg" },
+      { title: "Lec06 DP Creational Behavioural", folder: "lecturer", file: "Lec06 DP Creational  Behavioural.pdf", image: "FCI/CCP6224-OOAD/img/Lec06 DP Creational  Behavioural.jpg" },
+      { title: "Lec07 OO Analysis", folder: "lecturer", file: "Lec07 OO Analysis.pdf", image: "FCI/CCP6224-OOAD/img/Lec07 OO Analysis.jpg" },
+      { title: "Lec08 OO System Design 1", folder: "lecturer", file: "Lec08 OO System Design 1.pdf", image: "FCI/CCP6224-OOAD/img/Lec08 OO System Design 1.jpg" },
+      { title: "Lec09 OO System Design 2", folder: "lecturer", file: "Lec09 OO System Design 2.pdf", image: "FCI/CCP6224-OOAD/img/Lec09 OO System Design 2.jpg" },
+      { title: "Lec10 Using UML", folder: "lecturer", file: "Lec10 Using UML.pdf", image: "FCI/CCP6224-OOAD/img/Lec10 Using UML.jpg" },
+      { title: "Lec11 UML to Code", folder: "lecturer", file: "Lec11 UML to Code.pdf", image: "FCI/CCP6224-OOAD/img/Lec11 UML to Code.jpg" },
+      { title: "Lec12 Frameworks", folder: "lecturer", file: "Lec12 Frameworks.pdf", image: "FCI/CCP6224-OOAD/img/Lec12 Frameworks.jpg" }
     ],
-    "OOPDS": [
-      { title: "Lecture 1", folder: "lec", file: "week_1_part1.pdf", image: "FCI/OOPDS/img/1l.jpg" },
-      { title: "Lecture 1.2", folder: "lec", file: "week_1_part2.pdf", image: "FCI/OOPDS/img/2l.jpg" },
-      { title: "Lecture 2", folder: "lec", file: "Week_2_part1.pdf", image: "FCI/OOPDS/img/3l.jpg" },
-      { title: "Lecture 2.2", folder: "lec", file: "Week_2_part2.pdf", image: "FCI/OOPDS/img/4l.jpg" },
-      { title: "Lecture 3", folder: "lec", file: "week_3.pdf", image: "FCI/OOPDS/img/5l.jpg" },
-      { title: "Lecture 4", folder: "lec", file: "week_4.pdf", image: "FCI/OOPDS/img/6l.jpg" },
-      { title: "Lecture 5", folder: "lec", file: "week_5__6.pdf", image: "FCI/OOPDS/img/7l.jpg" },
-      { title: "Lecture 6", folder: "lec", file: "week_7.pdf", image: "FCI/OOPDS/img/8l.jpg" },
-      { title: "Lecture 7", folder: "lec", file: "week_8.pdf", image: "FCI/OOPDS/img/9l.jpg" },
-      { title: "Lecture 8", folder: "lec", file: "week_9.pdf", image: "FCI/OOPDS/img/10l.jpg" },
-      { title: "Lecture 9", folder: "lec", file: "week_10.pdf", image: "FCI/OOPDS/img/11l.jpg" },
-      { title: "Lecture 10", folder: "lec", file: "week_11.pdf", image: "FCI/OOPDS/img/12l.jpg" },
-      { title: "Lecture 11", folder: "lec", file: "week_12.pdf", image: "FCI/OOPDS/img/13l.jpg" },
-      { title: "Lecture 12", folder: "lec", file: "week_13.pdf", image: "FCI/OOPDS/img/14l.jpg" },
-      { title: "Lecture 13", folder: "lec", file: "week_14.pdf", image: "FCI/OOPDS/img/15l.jpg" },
-      { title: "Lab 1", folder: "tuto", file: "Lab01.pdf", image: "FCI/OOPDS/img/2.jpg" },
-      { title: "Lab 2", folder: "tuto", file: "Lab02.pdf", image: "FCI/OOPDS/img/3.jpg" },
-      { title: "Lab 3", folder: "tuto", file: "Lab03.pdf", image: "FCI/OOPDS/img/4.jpg" },
-      { title: "Lab 4", folder: "tuto", file: "Lab04.pdf", image: "FCI/OOPDS/img/5.jpg" },
-      { title: "Lab 5", folder: "tuto", file: "Lab05.pdf", image: "FCI/OOPDS/img/6.jpg" },
-      { title: "Lab 6", folder: "tuto", file: "Lab06.pdf", image: "FCI/OOPDS/img/7.jpg" },
-      { title: "Lab 7", folder: "tuto", file: "Lab07.pdf", image: "FCI/OOPDS/img/8.jpg" },
-      { title: "Lab 8", folder: "tuto", file: "Lab08.pdf", image: "FCI/OOPDS/img/9.jpg" },
-      { title: "Lab 9", folder: "tuto", file: "Lab09.pdf", image: "FCI/OOPDS/img/10.jpg" },
-      { title: "Lab 10", folder: "tuto", file: "Lab10.pdf", image: "FCI/OOPDS/img/11.jpg" },
-      { title: "Lab 11", folder: "tuto", file: "Lab11.pdf", image: "FCI/OOPDS/img/12.jpg" },
-      { title: "Lab 12", folder: "tuto", file: "Lab12.pdf", image: "FCI/OOPDS/img/13.jpg" },
-      { title: "Lab 13", folder: "tuto", file: "Lab13.pdf", image: "FCI/OOPDS/img/14.jpg" },
-      { title: "Lab 14", folder: "tuto", file: "Lab14.pdf", image: "FCI/OOPDS/img/15.jpg" },
-      { title: "msys2_vscode_settings", folder: "tuto", file: "msys2_vscode_settings.pdf", image: "FCI/OOPDS/img/16.jpg" },
-      
+    "CCS6214-CYBERSECURITY FUNDAMENTALS": [
+      { title: "Lecture 01", folder: "", file: "lecture-01.pdf", image: "FCI/CCS6214-CYBERSECURITY FUNDAMENTALS/img/lecture-01.jpg" },
+      { title: "Lecture 02", folder: "", file: "lecture-02.pdf", image: "FCI/CCS6214-CYBERSECURITY FUNDAMENTALS/img/lecture-02.jpg" },
+      { title: "Lecture 03", folder: "", file: "lecture-03.pdf", image: "FCI/CCS6214-CYBERSECURITY FUNDAMENTALS/img/lecture-03.jpg" },
+      { title: "Lecture 04", folder: "", file: "lecture-04.pdf", image: "FCI/CCS6214-CYBERSECURITY FUNDAMENTALS/img/lecture-04.jpg" },
+      { title: "Lecture 05", folder: "", file: "lecture-05.pdf", image: "FCI/CCS6214-CYBERSECURITY FUNDAMENTALS/img/lecture-05.jpg" },
+      { title: "Lecture 06", folder: "", file: "lecture-06.pdf", image: "FCI/CCS6214-CYBERSECURITY FUNDAMENTALS/img/lecture-06.jpg" },
+      { title: "Lecture 07", folder: "", file: "lecture-07.pdf", image: "FCI/CCS6214-CYBERSECURITY FUNDAMENTALS/img/lecture-07.jpg" },
+      { title: "Lecture 08", folder: "", file: "lecture-08.pdf", image: "FCI/CCS6214-CYBERSECURITY FUNDAMENTALS/img/lecture-08.jpg" },
+      { title: "Lecture 09", folder: "", file: "lecture-09.pdf", image: "FCI/CCS6214-CYBERSECURITY FUNDAMENTALS/img/lecture-09.jpg" },
+      { title: "Lecture 10", folder: "", file: "lecture-10.pdf", image: "FCI/CCS6214-CYBERSECURITY FUNDAMENTALS/img/lecture-10.jpg" }
+    ],
+    "CCS6224-NETWORK SECURITY": [
+      { title: "Lab 01 Question", folder: "lab", file: "Lab01.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lab01.jpg" },
+      { title: "Lab 03 Question", folder: "lab", file: "Lab03.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lab03.jpg" },
+      { title: "Lab7 Intrusion Prevention System (IPS)", folder: "lab", file: "Lab7 - Intrusion Prevention System (IPS).pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lab7 - Intrusion Prevention System (IPS).jpg" },
+      { title: "Lab 02 (Graded Lab Exercise 1)", folder: "lab", file: "Lab 02 (Graded Lab Exercise 1).pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lab 02 (Graded Lab Exercise 1).jpg" },
+      { title: "Lab 04 (Graded Lab Exercise 2)", folder: "lab", file: "Lab 04 (Graded Lab Exercise 2).pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lab 04 (Graded Lab Exercise 2).jpg" },
+      { title: "Lab 6 Site to Site IPsec VPN", folder: "lab", file: "Lab 6 - Site-to-Site IPsec VPN.pka", image: "FCI/CCS6224-NETWORK SECURITY/img/Lab 6 - Site-to-Site IPsec VPN.jpg" },
+      { title: "Lab 7 Question", folder: "lab", file: "Lab 7 - IOS IPS.pka", image: "FCI/CCS6224-NETWORK SECURITY/img/Lab 7 - IOS IPS.jpg" },
+      { title: "Lab 8 Question", folder: "lab", file: "Lab 8 Materials.zip", image: "FCI/CCS6224-NETWORK SECURITY/img/Lab 8 Materials.jpg" },
+      { title: "Lab 9 ASA Basic Settings and Firewall", folder: "lab", file: "Lab 9 - ASA Basic Settings and Firewall.pka", image: "FCI/CCS6224-NETWORK SECURITY/img/Lab 9 - ASA Basic Settings and Firewall.jpg" },
+      { title: "Lab 10a Configure a Wireless Network", folder: "lab", file: "Lab 10a - Configure a Wireless Network.pka", image: "FCI/CCS6224-NETWORK SECURITY/img/Lab 10a - Configure a Wireless Network.jpg" },
+      { title: "Lab 10b Configure a Basic WLAN on the WLC", folder: "lab", file: "Lab 10b - Configure a Basic WLAN on the WLC.pka", image: "FCI/CCS6224-NETWORK SECURITY/img/Lab 10b - Configure a Basic WLAN on the WLC.jpg" },
+      { title: "Lab 11 WPA2 Enterprise", folder: "lab", file: "Lab 11 - WPA2 Enterprise.pka", image: "FCI/CCS6224-NETWORK SECURITY/img/Lab 11 - WPA2 Enterprise.jpg" },
+      { title: "Lab Configure a ZPF", folder: "lab", file: "Lab - Configure a ZPF.pka", image: "FCI/CCS6224-NETWORK SECURITY/img/Lab - Configure a ZPF.jpg" },
+      { title: "Lecture 02", folder: "lecturer", file: "Lecture02.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lecture02.jpg" },
+      { title: "Lecture 03", folder: "lecturer", file: "Lecture03.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lecture03.jpg" },
+      { title: "Lecture 04", folder: "lecturer", file: "Lecture04.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lecture04.jpg" },
+      { title: "Lecture 08", folder: "lecturer", file: "Lecture08.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lecture08.jpg" },
+      { title: "Lecture 09", folder: "lecturer", file: "Lecture09.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lecture09.jpg" },
+      { title: "Lecture 10", folder: "lecturer", file: "Lecture10.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lecture10.jpg" },
+      { title: "Lecture 11", folder: "lecturer", file: "Lecture11.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lecture11.jpg" },
+      { title: "Lecture 01", folder: "lecturer", file: "Lecture 01.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lecture 01.jpg" },
+      { title: "Lecture 05", folder: "lecturer", file: "Lecture 05.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lecture 05.jpg" },
+      { title: "Lecture 06", folder: "lecturer", file: "Lecture 06.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lecture 06.jpg" },
+      { title: "Lecture 07", folder: "lecturer", file: "Lecture 07.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lecture 07.jpg" },
+      { title: "Lecture 12", folder: "lecturer", file: "Lecture 12.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lecture 12.jpg" },
+      { title: "Lecture 13 Application Level Security", folder: "lecturer", file: "Lecture 13 - Application Level Security.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Lecture 13 - Application Level Security.jpg" },
+      { title: "Week 8 Lab 6 Agenda", folder: "lab", file: "Week 8 -  Lab 6 Agenda.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Week 8 -  Lab 6 Agenda.jpg" },
+      { title: "Week 12 Lab CS6224", folder: "lab", file: "Week 12 -  Lab CS6224.pdf", image: "FCI/CCS6224-NETWORK SECURITY/img/Week 12 -  Lab CS6224.jpg" }
+    ],
+    "CCS6314-CRYPTOGRAPHY & DATA SECURITY": [
+      { title: "Chapter 0", folder: "lecturer", file: "Chapter 0.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 0.jpg" },
+      { title: "Chapter 1", folder: "lecturer", file: "Chapter 1.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 1.jpg" },
+      { title: "Chapter 2", folder: "lecturer", file: "Chapter 2.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 2.jpg" },
+      { title: "Chapter 3", folder: "lecturer", file: "Chapter 3.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 3.jpg" },
+      { title: "Chapter 4", folder: "lecturer", file: "Chapter 4Chan.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 4Chan.jpg" },
+      { title: "Chapter 5", folder: "lecturer", file: "Chapter 5Chan.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 5Chan.jpg" },
+      { title: "Chapter 6", folder: "lecturer", file: "Chapter 6.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 6.jpg" },
+      { title: "Chapter 7", folder: "lecturer", file: "Chapter 7.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 7.jpg" },
+      { title: "Chapter 8", folder: "lecturer", file: "Chapter 8.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 8.jpg" },
+      { title: "Chapter 9", folder: "lecturer", file: "Chapter 9Chan.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 9Chan.jpg" },
+      { title: "Chapter 10", folder: "lecturer", file: "Chapter 10.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 10.jpg" },
+      { title: "Chapter 11", folder: "lecturer", file: "Chapter 11.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 11.jpg" },
+      { title: "Chapter 12", folder: "lecturer", file: "Chapter 12.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 12.jpg" },
+      { title: "Chapter 13", folder: "lecturer", file: "Chapter 13.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 13.jpg" },
+      { title: "Chapter 14", folder: "lecturer", file: "Chapter 14.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Chapter 14.jpg" },
+      { title: "Tutorial 1 Answer", folder: "tutorial", file: "Tut1Answer.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tut1Answer.jpg" },
+      { title: "Tutorial 2 Answer", folder: "tutorial", file: "Tut2Answer.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tut2Answer.jpg" },
+      { title: "Tutorial 3 Answer", folder: "tutorial", file: "Tut3answer.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tut3answer.jpg" },
+      { title: "Tutorial 5 Answer", folder: "tutorial", file: "Tut5ans.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tut5ans.jpg" },
+      { title: "Tutorial 7 Answer", folder: "tutorial", file: "Tut7Ans.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tut7Ans.jpg" },
+      { title: "Tutorial 8 Answer", folder: "tutorial", file: "Tut8ans.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tut8ans.jpg" },
+      { title: "Tutorial 9 Answer", folder: "tutorial", file: "Tut9ans.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tut9ans.jpg" },
+      { title: "Tutorial 10 Answer", folder: "tutorial", file: "Tut10.ans.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tut10.ans.jpg" },
+      { title: "Tutorial 11 Answer", folder: "tutorial", file: "tut11ans.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/tut11ans.jpg" },
+      { title: "Tutorial 1 Questions", folder: "tutorial", file: "Tutorial 1 Questions.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 1 Questions.jpg" },
+      { title: "Tutorial 2 Questions", folder: "tutorial", file: "Tutorial 2 Questions.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 2 Questions.jpg" },
+      { title: "Tutorial 2 QuestionsChan", folder: "tutorial", file: "Tutorial 2 QuestionsChan.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 2 QuestionsChan.jpg" },
+      { title: "Tutorial 3 Questions", folder: "tutorial", file: "Tutorial 3 Questions.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 3 Questions.jpg" },
+      { title: "Tutorial 4 (Answer)", folder: "tutorial", file: "Tutorial 4 (Answer).pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 4 (Answer).jpg" },
+      { title: "Tutorial 4 questions", folder: "tutorial", file: "Tutorial 4 questions.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 4 questions.jpg" },
+      { title: "Tutorial 4, Question 5 DES", folder: "tutorial", file: "Tutorial 4, Question 5 - DES.mp4", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 4, Question 5 - DES.jpg" },
+      { title: "Tutorial 5 Questions", folder: "tutorial", file: "Tutorial 5 Questions.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 5 Questions.jpg" },
+      { title: "Tutorial 6 (Answer)", folder: "tutorial", file: "Tutorial 6 (Answer).pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 6 (Answer).jpg" },
+      { title: "Tutorial 6 questions", folder: "tutorial", file: "Tutorial 6 questions.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 6 questions.jpg" },
+      { title: "Tutorial 7 Questions", folder: "tutorial", file: "Tutorial 7 Questions.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 7 Questions.jpg" },
+      { title: "Tutorial 8 Questions", folder: "tutorial", file: "Tutorial 8 Questions.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 8 Questions.jpg" },
+      { title: "Tutorial 9 Questions", folder: "tutorial", file: "Tutorial 9 Questions.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 9 Questions.jpg" },
+      { title: "Tutorial 10 Questions", folder: "tutorial", file: "Tutorial 10 Questions.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 10 Questions.jpg" },
+      { title: "Tutorial 11 Questions", folder: "tutorial", file: "Tutorial 11 Questions.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Tutorial 11 Questions.jpg" },
+      { title: "Vigen\u00e8re Cipher Table", folder: "tutorial", file: "Vigen\u00e8re Cipher Table.pdf", image: "FCI/CCS6314-CRYPTOGRAPHY & DATA SECURITY/img/Vigen\u00e8re Cipher Table.jpg" }
+    ],
+    "CCS6324-ETHICAL HACKING & PENETRATION": [
+      { title: "Lecture 01 Overview", folder: "Lectures", file: "Lecture-01-CCS6324 - Overview.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Lecture-01-CCS6324 - Overview.jpg" },
+      { title: "Lecture 02 Footprinting and Reconnaissance", folder: "Lectures", file: "Lecture-02-CCS6324 -  Footprinting and Reconnaissance.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Lecture-02-CCS6324 -  Footprinting and Reconnaissance.jpg" },
+      { title: "Lecture 03 Network and Computer Attacks", folder: "Lectures", file: "Lecture-03-CCS6324 -  Network and Computer Attacks.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Lecture-03-CCS6324 -  Network and Computer Attacks.jpg" },
+      { title: "Lecture 04 Port Scanning", folder: "Lectures", file: "Lecture-04-CCS6324 -  Port Scanning.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Lecture-04-CCS6324 -  Port Scanning.jpg" },
+      { title: "Lecture 05 Enumeration", folder: "Lectures", file: "Lecture-05-CCS6324 -  Enumeration.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Lecture-05-CCS6324 -  Enumeration.jpg" },
+      { title: "Lecture 06 Network Sniffing", folder: "Lectures", file: "Lecture-06-CCS6324 -  Network Sniffing.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Lecture-06-CCS6324 -  Network Sniffing.jpg" },
+      { title: "Lecture 07 Operating System Vulnerabilities", folder: "Lectures", file: "Lecture-07-CCS6324 -  Operating System Vulnerabilities.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Lecture-07-CCS6324 -  Operating System Vulnerabilities.jpg" },
+      { title: "Lecture 08 Hacking Web Servers", folder: "Lectures", file: "Lecture-08-CCS6324 -  Hacking Web Servers.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Lecture-08-CCS6324 -  Hacking Web Servers.jpg" },
+      { title: "Lecture 09 Advanced Web Application Attacks", folder: "Lectures", file: "Lecture-09-CCS6324 -  Advanced Web Application Attacks.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Lecture-09-CCS6324 -  Advanced Web Application Attacks.jpg" },
+      { title: "Lecture 10 Hacking Wireless Networks (1)", folder: "Lectures", file: "Lecture-10-CCS6324 -  Hacking Wireless Networks (1).pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Lecture-10-CCS6324 -  Hacking Wireless Networks (1).jpg" },
+      { title: "Lecture 11 Network Protection Systems", folder: "Lectures", file: "Lecture-11-CCS6324 - Network Protection Systems.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Lecture-11-CCS6324 - Network Protection Systems.jpg" },
+      { title: "Lecture 12 Cryptography Fundamentals", folder: "Lectures", file: "Lecture-12-CCS6324 - Cryptography Fundamentals.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Lecture-12-CCS6324 - Cryptography Fundamentals.jpg" },
+      { title: "Lecture 13 Social Engineering Penetration Testing Capstone", folder: "Lectures", file: "Lecture-13-CCS6324 - Social Engineering  Penetration Testing Capstone.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Lecture-13-CCS6324 - Social Engineering  Penetration Testing Capstone.jpg" },
+      { title: "Week 03 Easy Lab Network and Computer Attacks", folder: "Tutorials", file: "Week-03 - Easy Lab - Network and Computer Attacks.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Week-03 - Easy Lab - Network and Computer Attacks.jpg" },
+      { title: "Week 03 Helping Material for Assignment Lab 3 How to Test Trojan in Metasploitable2 3", folder: "Tutorials", file: "Week-03 - Helping Material for Assignment-Lab-3 - How to Test Trojan in Metasploitable2-3.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Week-03 - Helping Material for Assignment-Lab-3 - How to Test Trojan in Metasploitable2-3.jpg" },
+      { title: "Week 03 Lab with Assignment Network and Computer Attacks Advanced", folder: "Tutorials", file: "Week-03 - Lab-with-Assignment - Network and Computer Attacks - Advanced.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Week-03 - Lab-with-Assignment - Network and Computer Attacks - Advanced.jpg" },
+      { title: "Week 04 Port Scanning", folder: "Tutorials", file: "Week-04 - Port Scanning.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Week-04 - Port Scanning.jpg" },
+      { title: "Week 05 Lab Activities Enumeration", folder: "Tutorials", file: "Week-05 - Lab-Activities - Enumeration.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Week-05 - Lab-Activities - Enumeration.jpg" },
+      { title: "Week 06 Lab Activities Network Sniffing", folder: "Tutorials", file: "Week-06 - Lab-Activities-Network-Sniffing.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Week-06 - Lab-Activities-Network-Sniffing.jpg" },
+      { title: "Week 07 Lab with Assignment Beginner Friendly Operating System Vulnerabilities", folder: "Tutorials", file: "Week-07 - Lab-with-Assignment - Beginner Friendly - Operating System Vulnerabilities.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Week-07 - Lab-with-Assignment - Beginner Friendly - Operating System Vulnerabilities.jpg" },
+      { title: "Week 07 Lab with Assignment Operating System Vulnerabilities", folder: "Tutorials", file: "Week-07 - Lab-with-Assignment - Operating System Vulnerabilities.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Week-07 - Lab-with-Assignment - Operating System Vulnerabilities.jpg" },
+      { title: "Week 08 Lab Activities Hacking Web Servers", folder: "Tutorials", file: "Week-08 - Lab-Activities - Hacking Web Servers.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Week-08 - Lab-Activities - Hacking Web Servers.jpg" },
+      { title: "Week 09 Lab Activities Advanced Web Application Attacks", folder: "Tutorials", file: "Week-09 - Lab Activities - Advanced Web Application Attacks.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Week-09 - Lab Activities - Advanced Web Application Attacks.jpg" },
+      { title: "Week 10 Lab with Assignment Hacking Wireless Networks", folder: "Tutorials", file: "Week-10 - Lab-with-Assignment - Hacking Wireless Networks.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Week-10 - Lab-with-Assignment - Hacking Wireless Networks.jpg" },
+      { title: "Week 11 Lab with Assignment Network Protection Systems", folder: "Tutorials", file: "Week-11 - Lab-with-Assignment - Network Protection Systems.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Week-11 - Lab-with-Assignment - Network Protection Systems.jpg" },
+      { title: "Week 12 Lab Cryptography Fundamental", folder: "Tutorials", file: "Week-12 - Lab - Cryptography Fundamental.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Week-12 - Lab - Cryptography Fundamental.jpg" },
+      { title: "Week 13 Lab Social Engineering Penetration Testing Capstone copy", folder: "Tutorials", file: "Week-13 - Lab - Social Engineering  Penetration Testing Capstone copy.pdf", image: "FCI/CCS6324-ETHICAL HACKING & PENETRATION/img/Week-13 - Lab - Social Engineering  Penetration Testing Capstone copy.jpg" }
+    ],
+    "CCS6334-DIGITAL & COMPUTER FORENSICS": [
+      { title: "2. The Forensic Analysis Process", folder: "Additional Reference Materials", file: "2. The Forensic Analysis Process.pdf", image: "FCI/CCS6334-DIGITAL & COMPUTER FORENSICS/img/2. The Forensic Analysis Process.jpg" },
+      { title: "6. Windows Artifact Analysis", folder: "Additional Reference Materials", file: "6. Windows Artifact Analysis.pdf", image: "FCI/CCS6334-DIGITAL & COMPUTER FORENSICS/img/6. Windows Artifact Analysis.jpg" },
+      { title: "Lecture 6334", folder: "Lecture Slides", file: "CCS6334 - Lecture 1.pdf", image: "FCI/CCS6334-DIGITAL & COMPUTER FORENSICS/img/CCS6334 - Lecture 1.jpg" },
+      { title: "Lecture 6334", folder: "Lecture Slides", file: "CCS6334 - Lecture 2.pdf", image: "FCI/CCS6334-DIGITAL & COMPUTER FORENSICS/img/CCS6334 - Lecture 2.jpg" },
+      { title: "Lecture 6334", folder: "Lecture Slides", file: "CCS6334 - Lecture 3.pdf", image: "FCI/CCS6334-DIGITAL & COMPUTER FORENSICS/img/CCS6334 - Lecture 3.jpg" },
+      { title: "Lecture 6334", folder: "Lecture Slides", file: "CCS6334 - Lecture 4.pdf", image: "FCI/CCS6334-DIGITAL & COMPUTER FORENSICS/img/CCS6334 - Lecture 4.jpg" },
+      { title: "Lecture 6334", folder: "Lecture Slides", file: "CCS6334 - Lecture 5.pdf", image: "FCI/CCS6334-DIGITAL & COMPUTER FORENSICS/img/CCS6334 - Lecture 5.jpg" },
+      { title: "Lecture 6334", folder: "Lecture Slides", file: "CCS6334 - Lecture 6.pdf", image: "FCI/CCS6334-DIGITAL & COMPUTER FORENSICS/img/CCS6334 - Lecture 6.jpg" },
+      { title: "Lecture 6334", folder: "Lecture Slides", file: "CCS6334 - Lecture 7.pdf", image: "FCI/CCS6334-DIGITAL & COMPUTER FORENSICS/img/CCS6334 - Lecture 7.jpg" },
+      { title: "Lecture 6334", folder: "Lecture Slides", file: "CCS6334 - Lecture 8.pdf", image: "FCI/CCS6334-DIGITAL & COMPUTER FORENSICS/img/CCS6334 - Lecture 8.jpg" },
+      { title: "Lecture 6334", folder: "Lecture Slides", file: "CCS6334 - Lecture 9.pdf", image: "FCI/CCS6334-DIGITAL & COMPUTER FORENSICS/img/CCS6334 - Lecture 9.jpg" },
+      { title: "Lecture 6334", folder: "Lecture Slides", file: "CCS6334 - Lecture 10.pdf", image: "FCI/CCS6334-DIGITAL & COMPUTER FORENSICS/img/CCS6334 - Lecture 10.jpg" },
+      { title: "Lecture 6334", folder: "Lecture Slides", file: "CCS6334 - Lecture 11.pdf", image: "FCI/CCS6334-DIGITAL & COMPUTER FORENSICS/img/CCS6334 - Lecture 11.jpg" },
+      { title: "Lecture 6334", folder: "Lecture Slides", file: "CCS6334 - Lecture 12.pdf", image: "FCI/CCS6334-DIGITAL & COMPUTER FORENSICS/img/CCS6334 - Lecture 12.jpg" }
+    ],
+    "CCS6344-DATABASE AND CLOUD SECURITY": [
+      { title: "Lecture 1 Threat Analysis and Compliance e", folder: "lecturer", file: "Lecture 1 - Threat Analysis and Compliance_e.pdf", image: "FCI/CCS6344-DATABASE AND CLOUD SECURITY/img/Lecture 1 - Threat Analysis and Compliance_e.jpg" },
+      { title: "Lecture 2 SQL Server Security Model and Security Audit e", folder: "lecturer", file: "Lecture 2 - SQL Server Security Model and Security Audit_e.pdf", image: "FCI/CCS6344-DATABASE AND CLOUD SECURITY/img/Lecture 2 - SQL Server Security Model and Security Audit_e.jpg" },
+      { title: "Lecture 3 Data Level Security and Encryption e", folder: "lecturer", file: "Lecture 3 - Data Level Security and Encryption_e.pdf", image: "FCI/CCS6344-DATABASE AND CLOUD SECURITY/img/Lecture 3 - Data Level Security and Encryption_e.jpg" },
+      { title: "Lecture 4 Security Metadata, Service Accounts and Protecting Credentials e", folder: "lecturer", file: "Lecture 4 - Security Metadata, Service Accounts and Protecting Credentials_e.pdf", image: "FCI/CCS6344-DATABASE AND CLOUD SECURITY/img/Lecture 4 - Security Metadata, Service Accounts and Protecting Credentials_e.jpg" },
+      { title: "Lecture 5 Attacks e", folder: "lecturer", file: "Lecture 5 - Attacks_e.pdf", image: "FCI/CCS6344-DATABASE AND CLOUD SECURITY/img/Lecture 5 - Attacks_e.jpg" },
+      { title: "Lecture 6 Reducing the Attack Surface e", folder: "lecturer", file: "Lecture 6 - Reducing the Attack Surface_e.pdf", image: "FCI/CCS6344-DATABASE AND CLOUD SECURITY/img/Lecture 6 - Reducing the Attack Surface_e.jpg" },
+      { title: "Lecture 07", folder: "lecturer", file: "Lecture 07.pdf", image: "FCI/CCS6344-DATABASE AND CLOUD SECURITY/img/Lecture 07.jpg" },
+      { title: "Lecture 8", folder: "lecturer", file: "Lecture 8.pdf", image: "FCI/CCS6344-DATABASE AND CLOUD SECURITY/img/Lecture 8.jpg" },
+      { title: "Lecture 9", folder: "lecturer", file: "Lecture 9.pdf", image: "FCI/CCS6344-DATABASE AND CLOUD SECURITY/img/Lecture 9.jpg" },
+      { title: "Lecture 10", folder: "lecturer", file: "Lecture 10.pdf", image: "FCI/CCS6344-DATABASE AND CLOUD SECURITY/img/Lecture 10.jpg" },
+      { title: "Lecture 11", folder: "lecturer", file: "Lecture 11.pdf", image: "FCI/CCS6344-DATABASE AND CLOUD SECURITY/img/Lecture 11.jpg" }
     ],
     "COMPUTER ARC": [
-      { title: "Lecture 1", folder: "lec", file: "archlec1.pdf", image: "FCI/COMPUTER ARC/img/arclec1.jpg" },
-      { title: "Lecture 2", folder: "lec", file: "arclec2.pdf", image: "FCI/COMPUTER ARC/img/arclec2.jpg" },
-      { title: "Lecture 3", folder: "lec", file: "arclec3.pdf", image: "FCI/COMPUTER ARC/img/arclec3.jpg" },
-      { title: "Lecture 4", folder: "lec", file: "arclec4.pdf", image: "FCI/COMPUTER ARC/img/arclec4.jpg" },
-      { title: "Lecture 5", folder: "lec", file: "arclec5.pdf", image: "FCI/COMPUTER ARC/img/arclec5.jpg" },
-      { title: "Lecture 6", folder: "lec", file: "arclec6.pdf", image: "FCI/COMPUTER ARC/img/arclec6.jpg" },
-      { title: "Lecture 7", folder: "lec", file: "arclec7.pdf", image: "FCI/COMPUTER ARC/img/arclec7.jpg" },
-      { title: "Lab 1", folder: "tuto", file: "LABARC1.pdf", image: "FCI/COMPUTER ARC/img/arclab1.jpg" },
-      { title: "Lab 2", folder: "tuto", file: "LABARC2.pdf", image: "FCI/COMPUTER ARC/img/arclab2.jpg" },
-      { title: "Lab 3", folder: "tuto", file: "LABARC3.pdf", image: "FCI/COMPUTER ARC/img/arclab3.jpg" },
-      { title: "Lab 4", folder: "tuto", file: "LABARC4.pdf", image: "FCI/COMPUTER ARC/img/arclab4.jpg" },
-      { title: "Lab 5", folder: "tuto", file: "LABARC5.pdf", image: "FCI/COMPUTER ARC/img/arclab5.jpg" },
-      { title: "Lab 6", folder: "tuto", file: "LABARC6.pdf", image: "FCI/COMPUTER ARC/img/arclab6.jpg" },
-      { title: "ARM LEC 1", folder: "arm-lec", file: "lec_b-01 -  Basic Concepts and System Buses Term2210.pdf", image: "FCI/COMPUTER ARC/img/ARM1.jpg" },
-      { title: "ARM LEC 2", folder: "arm-lec", file: "lec_b-02 - Structure and Function of Central Processing Unit term2210.pdf", image: "FCI/COMPUTER ARC/img/ARM2.jpg" },
-      { title: "ARM LEC 3", folder: "arm-lec", file: "lec_b-03 - Instruction pipelining and operation of control unit term2210.pdf", image: "FCI/COMPUTER ARC/img/ARM3.jpg" },
-      { title: "ARM LEC 4", folder: "arm-lec", file: "lec_b-04 - Instruction Sets Architecture and Design term2220.pdf", image: "FCI/COMPUTER ARC/img/ARM4.jpg" },
-      { title: "ARM LEC 5", folder: "arm-lec", file: "lec_b-05 - Memory Architecture term2210.pdf", image: "FCI/COMPUTER ARC/img/ARM5.jpg" },
-      { title: "ARM LEC 6", folder: "arm-lec", file: "lec_b-06 - Interfacing input output strategies 2022.pdf", image: "FCI/COMPUTER ARC/img/ARM6.jpg" },
-      { title: "ARM LEC 7", folder: "arm-lec", file: "lec_b-07 - Multiprocessing 2022.pdf", image: "FCI/COMPUTER ARC/img/ARM7.jpg" },
-      { title: "ARM LAB 1 & 2", folder: "arm-lab", file: "lab_b_01_02_ARM_architecture_Term2210.pdf", image: "FCI/COMPUTER ARC/img/ARMLAB1.jpg" },
-      { title: "ARM LAB 3", folder: "arm-lab", file: "lab_b-03_programming_exercise_1_2023.pdf", image: "FCI/COMPUTER ARC/img/ARMLAB2.jpg" },
-      { title: "ARM LAB 4", folder: "arm-lab", file: "lab b-04 Programming Exercise 2 _2023.pdf", image: "FCI/COMPUTER ARC/img/ARMLAB3.jpg" },
-      { title: "ARM LAB 5", folder: "arm-lab", file: "lab_b-05_programming_exercise_3_2023.pdf", image: "FCI/COMPUTER ARC/img/ARMLAB4.jpg" },
-      { title: "ARM LAB 6", folder: "arm-lab", file: "lab_b-06_programming_exercise_4_2023.pdf", image: "FCI/COMPUTER ARC/img/ARMLAB5.jpg" },
-      
-  ],
+      { title: "Arclec1", folder: "lec", file: "arclec1.pdf", image: "FCI/COMPUTER ARC/img/arclec1.jpg" },
+      { title: "Arclec2", folder: "lec", file: "arclec2.pdf", image: "FCI/COMPUTER ARC/img/arclec2.jpg" },
+      { title: "Arclec3", folder: "lec", file: "arclec3.pdf", image: "FCI/COMPUTER ARC/img/arclec3.jpg" },
+      { title: "Arclec4", folder: "lec", file: "arclec4.pdf", image: "FCI/COMPUTER ARC/img/arclec4.jpg" },
+      { title: "Arclec5", folder: "lec", file: "arclec5.pdf", image: "FCI/COMPUTER ARC/img/arclec5.jpg" },
+      { title: "Arclec6", folder: "lec", file: "arclec6.pdf", image: "FCI/COMPUTER ARC/img/arclec6.jpg" },
+      { title: "Arclec7", folder: "lec", file: "arclec7.pdf", image: "FCI/COMPUTER ARC/img/arclec7.jpg" },
+      { title: "Lab b 04 Programming Exercise 2 2023", folder: "arm-lab", file: "lab b-04 Programming Exercise 2 _2023.pdf", image: "FCI/COMPUTER ARC/img/lab b-04 Programming Exercise 2 _2023.jpg" },
+      { title: "Lab b 03 programming exercise 1 2023", folder: "arm-lab", file: "lab_b-03_programming_exercise_1_2023.pdf", image: "FCI/COMPUTER ARC/img/lab_b-03_programming_exercise_1_2023.jpg" },
+      { title: "Lab b 05 programming exercise 3 2023", folder: "arm-lab", file: "lab_b-05_programming_exercise_3_2023.pdf", image: "FCI/COMPUTER ARC/img/lab_b-05_programming_exercise_3_2023.jpg" },
+      { title: "Lab b 06 programming exercise 4 2023", folder: "arm-lab", file: "lab_b-06_programming_exercise_4_2023.pdf", image: "FCI/COMPUTER ARC/img/lab_b-06_programming_exercise_4_2023.jpg" },
+      { title: "Lab b 01 02 ARM architecture Term2210", folder: "arm-lab", file: "lab_b_01_02_ARM_architecture_Term2210.pdf", image: "FCI/COMPUTER ARC/img/lab_b_01_02_ARM_architecture_Term2210.jpg" },
+      { title: "Lab 1 Question", folder: "lab", file: "LABARC1.pdf", image: "FCI/COMPUTER ARC/img/LABARC1.jpg" },
+      { title: "Lab 2 Question", folder: "lab", file: "LABARC2.pdf", image: "FCI/COMPUTER ARC/img/LABARC2.jpg" },
+      { title: "Lab 3 Question", folder: "lab", file: "LABARC3.pdf", image: "FCI/COMPUTER ARC/img/LABARC3.jpg" },
+      { title: "Lab 4 Question", folder: "lab", file: "LABARC4.pdf", image: "FCI/COMPUTER ARC/img/LABARC4.jpg" },
+      { title: "Lab 5 Question", folder: "lab", file: "LABARC5.pdf", image: "FCI/COMPUTER ARC/img/LABARC5.jpg" },
+      { title: "Lab 6 Question", folder: "lab", file: "LABARC6.pdf", image: "FCI/COMPUTER ARC/img/LABARC6.jpg" },
+      { title: "Lec b 01 Basic Concepts and System Buses Term2210", folder: "arm-lec", file: "lec_b-01 -  Basic Concepts and System Buses Term2210.pdf", image: "FCI/COMPUTER ARC/img/lec_b-01 -  Basic Concepts and System Buses Term2210.jpg" },
+      { title: "Lec b 02 Structure and Function of Central Processing Unit term2210", folder: "arm-lec", file: "lec_b-02 - Structure and Function of Central Processing Unit term2210.pdf", image: "FCI/COMPUTER ARC/img/lec_b-02 - Structure and Function of Central Processing Unit term2210.jpg" },
+      { title: "Lec b 03 Instruction pipelining and operation of control unit term2210", folder: "arm-lec", file: "lec_b-03 - Instruction pipelining and operation of control unit term2210.pdf", image: "FCI/COMPUTER ARC/img/lec_b-03 - Instruction pipelining and operation of control unit term2210.jpg" },
+      { title: "Lec b 04 Instruction Sets Architecture and Design term2220", folder: "arm-lec", file: "lec_b-04 - Instruction Sets Architecture and Design term2220.pdf", image: "FCI/COMPUTER ARC/img/lec_b-04 - Instruction Sets Architecture and Design term2220.jpg" },
+      { title: "Lec b 05 Memory Architecture term2210", folder: "arm-lec", file: "lec_b-05 - Memory Architecture term2210.pdf", image: "FCI/COMPUTER ARC/img/lec_b-05 - Memory Architecture term2210.jpg" },
+      { title: "Lec b 06 Interfacing input output strategies 2022", folder: "arm-lec", file: "lec_b-06 - Interfacing input output strategies 2022.pdf", image: "FCI/COMPUTER ARC/img/lec_b-06 - Interfacing input output strategies 2022.jpg" },
+      { title: "Lec b 07 Multiprocessing 2022", folder: "arm-lec", file: "lec_b-07 - Multiprocessing 2022.pdf", image: "FCI/COMPUTER ARC/img/lec_b-07 - Multiprocessing 2022.jpg" }
+    ],
+    "COMPUTER GRAPHICS": [
+      { title: "Cglec1", folder: "lec", file: "cglec1.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec1.jpg" },
+      { title: "Cglec2", folder: "lec", file: "cglec2.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec2.jpg" },
+      { title: "Cglec3", folder: "lec", file: "cglec3.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec3.jpg" },
+      { title: "Cglec4", folder: "lec", file: "cglec4.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec4.jpg" },
+      { title: "Cglec5", folder: "lec", file: "cglec5.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec5.jpg" },
+      { title: "Cglec6", folder: "lec", file: "cglec6.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec6.jpg" },
+      { title: "Cglec7", folder: "lec", file: "cglec7.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec7.jpg" },
+      { title: "Cglec8", folder: "lec", file: "cglec8.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec8.jpg" },
+      { title: "Cglec9", folder: "lec", file: "cglec9.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec9.jpg" },
+      { title: "Cglec10", folder: "lec", file: "cglec10.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec10.jpg" }
+    ],
+    "COMPUTER METHOD": [
+      { title: "Comet1", folder: "lec", file: "comet1.pdf", image: "FCI/COMPUTER METHOD/img/comet1.jpg" },
+      { title: "Comet1t", folder: "tuto", file: "comet1t.pdf", image: "FCI/COMPUTER METHOD/img/comet1t.jpg" },
+      { title: "Comet2", folder: "lec", file: "comet2.pdf", image: "FCI/COMPUTER METHOD/img/comet2.jpg" },
+      { title: "Comet2t", folder: "tuto", file: "comet2t.pdf", image: "FCI/COMPUTER METHOD/img/comet2t.jpg" },
+      { title: "Comet3", folder: "lec", file: "comet3.pdf", image: "FCI/COMPUTER METHOD/img/comet3.jpg" },
+      { title: "Comet3t", folder: "tuto", file: "comet3t.pdf", image: "FCI/COMPUTER METHOD/img/comet3t.jpg" },
+      { title: "Comet4", folder: "lec", file: "comet4.pdf", image: "FCI/COMPUTER METHOD/img/comet4.jpg" },
+      { title: "Comet4t", folder: "tuto", file: "comet4t.pdf", image: "FCI/COMPUTER METHOD/img/comet4t.jpg" },
+      { title: "Comet5", folder: "lec", file: "comet5.pdf", image: "FCI/COMPUTER METHOD/img/comet5.jpg" },
+      { title: "Comet5t", folder: "tuto", file: "comet5t.pdf", image: "FCI/COMPUTER METHOD/img/comet5t.jpg" },
+      { title: "Comet6", folder: "lec", file: "comet6.pdf", image: "FCI/COMPUTER METHOD/img/comet6.jpg" },
+      { title: "Comet6t", folder: "tuto", file: "comet6t.pdf", image: "FCI/COMPUTER METHOD/img/comet6t.jpg" },
+      { title: "Comet7t", folder: "tuto", file: "comet7t.pdf", image: "FCI/COMPUTER METHOD/img/comet7t.jpg" },
+      { title: "Comet8t", folder: "tuto", file: "comet8t.pdf", image: "FCI/COMPUTER METHOD/img/comet8t.jpg" }
+    ],
+    "CSE6214-SOFTWARE ENG FUNDAMENTALS": [
+      { title: "Lecture 1 Introduction to Software Engineering", folder: "Lecture", file: "Lecture 1 Introduction to Software Engineering.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Lecture 1 Introduction to Software Engineering.jpg" },
+      { title: "Lecture 2 Software Process", folder: "Lecture", file: "Lecture 2 Software Process.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Lecture 2 Software Process.jpg" },
+      { title: "Lecture 3 Software Requirements Analysis I", folder: "Lecture", file: "Lecture 3 Software Requirements Analysis I.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Lecture 3 Software Requirements Analysis I.jpg" },
+      { title: "Lecture 4 Software Requirements Analysis II", folder: "Lecture", file: "Lecture 4 Software Requirements Analysis II.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Lecture 4 Software Requirements Analysis II.jpg" },
+      { title: "Lecture 5 Software Design Concepts", folder: "Lecture", file: "Lecture 5 Software Design Concepts.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Lecture 5 Software Design Concepts.jpg" },
+      { title: "Lecture 6 Design Modelling 1", folder: "Lecture", file: "Lecture 6 Design Modelling 1.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Lecture 6 Design Modelling 1.jpg" },
+      { title: "Lecture 7 Design Modelling 2", folder: "Lecture", file: "Lecture 7 Design Modelling 2.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Lecture 7 Design Modelling 2.jpg" },
+      { title: "Lecture 8 WebApp and Mobile App Design", folder: "Lecture", file: "Lecture 8 WebApp and Mobile App Design.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Lecture 8 WebApp and Mobile App Design.jpg" },
+      { title: "Lecture 9 Software Quality Assurance", folder: "Lecture", file: "Lecture 9 Software Quality Assurance.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Lecture 9 Software Quality Assurance.jpg" },
+      { title: "Lecture 10 Software Testing Techniques", folder: "Lecture", file: "Lecture 10 Software Testing Techniques.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Lecture 10 Software Testing Techniques.jpg" },
+      { title: "Lecture 11 Software Testing Strategies", folder: "Lecture", file: "Lecture 11 Software Testing Strategies.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Lecture 11 Software Testing Strategies.jpg" },
+      { title: "Lecture 12 Software Project Management", folder: "Lecture", file: "Lecture 12 Software Project Management.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Lecture 12 Software Project Management.jpg" },
+      { title: "Lecture 13 Software Maintenance Control", folder: "Lecture", file: "Lecture 13 Software Maintenance  Control.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Lecture 13 Software Maintenance  Control.jpg" },
+      { title: "Tutorial 01 Question", folder: "Tutorial", file: "Tut01.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Tut01.jpg" },
+      { title: "Tutorial 02 Question", folder: "Tutorial", file: "Tut02.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Tut02.jpg" },
+      { title: "Tutorial 03 Question", folder: "Tutorial", file: "Tut03.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Tut03.jpg" },
+      { title: "Tutorial 04 Question", folder: "Tutorial", file: "Tut04.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Tut04.jpg" },
+      { title: "Tutorial 05 Question", folder: "Tutorial", file: "Tut05.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Tut05.jpg" },
+      { title: "Tutorial 06 Question", folder: "Tutorial", file: "Tut06.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Tut06.jpg" },
+      { title: "Tutorial 07 Question", folder: "Tutorial", file: "Tut07.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Tut07.jpg" },
+      { title: "Tutorial 08 Question", folder: "Tutorial", file: "Tut08.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Tut08.jpg" },
+      { title: "Tutorial 09 Question", folder: "Tutorial", file: "Tut09.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Tut09.jpg" },
+      { title: "Tutorial 10 Question", folder: "Tutorial", file: "Tut10.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Tut10.jpg" },
+      { title: "Tutorial 11 Question", folder: "Tutorial", file: "Tut11.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Tut11.jpg" },
+      { title: "Tutorial 12 Question", folder: "Tutorial", file: "Tut12.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Tut12.jpg" },
+      { title: "Tutorial 13 Question", folder: "Tutorial", file: "Tut13.pdf", image: "FCI/CSE6214-SOFTWARE ENG FUNDAMENTALS/img/Tut13.jpg" }
+    ],
+    "DATABASE": [
+      { title: "Lecture 1", folder: "lec", file: "datab1.pdf", image: "FCI/DATABASE/img/datab1.jpg" },
+      { title: "Lecture 2", folder: "lec", file: "datab2.pdf", image: "FCI/DATABASE/img/datab2.jpg" },
+      { title: "Lecture 3", folder: "lec", file: "datab3.pdf", image: "FCI/DATABASE/img/datab3.jpg" },
+      { title: "Lecture 4", folder: "lec", file: "datab4.pdf", image: "FCI/DATABASE/img/datab4.jpg" },
+      { title: "Lecture 5", folder: "lec", file: "datab5.pdf", image: "FCI/DATABASE/img/datab5.jpg" },
+      { title: "Lecture 6", folder: "lec", file: "datab6.pdf", image: "FCI/DATABASE/img/datab6.jpg" },
+      { title: "Lecture 7", folder: "lec", file: "datab7.pdf", image: "FCI/DATABASE/img/datab7.jpg" },
+      { title: "Lecture 8", folder: "lec", file: "datab8.pdf", image: "FCI/DATABASE/img/datab8.jpg" },
+      { title: "Lecture 9", folder: "lec", file: "datab9.pdf", image: "FCI/DATABASE/img/datab9.jpg" },
+      { title: "Lecture 10", folder: "lec", file: "datab10.pdf", image: "FCI/DATABASE/img/datab10.jpg" },
+      { title: "Lecture 11", folder: "lec", file: "datab11.pdf", image: "FCI/DATABASE/img/datab11.jpg" },
+      { title: "Lecture 12", folder: "lec", file: "datab12.pdf", image: "FCI/DATABASE/img/datab12.jpg" },
+      { title: "Lecture 13", folder: "lec", file: "datab13.pdf", image: "FCI/DATABASE/img/datab13.jpg" },
+      { title: "Tutorial 1", folder: "tuto", file: "databl1.pdf", image: "FCI/DATABASE/img/databl1.jpg" },
+      { title: "Tutorial 2", folder: "tuto", file: "databl2.pdf", image: "FCI/DATABASE/img/databl2.jpg" },
+      { title: "Tutorial 3", folder: "tuto", file: "databl3.pdf", image: "FCI/DATABASE/img/databl3.jpg" },
+      { title: "Tutorial 4", folder: "tuto", file: "databl4.pdf", image: "FCI/DATABASE/img/databl4.jpg" },
+      { title: "Tutorial 5", folder: "tuto", file: "databl5.pdf", image: "FCI/DATABASE/img/databl5.jpg" },
+      { title: "Tutorial 6", folder: "tuto", file: "databl6.pdf", image: "FCI/DATABASE/img/databl6.jpg" },
+      { title: "Tutorial 7", folder: "tuto", file: "databl7.pdf", image: "FCI/DATABASE/img/databl7.jpg" },
+      { title: "Tutorial 8", folder: "tuto", file: "databl8.pdf", image: "FCI/DATABASE/img/databl8.jpg" },
+      { title: "Tutorial 9", folder: "tuto", file: "databl9.pdf", image: "FCI/DATABASE/img/databl9.jpg" },
+      { title: "Tutorial 10", folder: "tuto", file: "databl10.pdf", image: "FCI/DATABASE/img/databl10.jpg" },
+      { title: "Tutorial 11", folder: "tuto", file: "databl11.pdf", image: "FCI/DATABASE/img/databl11.jpg" }
+    ],
+    "DIGITAL COMP": [
+      { title: "TOPIC 1", folder: "lec", file: "TOPIC 1_.pdf", image: "FCI/DIGITAL COMP/img/TOPIC 1_.jpg" },
+      { title: "TOPIC 2", folder: "lec", file: "TOPIC 2.pdf", image: "FCI/DIGITAL COMP/img/TOPIC 2.jpg" },
+      { title: "TOPIC 3", folder: "lec", file: "TOPIC 3.pdf", image: "FCI/DIGITAL COMP/img/TOPIC 3.jpg" },
+      { title: "TOPIC 4", folder: "lec", file: "TOPIC 4.pdf", image: "FCI/DIGITAL COMP/img/TOPIC 4.jpg" },
+      { title: "TOPIC 5", folder: "lec", file: "TOPIC 5.pdf", image: "FCI/DIGITAL COMP/img/TOPIC 5.jpg" },
+      { title: "TOPIC 6B", folder: "lec", file: "TOPIC 6B.pdf", image: "FCI/DIGITAL COMP/img/TOPIC 6B.jpg" }
+    ],
+    "DISCRETE STRUCTURE": [
+      { title: "Appendix", folder: "lec", file: "Appendix.pdf", image: "FCI/DISCRETE STRUCTURE/img/Appendix.jpg" },
+      { title: "Lecture 01", folder: "lec", file: "Lecture01 Sets.pdf", image: "FCI/DISCRETE STRUCTURE/img/Lecture01 Sets.jpg" },
+      { title: "Solu1.1", folder: "ans", file: "solu1.1.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu1.1.jpg" },
+      { title: "Solu1", folder: "ans", file: "solu1.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu1.jpg" },
+      { title: "Solu2.2", folder: "ans", file: "solu2.2.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu2.2.jpg" },
+      { title: "Solu2", folder: "ans", file: "solu2.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu2.jpg" },
+      { title: "Solu3.3", folder: "ans", file: "solu3.3.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu3.3.jpg" },
+      { title: "Solu3", folder: "ans", file: "solu3.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu3.jpg" },
+      { title: "Solu4.4.4", folder: "ans", file: "solu4.4.4.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu4.4.4.jpg" },
+      { title: "Solu4.4", folder: "ans", file: "solu4.4.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu4.4.jpg" },
+      { title: "Solu4", folder: "ans", file: "solu4.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu4.jpg" },
+      { title: "Solu5.5", folder: "ans", file: "solu5.5.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu5.5.jpg" },
+      { title: "Solu5", folder: "ans", file: "solu5.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu5.jpg" },
+      { title: "Solu6.6", folder: "ans", file: "solu6.6.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu6.6.jpg" },
+      { title: "Solu6", folder: "ans", file: "solu6.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu6.jpg" },
+      { title: "Solu7.7", folder: "ans", file: "solu7.7.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu7.7.jpg" },
+      { title: "Solu7", folder: "ans", file: "solu7.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu7.jpg" },
+      { title: "Solu8.8", folder: "ans", file: "solu8.8.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu8.8.jpg" },
+      { title: "Solu8", folder: "ans", file: "solu8.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu8.jpg" },
+      { title: "Solu9.9", folder: "ans", file: "solu9.9.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu9.9.jpg" },
+      { title: "Solu9", folder: "ans", file: "solu9.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu9.jpg" },
+      { title: "Solu10.10", folder: "ans", file: "solu10.10.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu10.10.jpg" },
+      { title: "Solu10", folder: "ans", file: "solu10.pdf", image: "FCI/DISCRETE STRUCTURE/img/solu10.jpg" },
+      { title: "Topic 1.1 Propositional logic rev2310", folder: "lec", file: "Topic 1.1 Propositional logic-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 1.1 Propositional logic-rev2310.jpg" },
+      { title: "Topic 1.2 Predicate logic rev2310", folder: "lec", file: "Topic 1.2 Predicate logic-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 1.2 Predicate logic-rev2310.jpg" },
+      { title: "Topic 1.3 Formal reasoning rev2310", folder: "lec", file: "Topic 1.3 Formal reasoning-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 1.3 Formal reasoning-rev2310.jpg" },
+      { title: "Topic 2 Set theory rev2310", folder: "lec", file: "Topic 2 Set theory-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 2 Set theory-rev2310.jpg" },
+      { title: "Topic 3.1 Relation rev2310", folder: "lec", file: "Topic 3.1 Relation-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 3.1 Relation-rev2310.jpg" },
+      { title: "Topic 3.2 Function", folder: "lec", file: "Topic 3.2 Function.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 3.2 Function.jpg" },
+      { title: "Topic 4.1 Induction rev2310", folder: "lec", file: "Topic 4.1 Induction-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 4.1 Induction-rev2310.jpg" },
+      { title: "Topic 4.2 Recursion rev2310", folder: "lec", file: "Topic 4.2 Recursion-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 4.2 Recursion-rev2310.jpg" },
+      { title: "Topic 5 Intro to Complexity of An Algorithm rev2220", folder: "lec", file: "Topic 5 Intro to Complexity of An Algorithm-rev2220.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 5 Intro to Complexity of An Algorithm-rev2220.jpg" },
+      { title: "Topic 6.1 Intro to Graph rev2220", folder: "lec", file: "Topic 6.1 Intro to Graph-rev2220.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 6.1 Intro to Graph-rev2220.jpg" },
+      { title: "Topic 6.2 Trail, Path and Circuit rev2220", folder: "lec", file: "Topic 6.2 Trail, Path and Circuit-rev2220.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 6.2 Trail, Path and Circuit-rev2220.jpg" },
+      { title: "Topic 6.3 Tree rev2220", folder: "lec", file: "Topic 6.3 Tree-rev2220.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 6.3 Tree-rev2220.jpg" },
+      { title: "Topic 7 Finite state automata", folder: "lec", file: "Topic 7 Finite state automata.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 7 Finite state automata.jpg" },
+      { title: "Topic 8 Intro to combinatory", folder: "lec", file: "Topic 8 Intro to combinatory.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 8 Intro to combinatory.jpg" },
+      { title: "Topic 9.1 Intro to probability rev2020", folder: "lec", file: "Topic 9.1 Intro to probability-rev2020.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 9.1 Intro to probability-rev2020.jpg" },
+      { title: "Topic 9.2 Random variable", folder: "lec", file: "Topic 9.2 Random variable.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 9.2 Random variable.jpg" },
+      { title: "Topic 9.3 Discrete distribution rev2220", folder: "lec", file: "Topic 9.3 Discrete distribution-rev2220.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 9.3 Discrete distribution-rev2220.jpg" },
+      { title: "Topic 9.4 Normal distribution rev2020", folder: "lec", file: "Topic 9.4 Normal distribution-rev2020.pdf", image: "FCI/DISCRETE STRUCTURE/img/Topic 9.4 Normal distribution-rev2020.jpg" },
+      { title: "Tutorial 01 Topic 1.1 Propositional logic", folder: "tuto", file: "Tutorial 01 - Topic 1.1 Propositional logic.pdf", image: "FCI/DISCRETE STRUCTURE/img/Tutorial 01 - Topic 1.1 Propositional logic.jpg" },
+      { title: "Tutorial 02 Topic 1.2 Predicate Logic", folder: "tuto", file: "Tutorial 02 - Topic 1.2 Predicate Logic.pdf", image: "FCI/DISCRETE STRUCTURE/img/Tutorial 02 - Topic 1.2 Predicate Logic.jpg" },
+      { title: "Tutorial 03 Topic 1.3 Formal reasoning", folder: "tuto", file: "Tutorial 03 - Topic 1.3 Formal reasoning.pdf", image: "FCI/DISCRETE STRUCTURE/img/Tutorial 03 - Topic 1.3 Formal reasoning.jpg" },
+      { title: "Tutorial 04 Topic 2 Set theory", folder: "tuto", file: "Tutorial 04 - Topic 2 Set theory.pdf", image: "FCI/DISCRETE STRUCTURE/img/Tutorial 04 - Topic 2 Set theory.jpg" },
+      { title: "Tutorial 05 Topic 3 Relation and function rev2020", folder: "tuto", file: "Tutorial 05 - Topic 3 Relation and function-rev2020.pdf", image: "FCI/DISCRETE STRUCTURE/img/Tutorial 05 - Topic 3 Relation and function-rev2020.jpg" },
+      { title: "Tutorial 06 Topic 4 Recursion and Induction", folder: "tuto", file: "Tutorial 06 -Topic 4 Recursion and Induction.pdf", image: "FCI/DISCRETE STRUCTURE/img/Tutorial 06 -Topic 4 Recursion and Induction.jpg" },
+      { title: "Tutorial 07 Topic 5 Intro to algo complexity", folder: "tuto", file: "Tutorial 07 - Topic 5 Intro to algo complexity.pdf", image: "FCI/DISCRETE STRUCTURE/img/Tutorial 07 - Topic 5 Intro to algo complexity.jpg" },
+      { title: "Tutorial 08 Topic 6 Graph and tree rev2220", folder: "tuto", file: "Tutorial 08 - Topic 6 Graph and tree-rev2220.pdf", image: "FCI/DISCRETE STRUCTURE/img/Tutorial 08 - Topic 6 Graph and tree-rev2220.jpg" },
+      { title: "Tutorial 09 Topic 7 Finite state automata", folder: "tuto", file: "Tutorial 09 - Topic 7 Finite-state automata.pdf", image: "FCI/DISCRETE STRUCTURE/img/Tutorial 09 - Topic 7 Finite-state automata.jpg" },
+      { title: "Tutorial 10 Topic 8 Combinatoric rev2310", folder: "tuto", file: "Tutorial 10 - Topic 8 Combinatoric-rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/Tutorial 10 - Topic 8 Combinatoric-rev2310.jpg" },
+      { title: "Tutorial 11 Topic 9.1 Probability rev2020", folder: "tuto", file: "Tutorial 11 - Topic 9.1 Probability-rev2020.pdf", image: "FCI/DISCRETE STRUCTURE/img/Tutorial 11 - Topic 9.1 Probability-rev2020.jpg" },
+      { title: "Tutorial 12 Topic 9.2 Random variable", folder: "tuto", file: "Tutorial 12 - Topic 9.2 Random variable.pdf", image: "FCI/DISCRETE STRUCTURE/img/Tutorial 12 - Topic 9.2 Random variable.jpg" },
+      { title: "Tutorial 13 Topic 9.3&4 Distributions rev2310", folder: "tuto", file: "Tutorial 13 - Topic 9.3&4 Distributions- rev2310.pdf", image: "FCI/DISCRETE STRUCTURE/img/Tutorial 13 - Topic 9.3&4 Distributions- rev2310.jpg" }
+    ],
+    "MATH 1": [
+      { title: "PMT0101 Topic 1", folder: "lec", file: "PMT0101_Topic_1.pdf", image: "FCI/MATH 1/img/PMT0101_Topic_1.jpg" },
+      { title: "PMT0101 Topic 2", folder: "lec", file: "PMT0101_Topic_2.pdf", image: "FCI/MATH 1/img/PMT0101_Topic_2.jpg" },
+      { title: "PMT0101 Topic 3", folder: "lec", file: "PMT0101_Topic_3.pdf", image: "FCI/MATH 1/img/PMT0101_Topic_3.jpg" },
+      { title: "PMT0101 Topic 4", folder: "lec", file: "PMT0101_Topic_4.pdf", image: "FCI/MATH 1/img/PMT0101_Topic_4.jpg" },
+      { title: "PMT0101 Topic 5", folder: "lec", file: "PMT0101_Topic_5.pdf", image: "FCI/MATH 1/img/PMT0101_Topic_5.jpg" },
+      { title: "PMT0101 Topic 6", folder: "lec", file: "PMT0101_Topic_6.pdf", image: "FCI/MATH 1/img/PMT0101_Topic_6.jpg" },
+      { title: "SET1 1510 A NBY", folder: "ans", file: "SET1-1510-A-NBY.pdf", image: "FCI/MATH 1/img/SET1-1510-A-NBY.jpg" },
+      { title: "SET1 1510 Q NBY", folder: "psy", file: "SET1-1510-Q-NBY.pdf", image: "FCI/MATH 1/img/SET1-1510-Q-NBY.jpg" },
+      { title: "SET2 1520 A JMJ", folder: "ans", file: "SET2-1520-A-JMJ.pdf", image: "FCI/MATH 1/img/SET2-1520-A-JMJ.jpg" },
+      { title: "SET2 1520 Q JMJ", folder: "psy", file: "SET2-1520-Q-JMJ.pdf", image: "FCI/MATH 1/img/SET2-1520-Q-JMJ.jpg" },
+      { title: "SET3 1530 A NBY", folder: "ans", file: "SET3-1530-A-NBY.pdf", image: "FCI/MATH 1/img/SET3-1530-A-NBY.jpg" },
+      { title: "SET3 1530 Q NBY", folder: "psy", file: "SET3-1530-Q-NBY.pdf", image: "FCI/MATH 1/img/SET3-1530-Q-NBY.jpg" },
+      { title: "SET4 1610 A JMJ", folder: "ans", file: "SET4-1610-A-JMJ.pdf", image: "FCI/MATH 1/img/SET4-1610-A-JMJ.jpg" },
+      { title: "SET4 1610 Q JMJ", folder: "psy", file: "SET4-1610-Q-JMJ.pdf", image: "FCI/MATH 1/img/SET4-1610-Q-JMJ.jpg" },
+      { title: "SET5 1620 A JMJ", folder: "ans", file: "SET5-1620-A-JMJ.pdf", image: "FCI/MATH 1/img/SET5-1620-A-JMJ.jpg" },
+      { title: "SET5 1620 Q JMJ", folder: "psy", file: "SET5-1620-Q-JMJ.pdf", image: "FCI/MATH 1/img/SET5-1620-Q-JMJ.jpg" },
+      { title: "SET6 1630 A NBY", folder: "ans", file: "SET6-1630-A-NBY.pdf", image: "FCI/MATH 1/img/SET6-1630-A-NBY.jpg" },
+      { title: "SET6 1630 Q NBY", folder: "psy", file: "SET6-1630-Q-NBY.pdf", image: "FCI/MATH 1/img/SET6-1630-Q-NBY.jpg" },
+      { title: "SET7 1710 A JMJ", folder: "ans", file: "SET7-1710-A-JMJ.pdf", image: "FCI/MATH 1/img/SET7-1710-A-JMJ.jpg" },
+      { title: "SET7 1710 Q JMJ", folder: "psy", file: "SET7-1710-Q-JMJ.pdf", image: "FCI/MATH 1/img/SET7-1710-Q-JMJ.jpg" },
+      { title: "SET8 1720 A JMJ", folder: "ans", file: "SET8-1720-A-JMJ.pdf", image: "FCI/MATH 1/img/SET8-1720-A-JMJ.jpg" },
+      { title: "SET8 1720 Q JMJ", folder: "psy", file: "SET8-1720-Q-JMJ.pdf", image: "FCI/MATH 1/img/SET8-1720-Q-JMJ.jpg" },
+      { title: "SET9 1730 A NBY", folder: "ans", file: "SET9-1730-A-NBY.pdf", image: "FCI/MATH 1/img/SET9-1730-A-NBY.jpg" },
+      { title: "SET9 1730 Q NBY", folder: "psy", file: "SET9-1730-Q-NBY.pdf", image: "FCI/MATH 1/img/SET9-1730-Q-NBY.jpg" },
+      { title: "SET10 2020 AFE1 A NSL", folder: "ans", file: "SET10-2020-AFE1-A-NSL.pdf", image: "FCI/MATH 1/img/SET10-2020-AFE1-A-NSL.jpg" },
+      { title: "SET10 2020 AFE1 Q NSL", folder: "psy", file: "SET10-2020-AFE1-Q-NSL.pdf", image: "FCI/MATH 1/img/SET10-2020-AFE1-Q-NSL.jpg" },
+      { title: "SET10 2020 AFE2 A NSL", folder: "ans", file: "SET10-2020-AFE2-A-NSL.pdf", image: "FCI/MATH 1/img/SET10-2020-AFE2-A-NSL.jpg" },
+      { title: "SET10 2020 AFE2 Q NSL", folder: "psy", file: "SET10-2020-AFE2-Q-NSL.pdf", image: "FCI/MATH 1/img/SET10-2020-AFE2-Q-NSL.jpg" }
+    ],
+    "MATH 2": [
+      { title: "Chapter 1 (Part 1) Answer", folder: "ans", file: "Chapter 1 (Part 1) - Answer.pdf", image: "FCI/MATH 2/img/Chapter 1 (Part 1) - Answer.jpg" },
+      { title: "Chapter 1 (Part 1)", folder: "lec", file: "Chapter 1 (Part 1).pdf", image: "FCI/MATH 2/img/Chapter 1 (Part 1).jpg" },
+      { title: "Chapter 1 (Part 2) Answer", folder: "ans", file: "Chapter 1 (Part 2) - Answer.pdf", image: "FCI/MATH 2/img/Chapter 1 (Part 2) - Answer.jpg" },
+      { title: "Chapter 1 (Part 2)", folder: "lec", file: "Chapter 1 (Part 2).pdf", image: "FCI/MATH 2/img/Chapter 1 (Part 2).jpg" },
+      { title: "Chapter 2 (Part 1) Updated Answers", folder: "ans", file: "Chapter 2 (Part 1) - Updated Answers.pdf", image: "FCI/MATH 2/img/Chapter 2 (Part 1) - Updated Answers.jpg" },
+      { title: "Chapter 2 (Part 1)", folder: "lec", file: "Chapter 2 (Part 1).pdf", image: "FCI/MATH 2/img/Chapter 2 (Part 1).jpg" },
+      { title: "Chapter 2 (Part 2) Answer", folder: "ans", file: "Chapter 2 (Part 2) - Answer.pdf", image: "FCI/MATH 2/img/Chapter 2 (Part 2) - Answer.jpg" },
+      { title: "Chapter 2 (Part 2)", folder: "lec", file: "Chapter 2 (Part 2).pdf", image: "FCI/MATH 2/img/Chapter 2 (Part 2).jpg" },
+      { title: "Chapter 3", folder: "lec", file: "Chapter 3 (1).pdf", image: "FCI/MATH 2/img/Chapter 3 (1).jpg" },
+      { title: "Chapter 3", folder: "ans", file: "Chapter 3 - Answer.pdf", image: "FCI/MATH 2/img/Chapter 3 - Answer.jpg" },
+      { title: "Chapter 4", folder: "lec", file: "Chapter 4 (1).pdf", image: "FCI/MATH 2/img/Chapter 4 (1).jpg" },
+      { title: "Chapter 5", folder: "lec", file: "Chapter 5.pdf", image: "FCI/MATH 2/img/Chapter 5.jpg" },
+      { title: "Topic 4 Answer", folder: "ans", file: "Topic 4 - Answer.pdf", image: "FCI/MATH 2/img/Topic 4 - Answer.jpg" },
+      { title: "Topic 5 Answer", folder: "ans", file: "Topic 5 - Answer.pdf", image: "FCI/MATH 2/img/Topic 5 - Answer.jpg" },
+      { title: "Tutorial 1.2 Question", folder: "tuto", file: "tuto1.2.pdf", image: "FCI/MATH 2/img/tuto1.2.jpg" },
+      { title: "Tutorial 2.2 Question", folder: "tuto", file: "tuto2.2.pdf", image: "FCI/MATH 2/img/tuto2.2.jpg" },
+      { title: "Tutorial 2 Question", folder: "tuto", file: "tuto2.pdf", image: "FCI/MATH 2/img/tuto2.jpg" },
+      { title: "Tutorial 3 Question", folder: "tuto", file: "tuto3.pdf", image: "FCI/MATH 2/img/tuto3.jpg" },
+      { title: "Tutorial 4 Question", folder: "tuto", file: "tuto4.pdf", image: "FCI/MATH 2/img/tuto4.jpg" },
+      { title: "Tutorial 5 Question", folder: "tuto", file: "tuto5.pdf", image: "FCI/MATH 2/img/tuto5.jpg" },
+      { title: "Tutorial 1 Question", folder: "tuto", file: "tuto 1.pdf", image: "FCI/MATH 2/img/tuto 1.jpg" }
+    ],
+    "MATH 3": [
+      { title: "Past exam paper Set 1", folder: "py", file: "Past exam paper_Set 1.pdf", image: "FCI/MATH 3/img/Past exam paper_Set 1.jpg" },
+      { title: "Past exam paper Set 2", folder: "py", file: "Past exam paper_Set 2.pdf", image: "FCI/MATH 3/img/Past exam paper_Set 2.jpg" },
+      { title: "Past exam paper Set 3", folder: "py", file: "Past exam paper_Set 3.pdf", image: "FCI/MATH 3/img/Past exam paper_Set 3.jpg" },
+      { title: "Past exam paper Set 4", folder: "py", file: "Past exam paper_Set 4.pdf", image: "FCI/MATH 3/img/Past exam paper_Set 4.jpg" },
+      { title: "Past exam paper Set 5", folder: "py", file: "Past exam paper_Set 5.pdf", image: "FCI/MATH 3/img/Past exam paper_Set 5.jpg" },
+      { title: "Past exam paper Set 6", folder: "py", file: "Past exam paper_Set 6.pdf", image: "FCI/MATH 3/img/Past exam paper_Set 6.jpg" },
+      { title: "Past exam paper Set 7", folder: "py", file: "Past exam paper_Set 7.pdf", image: "FCI/MATH 3/img/Past exam paper_Set 7.jpg" },
+      { title: "Topic 1 (Compulsory questions)", folder: "tuto", file: "Topic 1 (Compulsory questions).pdf", image: "FCI/MATH 3/img/Topic 1 (Compulsory questions).jpg" },
+      { title: "Topic 1 Sequences and Series", folder: "lec", file: "Topic 1 Sequences and Series.pdf", image: "FCI/MATH 3/img/Topic 1 Sequences and Series.jpg" },
+      { title: "Topic 2 (Compulsory questions)", folder: "tuto", file: "Topic 2 (Compulsory questions).pdf", image: "FCI/MATH 3/img/Topic 2 (Compulsory questions).jpg" },
+      { title: "Topic 2 Matrices and Systems of Equations", folder: "lec", file: "Topic 2 Matrices and Systems of Equations.pdf", image: "FCI/MATH 3/img/Topic 2 Matrices and Systems of Equations.jpg" },
+      { title: "Topic 3 (Compulsory questions) 120522", folder: "tuto", file: "Topic 3 (Compulsory questions)-120522.pdf", image: "FCI/MATH 3/img/Topic 3 (Compulsory questions)-120522.jpg" },
+      { title: "Topic 3 Vectors", folder: "lec", file: "Topic 3 Vectors.pdf", image: "FCI/MATH 3/img/Topic 3 Vectors.jpg" },
+      { title: "Topic 4 (Compulsory questions)", folder: "tuto", file: "Topic 4 (Compulsory questions).pdf", image: "FCI/MATH 3/img/Topic 4 (Compulsory questions).jpg" },
+      { title: "Topic 4 Descriptive Statistics 4.1", folder: "lec", file: "Topic 4 Descriptive Statistics_4.1.pdf", image: "FCI/MATH 3/img/Topic 4 Descriptive Statistics_4.1.jpg" },
+      { title: "Topic 4 Descriptive Statistics 4.2", folder: "lec", file: "Topic 4 Descriptive Statistics_4.2.pdf", image: "FCI/MATH 3/img/Topic 4 Descriptive Statistics_4.2.jpg" },
+      { title: "Topic 4 Descriptive Statistics 4.3", folder: "lec", file: "Topic 4 Descriptive Statistics_4.3.pdf", image: "FCI/MATH 3/img/Topic 4 Descriptive Statistics_4.3.jpg" },
+      { title: "Topic 5 (Compulsory questions)", folder: "tuto", file: "Topic 5 (Compulsory questions).pdf", image: "FCI/MATH 3/img/Topic 5 (Compulsory questions).jpg" },
+      { title: "Topic 5 Events and Probability 5.1", folder: "lec", file: "Topic 5 Events and Probability 5.1.pdf", image: "FCI/MATH 3/img/Topic 5 Events and Probability 5.1.jpg" },
+      { title: "Topic 5 Events and Probability 5.2", folder: "lec", file: "Topic 5 Events and Probability 5.2.pdf", image: "FCI/MATH 3/img/Topic 5 Events and Probability 5.2.jpg" },
+      { title: "Topic 6 (Compulsory questions)", folder: "tuto", file: "Topic 6 (Compulsory questions).pdf", image: "FCI/MATH 3/img/Topic 6 (Compulsory questions).jpg" },
+      { title: "Topic 6 Probability Distributions", folder: "lec", file: "Topic 6 Probability Distributions.pdf", image: "FCI/MATH 3/img/Topic 6 Probability Distributions.jpg" },
+      { title: "TOPIC 4.4 Transformations of Graphs", folder: "lec", file: "TOPIC_4.4_Transformations_of_Graphs.pdf", image: "FCI/MATH 3/img/TOPIC_4.4_Transformations_of_Graphs.jpg" },
+      { title: "Vector Summarized Notes JMJ", folder: "lec", file: "Vector-Summarized Notes-JMJ.pdf", image: "FCI/MATH 3/img/Vector-Summarized Notes-JMJ.jpg" }
+    ],
+    "OOPDS": [
+      { title: "Lab 01 Question", folder: "tuto", file: "Lab01.pdf", image: "FCI/OOPDS/img/Lab01.jpg" },
+      { title: "Lab 02 Question", folder: "tuto", file: "Lab02.pdf", image: "FCI/OOPDS/img/Lab02.jpg" },
+      { title: "Lab 03 Question", folder: "tuto", file: "Lab03.pdf", image: "FCI/OOPDS/img/Lab03.jpg" },
+      { title: "Lab 04 Question", folder: "tuto", file: "Lab04.pdf", image: "FCI/OOPDS/img/Lab04.jpg" },
+      { title: "Lab 05 Question", folder: "tuto", file: "Lab05.pdf", image: "FCI/OOPDS/img/Lab05.jpg" },
+      { title: "Lab 06 Question", folder: "tuto", file: "Lab06.pdf", image: "FCI/OOPDS/img/Lab06.jpg" },
+      { title: "Lab 07 Question", folder: "tuto", file: "Lab07.pdf", image: "FCI/OOPDS/img/Lab07.jpg" },
+      { title: "Lab 08 Question", folder: "tuto", file: "Lab08.pdf", image: "FCI/OOPDS/img/Lab08.jpg" },
+      { title: "Lab 09 Question", folder: "tuto", file: "Lab09.pdf", image: "FCI/OOPDS/img/Lab09.jpg" },
+      { title: "Lab 10 Question", folder: "tuto", file: "Lab10.pdf", image: "FCI/OOPDS/img/Lab10.jpg" },
+      { title: "Lab 11 Question", folder: "tuto", file: "Lab11.pdf", image: "FCI/OOPDS/img/Lab11.jpg" },
+      { title: "Lab 12 Question", folder: "tuto", file: "Lab12.pdf", image: "FCI/OOPDS/img/Lab12.jpg" },
+      { title: "Lab 13 Question", folder: "tuto", file: "Lab13.pdf", image: "FCI/OOPDS/img/Lab13.jpg" },
+      { title: "Lab 14 Question", folder: "tuto", file: "Lab14.pdf", image: "FCI/OOPDS/img/Lab14.jpg" },
+      { title: "Msys2 vscode settings", folder: "tuto", file: "msys2_vscode_settings.pdf", image: "FCI/OOPDS/img/msys2_vscode_settings.jpg" },
+      { title: "Week 1 part1", folder: "lec", file: "week_1_part1.pdf", image: "FCI/OOPDS/img/week_1_part1.jpg" },
+      { title: "Week 1 part2", folder: "lec", file: "week_1_part2.pdf", image: "FCI/OOPDS/img/week_1_part2.jpg" },
+      { title: "Week 2 part1", folder: "lec", file: "Week_2_part1.pdf", image: "FCI/OOPDS/img/Week_2_part1.jpg" },
+      { title: "Week 2 part2", folder: "lec", file: "Week_2_part2.pdf", image: "FCI/OOPDS/img/Week_2_part2.jpg" },
+      { title: "Week 3", folder: "lec", file: "week_3.pdf", image: "FCI/OOPDS/img/week_3.jpg" },
+      { title: "Week 4", folder: "lec", file: "Week_4.pdf", image: "FCI/OOPDS/img/Week_4.jpg" },
+      { title: "Week 5 6", folder: "lec", file: "week_5__6.pdf", image: "FCI/OOPDS/img/week_5__6.jpg" },
+      { title: "Week 7", folder: "lec", file: "week_7.pdf", image: "FCI/OOPDS/img/week_7.jpg" },
+      { title: "Week 8", folder: "lec", file: "week_8.pdf", image: "FCI/OOPDS/img/week_8.jpg" },
+      { title: "Week 9", folder: "lec", file: "Week_9.pdf", image: "FCI/OOPDS/img/Week_9.jpg" },
+      { title: "Week 10", folder: "lec", file: "week_10.pdf", image: "FCI/OOPDS/img/week_10.jpg" },
+      { title: "Week 11", folder: "lec", file: "week_11.pdf", image: "FCI/OOPDS/img/week_11.jpg" },
+      { title: "Week 12", folder: "lec", file: "week_12.pdf", image: "FCI/OOPDS/img/week_12.jpg" },
+      { title: "Week 13", folder: "lec", file: "week_13.pdf", image: "FCI/OOPDS/img/week_13.jpg" },
+      { title: "Week 14", folder: "lec", file: "Week_14.pdf", image: "FCI/OOPDS/img/Week_14.jpg" }
+    ],
+    "PDS": [
+      { title: "Chapter 1 - Lecture", folder: "lec", file: "chapter 1ds.pdf", image: "FCI/PDS/img/chapter 1ds.jpg" },
+      { title: "Chapter 2 - Lecture", folder: "lec", file: "chapter 2ds.pdf", image: "FCI/PDS/img/chapter 2ds.jpg" },
+      { title: "Chapter 3 - Lecture", folder: "lec", file: "chapter 3ds.pdf", image: "FCI/PDS/img/chapter 3ds.jpg" },
+      { title: "Chapter 4 - Lecture", folder: "lec", file: "chapter 4ds.pdf", image: "FCI/PDS/img/chapter 4ds.jpg" },
+      { title: "Chapter 5 - Lecture", folder: "lec", file: "chapter 5ds.pdf", image: "FCI/PDS/img/chapter 5ds.jpg" },
+      { title: "Chapter 6 - Lecture", folder: "lec", file: "chapter 6ds.pdf", image: "FCI/PDS/img/chapter 6ds.jpg" },
+      { title: "Chapter 7 - Lecture", folder: "lec", file: "chapter 7ds.pdf", image: "FCI/PDS/img/chapter 7ds.jpg" },
+      { title: "Chapter 8 - Lecture", folder: "lec", file: "chapter 8ds.pdf", image: "FCI/PDS/img/chapter 8ds.jpg" },
+      { title: "Chapter 9 - Lecture", folder: "lec", file: "chapter 9ds.pdf", image: "FCI/PDS/img/chapter 9ds.jpg" },
+      { title: "Chapter 10 - Lecture", folder: "lec", file: "chapter 10ds.pdf", image: "FCI/PDS/img/chapter 10ds.jpg" },
+      { title: "Chapter 11 - Lecture", folder: "lec", file: "chapter 11ds.pdf", image: "FCI/PDS/img/chapter 11ds.jpg" },
+      { title: "Chapter 12 - Lecture", folder: "lec", file: "chapter 12ds.pdf", image: "FCI/PDS/img/chapter 12ds.jpg" },
+      { title: "Tutorial 1", folder: "tuto", file: "dtuto1.pdf", image: "FCI/PDS/img/dtuto1.jpg" },
+      { title: "Tutorial 2", folder: "tuto", file: "dtuto2.pdf", image: "FCI/PDS/img/dtuto2.jpg" },
+      { title: "Tutorial 3", folder: "tuto", file: "dtuto3.pdf", image: "FCI/PDS/img/dtuto3.jpg" },
+      { title: "Tutorial 4", folder: "tuto", file: "dtuto4.pdf", image: "FCI/PDS/img/dtuto4.jpg" },
+      { title: "Tutorial 5", folder: "tuto", file: "dtuto5.pdf", image: "FCI/PDS/img/dtuto5.jpg" },
+      { title: "Tutorial 6", folder: "tuto", file: "dtuto6.pdf", image: "FCI/PDS/img/dtuto6.jpg" },
+      { title: "Tutorial 7", folder: "tuto", file: "dtuto7.pdf", image: "FCI/PDS/img/dtuto7.jpg" },
+      { title: "Tutorial 8", folder: "tuto", file: "dtuto8.pdf", image: "FCI/PDS/img/dtuto8.jpg" },
+      { title: "Tutorial 9", folder: "tuto", file: "dtuto9.pdf", image: "FCI/PDS/img/dtuto9.jpg" },
+      { title: "Tutorial 10", folder: "tuto", file: "dtuto10.pdf", image: "FCI/PDS/img/dtuto10.jpg" }
+    ],
+    "PHS": [
+      { title: "Chapter 3 - Slide", folder: "lec", file: "chapter 3 -slide.pdf", image: "FCI/PHS/img/chapter 3 -slide.jpg" },
+      { title: "Chapter 4 - Slide", folder: "lec", file: "chapter 4-slide.pdf", image: "FCI/PHS/img/chapter 4-slide.jpg" },
+      { title: "Chapter 5 - Slide", folder: "lec", file: "chapter 5-slide.pdf", image: "FCI/PHS/img/chapter 5-slide.jpg" },
+      { title: "Chapter 5.2 - Slide", folder: "lec", file: "chapter 5.2-slide.pdf", image: "FCI/PHS/img/chapter 5.2-slide.jpg" },
+      { title: "Chapter 6 - Slide", folder: "lec", file: "chapter 6-slide.pdf", image: "FCI/PHS/img/chapter 6-slide.jpg" },
+      { title: "Chapter 2 Kinematics - Slide", folder: "lec", file: "kinematics chapter 2-slide.pdf", image: "FCI/PHS/img/kinematics chapter 2-slide.jpg" },
+      { title: "Past Year Paper 1", folder: "PSY", file: "ppp1.pdf", image: "FCI/PHS/img/ppp1.jpg" },
+      { title: "Past Year Paper 2", folder: "PSY", file: "ppp2.pdf", image: "FCI/PHS/img/ppp2.jpg" },
+      { title: "Past Year Paper 3", folder: "PSY", file: "ppp3.pdf", image: "FCI/PHS/img/ppp3.jpg" },
+      { title: "Past Year Paper 4", folder: "PSY", file: "ppp4.pdf", image: "FCI/PHS/img/ppp4.jpg" },
+      { title: "Past Year Paper 5", folder: "PSY", file: "ppp5.pdf", image: "FCI/PHS/img/ppp5.jpg" },
+      { title: "Past Year Paper 6", folder: "PSY", file: "ppp6.pdf", image: "FCI/PHS/img/ppp6.jpg" },
+      { title: "Past Year Paper 7", folder: "PSY", file: "ppp7.pdf", image: "FCI/PHS/img/ppp7.jpg" },
+      { title: "Past Year Paper 8", folder: "PSY", file: "ppp8.pdf", image: "FCI/PHS/img/ppp8.jpg" },
+      { title: "Past Year Paper 9", folder: "PSY", file: "ppp9.pdf", image: "FCI/PHS/img/ppp9.jpg" },
+      { title: "Chapter 1 - Lecture Slide", folder: "lec", file: "PPP0101 Lecture Slide Chapter 1.pdf", image: "FCI/PHS/img/PPP0101 Lecture Slide Chapter 1.jpg" },
+      { title: "Chapter 1 - Physical Quantities and Vectors", folder: "lec", file: "PPP0101_Chap01_Physical Quantities and Vectors.pdf", image: "FCI/PHS/img/PPP0101_Chap01_Physical Quantities and Vectors.jpg" },
+      { title: "Chapter 2 - Kinematics", folder: "lec", file: "PPP0101_Chap02_Kinematics.pdf", image: "FCI/PHS/img/PPP0101_Chap02_Kinematics.jpg" },
+      { title: "Chapter 3 - Dynamics", folder: "lec", file: "PPP0101_Chap03_Dynamics.pdf", image: "FCI/PHS/img/PPP0101_Chap03_Dynamics.jpg" },
+      { title: "Chapter 4 - Oscillatory Motion", folder: "lec", file: "PPP0101_Chap04_Oscillatory Motion.pdf", image: "FCI/PHS/img/PPP0101_Chap04_Oscillatory Motion.jpg" },
+      { title: "Chapter 5(i) - Waves", folder: "lec", file: "PPP0101_Chap05(i)_Waves.pdf", image: "FCI/PHS/img/PPP0101_Chap05(i)_Waves.jpg" },
+      { title: "Chapter 5(ii) - Sound Waves", folder: "lec", file: "PPP0101_Chap05(ii)_Sound Waves.pdf", image: "FCI/PHS/img/PPP0101_Chap05(ii)_Sound Waves.jpg" },
+      { title: "Chapter 6 - Properties of Light", folder: "lec", file: "PPP0101_Chap06_Properties of Light.pdf", image: "FCI/PHS/img/PPP0101_Chap06_Properties of Light.jpg" },
+      { title: "Tutorial Chapter 1", folder: "tuto", file: "TUTORIAL CHAPTER 1_.pdf", image: "FCI/PHS/img/TUTORIAL CHAPTER 1_.jpg" },
+      { title: "Tutorial Chapter 2", folder: "tuto", file: "TUTORIAL CHAPTER 2_.pdf", image: "FCI/PHS/img/TUTORIAL CHAPTER 2_.jpg" },
+      { title: "Tutorial Chapter 3", folder: "tuto", file: "TUTORIAL CHAPTER 3.pdf.pdf", image: "FCI/PHS/img/TUTORIAL CHAPTER 3.pdf.jpg" },
+      { title: "Tutorial Chapter 4", folder: "tuto", file: "TUTORIAL CHAPTER 4.pdf", image: "FCI/PHS/img/TUTORIAL CHAPTER 4.jpg" },
+      { title: "Tutorial Chapter 5", folder: "tuto", file: "TUTORIAL CHAPTER 5(i).pdf", image: "FCI/PHS/img/TUTORIAL CHAPTER 5(i).jpg" },
+      { title: "Tutorial Chapter 5", folder: "tuto", file: "TUTORIAL CHAPTER 5(ii).pdf", image: "FCI/PHS/img/TUTORIAL CHAPTER 5(ii).jpg" },
+      { title: "Tutorial Chapter 6", folder: "tuto", file: "TUTORIAL CHAPTER 6.pdf", image: "FCI/PHS/img/TUTORIAL CHAPTER 6.jpg" }
+    ],
+    "RESEARCH": [
+      { title: "Lab 2", folder: "tuto", file: "Lab2.pdf", image: "FCI/RESEARCH/img/Lab2.jpg" },
+      { title: "Lab 3", folder: "tuto", file: "Lab3.pdf", image: "FCI/RESEARCH/img/Lab3.jpg" },
+      { title: "Lab 4", folder: "tuto", file: "Lab4.pdf", image: "FCI/RESEARCH/img/Lab4.jpg" },
+      { title: "Lab 5", folder: "tuto", file: "Lab5.pdf", image: "FCI/RESEARCH/img/Lab5.jpg" },
+      { title: "Lab 8", folder: "tuto", file: "Lab8.pdf", image: "FCI/RESEARCH/img/Lab8.jpg" },
+      { title: "Lab 9", folder: "tuto", file: "Lab9.pdf", image: "FCI/RESEARCH/img/Lab9.jpg" },
+      { title: "Lab 10", folder: "tuto", file: "Lab10.pdf", image: "FCI/RESEARCH/img/Lab10.jpg" },
+      { title: "Lecture 1", folder: "lec", file: "Lec1.pdf", image: "FCI/RESEARCH/img/Lec1.jpg" },
+      { title: "Lecture 2", folder: "lec", file: "Lec2.pdf", image: "FCI/RESEARCH/img/Lec2.jpg" },
+      { title: "Lecture 3", folder: "lec", file: "Lec3.pdf", image: "FCI/RESEARCH/img/Lec3.jpg" },
+      { title: "Lecture 4", folder: "lec", file: "Lec4.pdf", image: "FCI/RESEARCH/img/Lec4.jpg" },
+      { title: "Lecture 5", folder: "lec", file: "Lec5.pdf", image: "FCI/RESEARCH/img/Lec5.jpg" },
+      { title: "Lecture 6", folder: "lec", file: "Lec6.pdf", image: "FCI/RESEARCH/img/Lec6.jpg" },
+      { title: "Lecture 7", folder: "lec", file: "Lec7.pdf", image: "FCI/RESEARCH/img/Lec7.jpg" },
+      { title: "Lecture 8", folder: "lec", file: "Lec8.pdf", image: "FCI/RESEARCH/img/Lec8.jpg" },
+      { title: "Lecture 9", folder: "lec", file: "Lec9.pdf", image: "FCI/RESEARCH/img/Lec9.jpg" },
+      { title: "Lecture 10", folder: "lec", file: "Lec10.pdf", image: "FCI/RESEARCH/img/Lec10.jpg" },
+      { title: "Lecture 11", folder: "lec", file: "Lec11.pdf", image: "FCI/RESEARCH/img/Lec11.jpg" }
+    ],
+    "TCP1101": [
+      { title: "Chapter 1 - Programming", folder: "lec", file: "chapter 1pro.pdf", image: "FCI/TCP1101/img/chapter 1pro.jpg" },
+      { title: "Chapter 2 - Programming", folder: "lec", file: "chapter 2pro.pdf", image: "FCI/TCP1101/img/chapter 2pro.jpg" },
+      { title: "Chapter 3 - Programming", folder: "lec", file: "chapter 3pro.pdf", image: "FCI/TCP1101/img/chapter 3pro.jpg" },
+      { title: "Chapter 4 - Programming", folder: "lec", file: "chapter 4pro.pdf", image: "FCI/TCP1101/img/chapter 4pro.jpg" },
+      { title: "Chapter 5 - Programming", folder: "lec", file: "chapter 5pro.pdf", image: "FCI/TCP1101/img/chapter 5pro.jpg" },
+      { title: "Chapter 6 - Programming", folder: "lec", file: "chapter 6pro.pdf", image: "FCI/TCP1101/img/chapter 6pro.jpg" },
+      { title: "Chapter 7 - Programming", folder: "lec", file: "chapter 7pro.pdf", image: "FCI/TCP1101/img/chapter 7pro.jpg" },
+      { title: "Chapter 8 - Programming", folder: "lec", file: "chapter 8pro.pdf", image: "FCI/TCP1101/img/chapter 8pro.jpg" },
+      { title: "Chapter 9 - Programming", folder: "lec", file: "chapter 9pro.pdf", image: "FCI/TCP1101/img/chapter 9pro.jpg" },
+      { title: "Chapter 10 - Programming", folder: "lec", file: "chapter 10pro.pdf", image: "FCI/TCP1101/img/chapter 10pro.jpg" },
+      { title: "Chapter 11 - Programming", folder: "lec", file: "chapter 11pro.pdf", image: "FCI/TCP1101/img/chapter 11pro.jpg" },
+      { title: "Chapter 12 - Programming", folder: "lec", file: "chapter 12pro.pdf", image: "FCI/TCP1101/img/chapter 12pro.jpg" },
+      { title: "Chapter 13 - Programming", folder: "lec", file: "chapter 13pro.pdf", image: "FCI/TCP1101/img/chapter 13pro.jpg" }
+    ]
+  };
 
-"COMPUTER METHOD": [
-      { title: "Lecture 1", folder: "lec", file: "comet1.pdf", image: "FCI/COMPUTER METHOD/img/comet1.jpg" },
-      { title: "Lecture 2", folder: "lec", file: "comet2.pdf", image: "FCI/COMPUTER METHOD/img/comet2.jpg" },
-      { title: "Lecture 3", folder: "lec", file: "comet3.pdf", image: "FCI/COMPUTER METHOD/img/comet3.jpg" },
-      { title: "Lecture 4", folder: "lec", file: "comet4.pdf", image: "FCI/COMPUTER METHOD/img/comet4.jpg" },
-      { title: "Lecture 5", folder: "lec", file: "comet5.pdf", image: "FCI/COMPUTER METHOD/img/comet5.jpg" },
-      { title: "Lecture 6", folder: "lec", file: "comet6.pdf", image: "FCI/COMPUTER METHOD/img/comt6.jpg" },
-      
-      { title: "Lab 1", folder: "tuto", file: "comet1t.pdf", image: "FCI/COMPUTER METHOD/img/comet1t.jpg" },
-      { title: "Lab 2", folder: "tuto", file: "comet2t.pdf", image: "FCI/COMPUTER METHOD/img/comet2t.jpg" },
-      { title: "Lab 3", folder: "tuto", file: "comet3t.pdf", image: "FCI/COMPUTER METHOD/img/comet3t.jpg" },
-      { title: "Lab 4", folder: "tuto", file: "comet4t.pdf", image: "FCI/COMPUTER METHOD/img/comet4t.jpg" },
-      { title: "Lab 5", folder: "tuto", file: "comet5t.pdf", image: "FCI/COMPUTER METHOD/img/comet5t.jpg" },
-      { title: "Lab 6", folder: "tuto", file: "comet6t.pdf", image: "FCI/COMPUTER METHOD/img/comet6t.jpg" },
-      { title: "Lab 6", folder: "tuto", file: "comet7t.pdf", image: "FCI/COMPUTER METHOD/img/comet7t.jpg" },
-      { title: "Lab 6", folder: "tuto", file: "comet8t.pdf", image: "FCI/COMPUTER METHOD/img/comet8t.jpg" },
-  ],
-  "DIGITAL COMP": [
-      { title: "Lecture 1", folder: "lec", file: "TOPIC 1_.pdf", image: "FCI/DIGITAL COMP/img/digi1.jpg" },
-      { title: "Lecture 2", folder: "lec", file: "TOPIC 2.pdf", image: "FCI/DIGITAL COMP/img/digi6.jpg" },
-      { title: "Lecture 3", folder: "lec", file: "TOPIC 3.pdf", image: "FCI/DIGITAL COMP/img/digi2.jpg" },
-      { title: "Lecture 4", folder: "lec", file: "TOPIC 4.pdf", image: "FCI/DIGITAL COMP/img/digi3.jpg" },
-      { title: "Lecture 5", folder: "lec", file: "TOPIC 5.pdf", image: "FCI/DIGITAL COMP/img/digi4.jpg" },
-      { title: "Lecture 6", folder: "lec", file: "TOPIC 6B.pdf", image: "FCI/DIGITAL COMP/img/digi5.jpg" },
-  ],
-
-  "COMPUTER GRAPHICS": [
-      { title: "Lecture 1", folder: "lec", file: "cglec1.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec1.jpg" },
-      { title: "Lecture 2", folder: "lec", file: "cglec2.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec2.jpg" },
-      { title: "Lecture 3", folder: "lec", file: "cglec3.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec3.jpg" },
-      { title: "Lecture 4", folder: "lec", file: "cglec4.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec4.jpg" },
-      { title: "Lecture 5", folder: "lec", file: "cglec5.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec5.jpg" },
-      { title: "Lecture 6", folder: "lec", file: "cglec6.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec6.jpg" },
-      { title: "Lecture 7", folder: "lec", file: "cglec7.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec7.jpg" },
-      { title: "Lecture 8", folder: "lec", file: "cglec8.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec8.jpg" },
-      { title: "Lecture 9", folder: "lec", file: "cglec9.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec9.jpg" },
-      { title: "Lecture 10", folder: "lec", file: "cglec10.pdf", image: "FCI/COMPUTER GRAPHICS/img/cglec10.jpg" },
-
-  ]};
   let currentSubject = null;
+
+  function filterCategory(category, el) {
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    el.classList.add('active');
+
+    const cards = document.querySelectorAll('.subject-card');
+    cards.forEach(card => {
+      const cardCat = card.getAttribute('data-category');
+      if (category === 'all' || cardCat === category) {
+        card.style.display = 'block';
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'scale(1)';
+        }, 50);
+      } else {
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+          card.style.display = 'none';
+        }, 300);
+      }
+    });
+  }
+
 
   function openModal(subject) {
     currentSubject = subject;
@@ -339,7 +1104,8 @@
 
     files.forEach(file => {
       const anchor = document.createElement('a');
-      anchor.href = `FCI/${subject}/${file.folder}/${file.file}`;
+      const folderPath = file.folder ? file.folder + '/' : '';
+      anchor.href = `FCI/${subject}/${folderPath}${file.file}`;
       anchor.target = '_blank';
 
       const card = document.createElement('div');
@@ -398,7 +1164,8 @@
       Object.entries(subjectFiles).forEach(([subject, files]) => {
         files.forEach(file => {
           const title = file.title;
-          const filePath = `FCI/${subject}/${file.folder}/${file.file}`;
+          const folderPath = file.folder ? file.folder + '/' : '';
+          const filePath = `FCI/${subject}/${folderPath}${file.file}`;
           const keywords = `${subject} ${title} ${filePath}`.toLowerCase();
 
           notes.push({
@@ -476,8 +1243,8 @@
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Useful Links</h4>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#about.html">About us</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About us</a></li>
           </ul>
         </div>
 
@@ -497,9 +1264,9 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-  <p>© <span>2025</span> <strong class="px-1 sitename">Ryan</strong> <span>All Rights Reserved</span></p>
+  <p>© <span>2025</span> <strong class="px-1 sitename"><a href="https://ryan-sec.dev/" target="_blank" style="color: inherit; text-decoration: none;">Ryan</a></strong> <span>All Rights Reserved</span></p>
   <div class="credits">
-    This website was created by <a href="https://www.linkedin.com/in/lai-ting-hong-734070291/" target="_blank">Ryan</a> using a public GitHub repository.
+    This website was created by <a href="https://ryan-sec.dev/" target="_blank">Ryan</a>. Connect with me on <a href="https://www.linkedin.com/in/lai-ting-hong-692a243b7/" target="_blank">LinkedIn</a>.
   </div>
 </div>
 
@@ -509,8 +1276,18 @@
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+  <!-- Preloader -->
+  <div id="preloader"></div>
 
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-  
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
 </body>
 </html>
